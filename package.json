@@ -5,8 +5,20 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
+    "build": "tsc",
     "check": "node scripts/check.mjs",
-    "test": "node --test scripts/"
+    "test": "tsc && node --test dist/ scripts/"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "typescript": "^7.0.2"
+  },
+  "files": [
+    "dist",
+    "packs"
+  ],
+  "packageManager": "pnpm@10.33.0"
 }
