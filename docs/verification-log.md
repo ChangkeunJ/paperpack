@@ -11,6 +11,78 @@ escalate. Rung 1 is the primary page directly, rung 2 the `r.jina.ai` text proxy
 same URL (still the source's own content), rung 3 the Wayback Machine, rung 4 a reputable
 secondary source. A value only counts as confirmed at rung 1 or 2.
 
+## 2026-08-18, third pass
+
+All 22 rules, grouped into seven areas, each read once and then handed to a second person
+told to break the verdict. **No encoded number was wrong.** One regulatory change was
+missed, five verdicts were overturned by the refuters, and roughly half the rule notes
+claimed more than their cited page carried.
+
+| verdict | count |
+|---|---|
+| confirmed | 20 |
+| changed | 2 |
+
+### The change that was missed
+
+The 300 dollar no-receipts allowance is **repealed from 2026-27**, along with the 150
+dollar laundry threshold, and a 1,000 dollar standard deduction replaces it. Confirmed at
+rung 1 in the amending Act and re-confirmed independently: the sections are absent from the
+compilation in force 1 July 2026 and the endnotes record the repeal.
+
+It is not a flat addition. The amount is the lesser of 1,000 and total labour income,
+reduced by the work deductions actually claimed, so it acts as a floor and someone claiming
+more than 1,000 in real expenses simply gets their real expenses. The gate is Australian
+residency at any time in the year, so a foreign resident on a working holiday gets neither
+the standard deduction nor the allowance it replaced, and is worse off in 2026-27 than in
+2025-26. The pack now treats the two years differently and says why.
+
+This is the second time the same amending Act nearly caused an error in opposite
+directions. Schedule 4 starts at 2026-27, Schedule 3 at 2027-28, and Schedule 4 Part 2 at
+the April 2027 FBT year. The consolidated Act shows none of that.
+
+### What the refuters overturned
+
+Five verdicts. In each case the first verifier had the right facts and the wrong grade.
+
+- **whmBands2026_27** is not confirmed but unverifiable. Four of its twelve numbers, the
+  base amounts, are published nowhere, and those four are exactly what decides the tax of
+  anyone earning over 45,000. Consistent with the published coefficients is not published.
+- **daspWhmRates** carried a one-limb rule where the law has two. Having held the visa is
+  not enough; the payment must also include contributions made while holding it. Someone
+  who held a 417 years ago and whose balance came later pays the ordinary rate, and the
+  note would have told them 65 per cent.
+- **rhcaCountries** was keyed on nationality, which is the wrong key for nine of the
+  eleven. Coverage turns on health insurance or on where the person lived before arriving.
+  Italian and Maltese cover also ends after six months, shorter than the visa, so the note's
+  claim that these people cannot get an entitlement statement was wrong in both directions.
+  The list is a reason to ask a question, not an answer, and the interview text now says so.
+- **taxFreeThreshold** was sourced to a page that never publishes it, and its note stated
+  the law incorrectly: treaty nationality is not a gate on the threshold, it is a gate on
+  being assessed on the resident basis.
+- **lodgementDueDate** cited the deadline for a different form that happens to share a date.
+
+### Two things that turned out better than recorded
+
+The Medicare shade-in rate is published after all, in Medicare Levy Act 1986 s 7(2). The
+note claiming it could only be reverse-engineered from a worked example was wrong to give
+up so early.
+
+The 2025-26 Medicare thresholds are, as the law currently stands, also the 2026-27 figures:
+the amending Act applies them to 2025-26 and later years. The pack still refuses that year,
+because the annual indexation rise is legislated afterwards and applying pre-indexation
+figures would overstate someone's levy. That reasoning is now in the rule rather than
+implied by its absence.
+
+### Everything else
+
+Most remaining findings were notes asserting more than their page supports: the treaty rule
+dropped the visa condition and described a switch where the ATO describes a comparison; the
+foreign resident bands note explained withholding using a page about assessment; the levy
+rate note described exemptions the cited page never mentions; the early lodgment note was
+stricter than the source, which allows interest, dividends and royalties after departure.
+All rewritten to what the sources carry, with the gaps named rather than papered over.
+
 ## 2026-08-18, second pass
 
 Eight questions behind the resident path, each read once and then independently re-read by
