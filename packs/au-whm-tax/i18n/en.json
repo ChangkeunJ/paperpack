@@ -85,5 +85,10 @@
   "rule.rhcaCountries": "Reciprocal health care agreement countries",
   "rule.taxFreeThreshold": "The tax free threshold",
   "rule.whmBands2025_26": "Working holiday maker tax rates, 2025-26",
-  "rule.whmBands2026_27": "Working holiday maker tax rates, 2026-27"
+  "rule.whmBands2026_27": "Working holiday maker tax rates, 2026-27",
+  "rule.residentBands2025_26": "Australian resident tax rates 2025-26",
+  "rule.residentBands2026_27": "Australian resident tax rates 2026-27",
+  "rule.lowIncomeTaxOffset": "Low income tax offset",
+  "rule.medicareLevyLowIncomeSingle2025_26": "Medicare levy low income thresholds 2025-26",
+  "rule.partYearTaxFreeThreshold": "Tax free threshold for part of a year"
 }

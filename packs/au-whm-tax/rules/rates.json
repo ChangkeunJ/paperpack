@@ -141,6 +141,111 @@
       "source": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/clothes-and-items-you-wear-at-work/clothing-laundry-and-dry-cleaning-expenses",
       "checked": "2026-08-18",
       "note": "The 150 dollar written-evidence threshold covers washing, drying and ironing. It does not extend to dry-cleaning."
+    },
+    "residentBands2025_26": {
+      "value": [
+        {
+          "upTo": 18200,
+          "rate": 0,
+          "base": 0
+        },
+        {
+          "upTo": 45000,
+          "rate": 0.16,
+          "base": 0
+        },
+        {
+          "upTo": 135000,
+          "rate": 0.3,
+          "base": 4288
+        },
+        {
+          "upTo": 190000,
+          "rate": 0.37,
+          "base": 31288
+        },
+        {
+          "upTo": null,
+          "rate": 0.45,
+          "base": 51638
+        }
+      ],
+      "from": "2025-07-01",
+      "to": "2026-06-30",
+      "source": "https://www.ato.gov.au/tax-rates-and-codes/tax-rates-australian-residents",
+      "checked": "2026-08-18",
+      "note": "Identical to 2024-25 in every threshold, rate and base amount. The page prints the 2026-27 table above this one, so read by year and never by position. Base amounts are published for the third band and up; the second band is published only as \"16c for each $1 over $18,200\", which is a base of zero. Excludes the Medicare levy."
+    },
+    "residentBands2026_27": {
+      "value": [
+        {
+          "upTo": 18200,
+          "rate": 0,
+          "base": 0
+        },
+        {
+          "upTo": 45000,
+          "rate": 0.15,
+          "base": 0
+        },
+        {
+          "upTo": 135000,
+          "rate": 0.3,
+          "base": 4020
+        },
+        {
+          "upTo": 190000,
+          "rate": 0.37,
+          "base": 31020
+        },
+        {
+          "upTo": null,
+          "rate": 0.45,
+          "base": 51370
+        }
+      ],
+      "from": "2026-07-01",
+      "source": "https://www.ato.gov.au/tax-rates-and-codes/tax-rates-australian-residents",
+      "checked": "2026-08-18",
+      "note": "The legislated cut takes the second band to 15c. Unlike the working holiday table for the same year, these base amounts are published rather than derived. Excludes the Medicare levy."
+    },
+    "lowIncomeTaxOffset": {
+      "value": {
+        "max": 700,
+        "fullUpTo": 37500,
+        "firstTaperRate": 0.05,
+        "secondTaperFrom": 45000,
+        "secondTaperBase": 325,
+        "secondTaperRate": 0.015,
+        "entitlementCeiling": 66667
+      },
+      "from": "2020-07-01",
+      "source": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/tax-offsets/low-income-tax-offset",
+      "checked": "2026-08-18",
+      "note": "Non-refundable: it reduces tax payable to zero and no further, and an unused part is not paid out. The ATO page states no income year; ITAA 1997 s 61-110 applies it to 2020-21 and later years and s 61-115 has not been amended since, which is what makes it good for both years here. Available in full to a part-year resident: s 61-110(1)(a) asks only for residency \"at any time during the income year\", so unlike the tax-free threshold it is not apportioned. Taper reaches zero at 66,666.67 while entitlement ceases above 66,667, so clamp at zero."
+    },
+    "medicareLevyLowIncomeSingle2025_26": {
+      "value": {
+        "lower": 28011,
+        "upper": 35013,
+        "shadeInRate": 0.1
+      },
+      "from": "2025-07-01",
+      "to": "2026-06-30",
+      "source": "https://www.ato.gov.au/individuals-and-families/medicare-and-private-health-insurance/medicare-levy/medicare-levy-reduction/medicare-levy-reduction-for-low-income-earners",
+      "checked": "2026-08-18",
+      "note": "Single with no dependants and no seniors offset. Both comparisons are inclusive: no levy at or below the lower threshold, a reduction at or below the upper one, full two per cent only above it. The shade-in rate is not published anywhere on the ATO site, but the worked example on this page pins it exactly: a taxable income of 29,000 gives a levy of 98.90, which is ten cents in each dollar above 28,011. Thresholds are indexed annually and announced late; no 2026-27 table exists yet."
+    },
+    "partYearTaxFreeThreshold": {
+      "value": {
+        "flat": 13464,
+        "apportioned": 4736,
+        "monthsInYear": 12
+      },
+      "from": "2012-07-01",
+      "source": "https://www.ato.gov.au/individuals-and-families/coming-to-australia-or-going-overseas/coming-to-australia/tax-free-threshold-for-newcomers-to-australia",
+      "checked": "2026-08-18",
+      "note": "Someone who becomes a resident partway through the year gets 13,464 plus 4,736 apportioned over the months they were a resident, counting the month of arrival in full and running to 30 June. Staying resident to year end does not avoid the apportionment. Whole calendar months, no day-level proration: 31 January and 1 January both count six months. The two components sum to 18,200. The page carries no effective date; 2012-07-01 is when the 18,200 threshold began. No rounding rule is published for the months that do not divide evenly."
     }
   }
 }

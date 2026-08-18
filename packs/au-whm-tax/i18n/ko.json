@@ -85,5 +85,10 @@
   "rule.rhcaCountries": "상호의료협정 체결국",
   "rule.taxFreeThreshold": "면세한도",
   "rule.whmBands2025_26": "워킹홀리데이 세율, 2025-26년도",
-  "rule.whmBands2026_27": "워킹홀리데이 세율, 2026-27년도"
+  "rule.whmBands2026_27": "워킹홀리데이 세율, 2026-27년도",
+  "rule.residentBands2025_26": "호주 거주자 세율 2025-26",
+  "rule.residentBands2026_27": "호주 거주자 세율 2026-27",
+  "rule.lowIncomeTaxOffset": "저소득 세액공제",
+  "rule.medicareLevyLowIncomeSingle2025_26": "메디케어 부담금 저소득 기준 2025-26",
+  "rule.partYearTaxFreeThreshold": "연중 거주 시의 면세한도"
 }
