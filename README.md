@@ -3,6 +3,9 @@
 Answer a set of questions, get the worked-out figures back with the source for every
 one of them. Runs entirely in the browser.
 
+Use it at https://paperpack-7v7.pages.dev/ with nothing to install. What you type
+never leaves the tab, on the hosted copy as much as on your own.
+
 ![The working holiday tax pack, filled in](docs/screenshot.png)
 
 The first pack works out Australian working holiday maker tax. Around 211,000 people
