@@ -56,7 +56,7 @@
       "from": "2026-07-01",
       "source": "https://www.ato.gov.au/tax-rates-and-codes/schedule-15-tax-table-for-working-holiday-makers",
       "checked": "2026-08-18",
-      "note": "Rates and ceilings confirmed against the 2026-27 withholding schedule (NAT 75331). The four base amounts are still derived, not published: the ATO assessment-rate page stops at 2025-26 and Schedule 15 publishes coefficients rather than base amounts. Re-check once the assessment page picks up 2026-27."
+      "note": "Rates and ceilings confirmed against the 2026-27 withholding schedule. The four base amounts are derived rather than published: Schedule 15 gives coefficients and no dollar base, and the ATO assessment page still stops at 2025-26. Schedule 15 is a withholding instrument and the ATO overwrites this URL in place each 1 July, so the citation stops evidencing 2026-27 on 1 July 2027. Re-check the assessment page around June 2027, which is when the base amounts should become publishable."
     },
     "foreignResidentBands2025_26": {
       "value": [
@@ -80,28 +80,28 @@
       "to": "2026-06-30",
       "source": "https://www.ato.gov.au/tax-rates-and-codes/tax-rates-foreign-residents",
       "checked": "2026-08-18",
-      "note": "Applies to withholding when the employer is not registered as a WHM employer. No tax-free threshold, no Medicare levy."
+      "note": "Annual assessment rates for someone who was a foreign resident for the whole year. No tax-free threshold, since the first band charges 30c from the first dollar, and no Medicare levy. An employer not registered to withhold at working holiday rates withholds at foreign resident rates instead, but that rule and its periodic tables live in Schedule 15 rather than on this page."
     },
     "noTfnWithholdingRate": {
       "value": 0.45,
-      "from": "2025-07-01",
+      "from": "2024-07-01",
       "source": "https://www.ato.gov.au/tax-rates-and-codes/schedule-15-tax-table-for-working-holiday-makers",
       "checked": "2026-08-18",
-      "note": "45 per cent, not 47. The extra 2 per cent Medicare component belongs to the resident no-TFN rate and WHMs sit outside it. The rate is long standing, but the cited schedule now serves the version effective 1 July 2026, so it no longer evidences the 2025 start date."
+      "note": "45 per cent, not 47. The published 47 per cent applies to a resident payee; Schedule 15 sets a flat 45 per cent for working holiday makers with no residency test. The rate itself is long standing, but this URL is overwritten each 1 July and now serves the version effective 1 July 2026, so the start date recorded here rests on an archived copy of the previous version rather than on the live page."
     },
     "taxFreeThreshold": {
       "value": 18200,
       "from": "2012-07-01",
-      "source": "https://www.ato.gov.au/individuals-and-families/coming-to-australia-or-going-overseas/coming-to-australia/taxation-of-australian-resident-whms-from-nda-countries",
+      "source": "https://www.legislation.gov.au/C2004A03348/latest/text",
       "checked": "2026-08-18",
-      "note": "Reachable by a WHM only when they are an Australian tax resident AND hold the nationality of an NDA country. See eligibility.json."
+      "note": "Income Tax Rates Act 1986 s 3(1). A working holiday maker's working holiday income is taxed under Schedule 7 Part III whatever their residency, so the threshold does not shelter it. What treaty nationality plus residency buys is the right to be assessed on the resident basis where that comes out cheaper, which is a comparison and not a switch. This pack only handles working holiday wages; a resident with other Australian income reaches whatever of the threshold is left over regardless of nationality, because Schedule 7 Part I clause 4 stacks working holiday income underneath it. The 2012 start is evidenced by the year-by-year tables on the ATO resident rates page, where 2012-13 is the first year at 18,200."
     },
     "medicareLevyRate": {
       "value": 0.02,
       "from": "2014-07-01",
       "source": "https://www.ato.gov.au/individuals-and-families/medicare-and-private-health-insurance/medicare-levy/what-is-the-medicare-levy",
       "checked": "2026-08-18",
-      "note": "Foreign residents do not pay it. A resident WHM does, unless a Medicare Entitlement Statement supports an exemption."
+      "note": "Two per cent of taxable income. The cited page states the rate and nothing else: the foreign resident exemption is claimed on the return as category 2 and lives under medicare-levy-exemption/foreign-residents-exemption-from-medicare-levy, and the entitlement statement route is on Services Australia. The 2014 start comes from Act No 43 of 2013 and is not on this page either."
     },
     "daspWhmRates": {
       "value": {
@@ -112,7 +112,7 @@
       "from": "2017-07-01",
       "source": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/temporary-residents-and-superannuation/departing-australia-superannuation-payment-dasp",
       "checked": "2026-08-18",
-      "note": "The ATO states the rule more broadly than a contribution-date test: having held a WHM visa at any time puts the entire payment at 65 per cent, including super earned while working under a different visa, with no apportionment. An associated bridging visa counts as a WHM visa. The dedicated tax-rates page for DASP is a 404; the table lives on the DASP topic page cited here. The 1 July 2017 start date is not stated on that page and remains unsourced."
+      "note": "A two-limb test, and the second limb matters. The rate applies where the person has ever held a 417 or 462 or an associated bridging visa AND the payment includes amounts attributable to contributions made while they held it. When held it does not matter; that the contributions fall in that period does. Someone who held a 417 years ago, accrued nothing then, and whose balance is all from a later visa pays the ordinary rates. Once triggered the rate applies to the entire payment with no apportionment. The dedicated tax-rates page for DASP is a 404; the table lives on the topic page cited here, and the 1 July 2017 start is s 5(3)(a) of the Superannuation (Departing Australia Superannuation Payments Tax) Act 2007."
     },
     "daspOtherTemporaryResidentRates": {
       "value": {
@@ -122,7 +122,8 @@
       },
       "from": "2017-07-01",
       "source": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/temporary-residents-and-superannuation/departing-australia-superannuation-payment-dasp",
-      "checked": "2026-08-18"
+      "checked": "2026-08-18",
+      "note": "The ATO calls this the ordinary rate. It is displaced entirely rather than blended the moment any working holiday period contribution is in the payment, so the rule name undersells how easily it stops applying. These percentages have been in s 5(1) since 2007, but s 6 raised them to 38 and 47 for the temporary budget repair levy years, which is why the start recorded here is 2017 rather than 2007. Separately, s 5(2) taxes an excess untaxed rollover amount at nil to avoid double taxation, which bites unclaimed super held by the ATO, exactly where a departed backpacker's money often sits."
     },
     "deductionSubstantiationThreshold": {
       "value": 300,
@@ -207,7 +208,7 @@
       "from": "2026-07-01",
       "source": "https://www.ato.gov.au/tax-rates-and-codes/tax-rates-australian-residents",
       "checked": "2026-08-18",
-      "note": "The legislated cut takes the second band to 15c. Unlike the working holiday table for the same year, these base amounts are published rather than derived. Excludes the Medicare levy."
+      "note": "The second band drops to 15c. Unlike the working holiday table for the same year these base amounts are published rather than derived. Excludes the Medicare levy."
     },
     "lowIncomeTaxOffset": {
       "value": {
@@ -234,7 +235,7 @@
       "to": "2026-06-30",
       "source": "https://www.ato.gov.au/individuals-and-families/medicare-and-private-health-insurance/medicare-levy/medicare-levy-reduction/medicare-levy-reduction-for-low-income-earners",
       "checked": "2026-08-18",
-      "note": "Single with no dependants and no seniors offset. Both comparisons are inclusive: no levy at or below the lower threshold, a reduction at or below the upper one, full two per cent only above it. The shade-in rate is not published anywhere on the ATO site, but the worked example on this page pins it exactly: a taxable income of 29,000 gives a levy of 98.90, which is ten cents in each dollar above 28,011. Thresholds are indexed annually and announced late; no 2026-27 table exists yet."
+      "note": "Single with no dependants and no seniors offset. Both comparisons are inclusive: no levy at or below the lower threshold, a reduction at or below the upper one, the full rate only above it. The shade-in rate is not on the ATO site but is stated in Medicare Levy Act 1986 s 7(2) as 10 per cent of the excess, and the worked example on this page pins it exactly, since 29,000 gives 98.90. These thresholds are indexed by an amending Act passed late and applied retrospectively; Act No 58 of 2026 enacted these figures on 30 June 2026 for 2025-26 and later years, so they are technically in force for 2026-27 as well. This pack does not use them for that year, because the indexation rise is legislated afterwards and pre-indexation figures would overstate someone's levy."
     },
     "partYearTaxFreeThreshold": {
       "value": {
@@ -245,7 +246,7 @@
       "from": "2012-07-01",
       "source": "https://www.ato.gov.au/individuals-and-families/coming-to-australia-or-going-overseas/coming-to-australia/tax-free-threshold-for-newcomers-to-australia",
       "checked": "2026-08-18",
-      "note": "Someone who becomes a resident partway through the year gets 13,464 plus 4,736 apportioned over the months they were a resident, counting the month of arrival in full and running to 30 June. Staying resident to year end does not avoid the apportionment. Whole calendar months, no day-level proration: 31 January and 1 January both count six months. The two components sum to 18,200. The page carries no effective date; 2012-07-01 is when the 18,200 threshold began. No rounding rule is published for the months that do not divide evenly."
+      "note": "Someone who becomes a resident partway through the year gets 13,464 plus 4,736 apportioned over the months they were a resident, counting the month of arrival in full and running to 30 June. Staying until 30 June does not avoid the apportionment. Whole calendar months, so 31 January and 1 January both count six. Income Tax Rates Act 1986 s 18(1) covers two shapes the ATO page does not: someone who ceases residency mid-year, and arrive-work-leave, where the period runs from the start of the arrival month to the end of the departure month. There is no apportionment at all where the period is the whole year. The formula is an exact fraction with no rounding, so an odd month count leaves cents. In statute only 4,736 and 18,200 are literals and 13,464 is the difference, so if the threshold ever moves the flat component goes stale silently. The page carries no effective date; 2012-07-01 is when the 18,200 threshold began."
     }
   }
 }

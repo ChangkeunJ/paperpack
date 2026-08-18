@@ -39,7 +39,7 @@
   "flag.medicare-exemption-claimed": "The levy is left out because you said you hold an entitlement statement.",
   "flag.no-tfn-withholding-is-recoverable": "Tax withheld at 45 per cent because no tax file number was given is not lost. Lodging is how you get it back.",
   "flag.resident-but-whm-rates-still-apply": "Answering that you were a resident does not change your rate. Working holiday rates apply regardless of residency unless you hold the passport of one of eight treaty countries.",
-  "flag.rhca-country-medicare-likely-payable": "Your country has a reciprocal health care agreement with Australia, so you can usually enrol in Medicare, and a resident who can enrol usually pays the levy.",
+  "flag.rhca-country-medicare-likely-payable": "Your country has a reciprocal health care agreement with Australia. Whether it actually covers you turns on health insurance or on where you lived before arriving, not on your passport, and if it covers you then a resident usually pays the levy. Italian and Maltese cover runs out after six months, which is shorter than the visa.",
   "fy.2025-26": "1 July 2025 to 30 June 2026",
   "fy.2026-27": "1 July 2026 to 30 June 2027",
   "help.daysInAustralia": "Being here more than half the year is one of the residency tests, but it is not the only one and it does not settle the question by itself.",

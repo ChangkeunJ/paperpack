@@ -16,7 +16,7 @@
       "from": "2021-11-03",
       "source": "https://www.ato.gov.au/individuals-and-families/coming-to-australia-or-going-overseas/coming-to-australia/taxation-of-australian-resident-whms-from-nda-countries",
       "checked": "2026-08-18",
-      "note": "Addy v Commissioner of Taxation [2021] HCA 34. Resident rates apply only when the person is BOTH an Australian tax resident AND a national of one of these. The seven-country list in wide circulation omits Israel. The United States, South Korea and Iceland are excluded; the Iceland treaty rules the WHM rate out expressly. Wider twelve-country lists published by law firms describe every Australian treaty carrying a non-discrimination article and are not accepted by the ATO for this purpose."
+      "note": "Addy v Commissioner of Taxation [2021] HCA 34. The ATO states three conditions, not two: a 417 or 462 visa, Australian residency for all or part of the year, and the nationality of one of these countries. Meeting them does not switch the person to resident rates; it entitles them to the lower of two assessments. The seven-country list in wide circulation omits Israel. Iceland is excluded expressly by its treaty, and the United States convention carries the article but was never incorporated into domestic law, so it creates no rights; South Korea is simply absent from the list. Wider twelve-country lists published by law firms describe every Australian treaty carrying a non-discrimination article and are not accepted by the ATO for this purpose."
     },
     "ndaCountryStartYears": {
       "value": {
@@ -42,17 +42,17 @@
         "SE",
         "GB"
       ],
-      "from": "2026-08-18",
+      "from": "2021-12-10",
       "source": "https://www.servicesaustralia.gov.au/when-reciprocal-health-care-agreements-apply-and-you-visit-australia",
       "checked": "2026-08-18",
-      "note": "Nationals of these countries can enrol in Medicare while on a WHM visa, so they generally cannot obtain a full Medicare Entitlement Statement and a resident among them pays the levy. Coverage differs by country and by period, so this is a starting point for a question, not a lookup answer."
+      "note": "Eleven countries have a reciprocal health care agreement with Australia. Nationality is not the test and this list is not a lookup answer: nine of the eleven key eligibility on health insurance or prior residence rather than citizenship, so a French national insured in Belgium is covered while a British national who flew in from somewhere else may not be. Italian and Maltese cover ends after six months, which is shorter than the visa, so those two can hold an entitlement statement for part of a year. What the list is good for is knowing when to ask. The cited page names the countries and nothing else; eligibility is on the eleven per-country pages and the entitlement statement consequence is at who-can-get-medicare-entitlement-statement."
     },
     "nonLodgementWageThreshold": {
       "value": 45001,
       "from": "2020-07-01",
       "source": "https://www.ato.gov.au/individuals-and-families/coming-to-australia-or-going-overseas/coming-to-australia/working-holiday-makers",
       "checked": "2026-08-18",
-      "note": "Below this, with all income earned as WHM salary or wages, neither a return nor a non-lodgment advice is required. Lodging is still the only way to recover over-withholding or claim deductions."
+      "note": "Below this, with all income earned as working holiday salary or wages, neither a return nor a non-lodgment advice is required. The comparison is strict, so 45,000 exactly is still exempt. The page does say a return is needed to claim any deductions. That lodging is also the only route to recovering over-withholding is true of the tax system but is not stated here."
     },
     "lodgementDueDate": {
       "value": {
@@ -60,16 +60,16 @@
         "day": 31
       },
       "from": "1997-07-01",
-      "source": "https://www.ato.gov.au/forms-and-instructions/non-lodgment-advice",
+      "source": "https://www.ato.gov.au/individuals-and-families/your-tax-return/how-to-lodge-your-tax-return/lodge-your-tax-return-from-outside-australia",
       "checked": "2026-08-18",
-      "note": "Self-lodgers. Engaging a registered tax agent before 31 October opens later concessional dates."
+      "note": "Self-lodgers. Engaging a registered tax agent can open a later date under their lodgment program, but it is not automatic and depends on when they are engaged. This page carries both halves and is where a departing working holiday maker is routed. Return due dates are set by an annual instrument under ITAA 1936 s 161 rather than fixed in the Act, so a single start date is the wrong shape for this value and the one recorded is unsourced."
     },
     "earlyLodgementProcessingDays": {
       "value": 50,
       "from": "2026-08-18",
       "source": "https://www.ato.gov.au/individuals-and-families/your-tax-return/how-to-lodge-your-tax-return/lodge-your-tax-return-before-leaving-australia",
       "checked": "2026-08-18",
-      "note": "Business days, paper return only, and unavailable to anyone holding a HELP, AASL or VET Student Loan debt or still earning Australian income. Keeping myGov access and lodging from overseas after 1 July is usually faster."
+      "note": "Business days, paper return only, and unavailable to anyone holding a HELP, AASL or VET Student Loan debt. Also unavailable to someone expecting Australian-sourced income after departure, other than interest, dividends and royalties, so a savings account or a few shares does not rule it out. Lodging from overseas with myTax after 1 July is usually faster, though that comparison rests on the myTax page's two-week figure rather than on this one. The page publishes no effective date."
     },
     "medicareEntitlementStatementWindow": {
       "value": {
@@ -82,7 +82,7 @@
       "from": "2026-08-18",
       "source": "https://www.servicesaustralia.gov.au/how-to-get-medicare-entitlement-statement",
       "checked": "2026-08-18",
-      "note": "Applications open 1 July. If you are leaving Australia you can apply up to four weeks before your departure date and it is processed after you leave. Services Australia publishes no processing time; an earlier eight-week figure here came from no source and was removed."
+      "note": "Applications open 1 July. Someone leaving Australia can apply for the current year up to four weeks before departure, which is a cut-off and not a start, and it is processed after they leave. The same page contradicts itself further down: its online application section says you can apply only for the previous financial year, even if you plan to leave. Treat the departing route as something to confirm with Services Australia. Services Australia publishes no processing time on any of the three statement pages; an earlier eight-week figure here came from no source and was removed."
     }
   }
 }
