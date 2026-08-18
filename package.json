@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "check": "node scripts/check.mjs",
-    "test": "tsc && node --test dist/ scripts/"
+    "test": "tsc && node --test $(find dist scripts -name '*.test.*js')"
   },
   "engines": {
     "node": ">=20"
