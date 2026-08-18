@@ -11,6 +11,63 @@ escalate. Rung 1 is the primary page directly, rung 2 the `r.jina.ai` text proxy
 same URL (still the source's own content), rung 3 the Wayback Machine, rung 4 a reputable
 secondary source. A value only counts as confirmed at rung 1 or 2.
 
+## 2026-08-18, departing super pass
+
+A single area, read once and then handed to a second person told to break the verdict.
+Everything the calculator already encoded held at rung 1, in the Acts themselves rather
+than on any ATO page. **One condition was wrong**, and it was wrong in the direction of
+promising money that would not arrive.
+
+### The visa test was taken from the wrong document
+
+The 65 per cent rate applies where the payment includes contributions made while the
+person was "a working holiday maker (within the meaning of the Income Tax Rates Act
+1986)". The pack described that as a 417, a 462 or an associated bridging visa, which is
+the ATO's summary. Income Tax Rates Act s 3A(1) has four limbs, and the summary drops two
+of them.
+
+The one that matters is paragraph (d), the COVID-19 pandemic event 408 visa. Large numbers
+of 417 and 462 holders were moved onto it in 2020 and 2021, and super paid in during that
+time puts the entire payment at 65 per cent. Someone answering honestly under the old
+wording would have been told 35 per cent, a thirty point error on the number they came
+for, and their super is exactly the kind that has since been transferred to the ATO.
+
+The other is the bridging visa limb, which the ATO states backwards. Its version looks at
+what was granted next; the Act asks whether the bridging visa allowed work and whether the
+417 or 462 application it was granted on is still undecided. A bridging visa on an
+application later refused satisfies the Act and fails the ATO wording.
+
+Paragraph (d) came from the Corporate Collective Investment Vehicle Framework and Other
+Measures Act 2022, Sch 8 Pt 1 items 17 and 18, and applies from the 2019-20 income year
+for non-residents. The definition is now a rule of its own, cited on every super estimate.
+
+### What held
+
+The rates: nil on the tax-free component, 35 and 45 per cent ordinary, 65 per cent on both
+taxable elements for a working holiday maker, from a payment made on or after 1 July 2017.
+Confirmed on the face of DASP Tax Act s 5, with the 95 to 65 change traced to its amending
+Act rather than inferred from a compilation date. The whole-payment rule holds too: s 5(3)
+switches the percentages for the payment, not for a slice, so there is no apportioning.
+
+### What the six month rule actually is
+
+Six months is not a transfer date. It is the point at which s 20AA(1)(b) of the Unclaimed
+Money and Lost Members Act makes someone a former temporary resident, measured from the
+later of the visa ceasing and the departure rather than from either alone. The money moves
+at the next scheduled statement day after the ATO notifies the fund, and those days are 30
+April and 31 October, so the real lag runs from six months to over a year. Nothing is lost
+when it moves: the components are rebuilt from what the fund reported, the working holiday
+rate follows, and there is no deadline to claim.
+
+### Deliberately not encoded
+
+The Home Affairs certification of immigration status fee and any fund paper-application
+fee: both are confirmed to exist and neither publishes an amount. The nil rate in DASP Tax
+Act s 5(2) is unreachable by a working holiday maker, since it needs a rollover into a
+fund, which is open only to citizens and permanent residents, and only bites above an
+indexed cap over a million dollars. That the payment summary itemises the component split
+is not established; the statute requires only the gross and the tax withheld.
+
 ## 2026-08-18, third pass
 
 All 22 rules, grouped into seven areas, each read once and then handed to a second person
