@@ -23,7 +23,8 @@ export function nextUnanswered<A extends Answers>(
   questions: readonly Question<A>[],
   answers: Partial<A>,
 ): Question<A> | undefined {
-  // A blank string is not an answer, but false and zero are.
+  // A blank string is not an answer, but false and zero are. This also means an
+  // Option must never use '' as its value: use an explicit token like 'none'.
   return visibleQuestions(questions, answers).find(q => {
     const v = answers[q.id]
     return v === undefined || (typeof v === 'string' && v.trim() === '')
