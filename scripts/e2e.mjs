@@ -25,6 +25,8 @@ const base = `http://127.0.0.1:${server.address().port}`
 
 const browser = await chromium.launch()
 const page = await browser.newPage({ viewport: { width: 1000, height: 1400 } })
+const requests = []
+page.on('request', r => requests.push(r))
 const errors = []
 page.on('pageerror', e => errors.push(String(e)))
 page.on('console', m => m.type() === 'error' && errors.push(m.text()))
@@ -149,6 +151,17 @@ await page.waitForSelector('fieldset')
 assert.equal(await bodyBg(), darkBg, 'stored dark must survive a reload on a light system')
 
 assert.deepEqual(errors, [], 'the page logged errors')
+
+// The privacy promise is measured, not assumed: every request the page ever makes,
+// across the whole session above, is a bodyless same-host GET with no query string.
+// Analytics, error reporting, or a form submission added anywhere would fail here.
+assert.ok(requests.length > 0)
+for (const r of requests) {
+  assert.equal(r.method(), 'GET', `non-GET request: ${r.method()} ${r.url()}`)
+  assert.ok(!r.postData(), `request with a body: ${r.url()}`)
+  assert.ok(r.url().startsWith(`${base}/`), `request left the host: ${r.url()}`)
+  assert.equal(new URL(r.url()).search, '', `query string on a request: ${r.url()}`)
+}
 await browser.close()
 server.close()
 console.log(`e2e ok${shot ? ` (screenshot: ${shot})` : ''}`)
