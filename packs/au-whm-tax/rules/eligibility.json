@@ -1,5 +1,4 @@
 {
-  "$schema": "../../../schemas/rules.schema.json",
   "jurisdiction": "AU",
   "rules": {
     "ndaCountries": {
