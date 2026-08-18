@@ -5,14 +5,15 @@ import type { DaspAnswers } from './dasp.js'
 /**
  * Countries that change the answer (non-discrimination article or reciprocal health
  * care agreement), plus the largest source countries by visa holders. Anything else
- * is OTHER, which behaves the same as any non-listed nationality.
+ * is OTHER, which behaves the same as any non-listed nationality. The treaty row
+ * comes from the rule data so the two lists cannot drift apart.
  */
-export const NATIONALITIES = [
-  'GB', 'DE', 'FI', 'CL', 'JP', 'NO', 'TR', 'IL',
+export const NATIONALITIES: readonly string[] = [
+  ...NDA_COUNTRIES,
   'BE', 'IT', 'MT', 'NL', 'NZ', 'IE', 'SI', 'SE',
   'FR', 'TW', 'KR', 'ID', 'AR', 'TH', 'VN', 'ES', 'US', 'CN',
   'OTHER',
-] as const
+]
 
 type A = WhmAnswers & { daysInAustralia: number; maintainedHomeOverseas: boolean }
 
@@ -34,7 +35,7 @@ export const questions: readonly Question<A>[] = [
     options: NATIONALITIES.map(value => ({ value, labelKey: `country.${value}` })),
   },
   { id: 'daysInAustralia', type: 'number', promptKey: 'q.daysInAustralia', helpKey: 'help.daysInAustralia' },
-  { id: 'maintainedHomeOverseas', type: 'boolean', promptKey: 'q.maintainedHomeOverseas' },
+  { id: 'maintainedHomeOverseas', type: 'boolean', promptKey: 'q.maintainedHomeOverseas', helpKey: 'help.maintainedHomeOverseas' },
   {
     id: 'isAustralianTaxResident',
     type: 'boolean',

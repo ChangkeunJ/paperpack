@@ -72,7 +72,6 @@
   "rule.daspWhmRates": "출국 시 퇴직연금 환급, 워킹홀리데이 세율",
   "rule.deductionSubstantiationThreshold": "업무 지출에 증빙이 필요해지는 기준",
   "rule.earlyLodgementProcessingDays": "조기 신고 처리 기간",
-  "rule.foreignResidentBands2025_26": "외국인 거주자 세율 (고용주 미등록 시 적용)",
   "rule.lodgementDueDate": "신고 기한",
   "rule.medicareEntitlementStatementWindow": "Medicare Entitlement Statement 신청 가능 시기",
   "rule.medicareLevyRate": "메디케어 부담금 요율",
@@ -141,5 +140,6 @@
   "ui.yes": "예",
   "ui.no": "아니요",
   "ui.sourceChecked": "확인일 {date}",
-  "locale.name": "한국어"
+  "locale.name": "한국어",
+  "help.maintainedHomeOverseas": "체류 일수와 마찬가지로 이 답은 여기 계산되는 금액을 바꾸지 않습니다. 아래 거주자 판정 질문을 돕기 위한 것으로, 돌아갈 집을 유지하고 있다면 호주 거주자가 아닐 가능성이 높고, 대부분의 워킹홀리데이 메이커는 거주자가 아닙니다."
 }

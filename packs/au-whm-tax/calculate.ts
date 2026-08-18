@@ -157,7 +157,7 @@ export function estimate(a: WhmAnswers): WhmEstimate {
   if (!substantiation) {
     flags.push('every-deduction-needs-written-evidence')
   } else if (deductions > (rates.rules[substantiation].value as number)) {
-    used.push(substantiation)
+    used.push(substantiation, 'laundryWrittenEvidenceThreshold', 'laundryPerLoadRates')
     flags.push('deductions-need-written-evidence')
   }
 
@@ -183,7 +183,7 @@ export function estimate(a: WhmAnswers): WhmEstimate {
     // carry someone under it.
     const threshold = eligibility.rules.nonLodgementWageThreshold.value as number
     if (grossIncome < threshold && taxWithheld > side.total) {
-      used.push('nonLodgementWageThreshold')
+      used.push('nonLodgementWageThreshold', 'lodgementDueDate', 'earlyLodgementProcessingDays')
       flags.push('lodging-is-optional-but-refund-needs-a-return')
     }
     return {
@@ -211,6 +211,7 @@ export function estimate(a: WhmAnswers): WhmEstimate {
   used.push('medicareLevyRate')
   let medicareLevy = 0
   if (a.hasMedicareEntitlementStatement) {
+    used.push('medicareEntitlementStatementWindow')
     flags.push('medicare-exemption-claimed')
   } else {
     const thresholds = medicareThresholdRule[a.financialYear]
@@ -236,6 +237,7 @@ export function estimate(a: WhmAnswers): WhmEstimate {
       used.push('rhcaCountries')
       flags.push('rhca-country-medicare-likely-payable')
     } else {
+      used.push('medicareEntitlementStatementWindow')
       flags.push('medicare-entitlement-statement-may-be-available')
     }
   }
@@ -253,7 +255,7 @@ export function estimate(a: WhmAnswers): WhmEstimate {
   // Addy v Commissioner of Taxation [2021] HCA 34. The treaty does not switch someone to
   // resident rates; it entitles them to whichever of the two assessments costs less.
   const months = Number.isFinite(a.residentMonths) ? (a.residentMonths as number) : partYear.monthsInYear
-  used.push('ndaCountries', residentBandRule[a.financialYear])
+  used.push('ndaCountries', 'ndaCountryStartYears', residentBandRule[a.financialYear])
   if (months < partYear.monthsInYear) {
     used.push('partYearTaxFreeThreshold')
     flags.push('part-year-threshold-applied')

@@ -67,6 +67,20 @@ test('every rule that can be cited has a readable label', async () => {
   }
 })
 
+// A rule nobody can cite is dead data: its note never reaches a user and nothing
+// notices when it rots. Every rule name has to appear in a calculation somewhere.
+test('every rule is reachable by some code path', async () => {
+  const { readFile } = await import('node:fs/promises')
+  const rates = (await import('./rules/rates.json', { with: { type: 'json' } })).default
+  const eligibility = (await import('./rules/eligibility.json', { with: { type: 'json' } })).default
+  const code = (
+    await Promise.all(['calculate.js', 'dasp.js'].map(f => readFile(new URL(f, import.meta.url), 'utf8')))
+  ).join('')
+  for (const name of [...Object.keys(rates.rules), ...Object.keys(eligibility.rules)]) {
+    assert.ok(code.includes(name), `${name} is cited nowhere`)
+  }
+})
+
 test('every flag the super calculator can raise has a message', () => {
   const base: DaspAnswers = {
     superBalance: 6000, taxFreeComponent: 0, untaxedElement: 0,

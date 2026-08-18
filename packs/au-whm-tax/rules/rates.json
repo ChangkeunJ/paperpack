@@ -57,30 +57,6 @@
       "checked": "2026-08-18",
       "note": "Rates and ceilings confirmed against the 2026-27 withholding schedule. The four base amounts are derived rather than published: Schedule 15 gives coefficients and no dollar base, and the ATO assessment page still stops at 2025-26. Schedule 15 is a withholding instrument and the ATO overwrites this URL in place each 1 July, so the citation stops evidencing 2026-27 on 1 July 2027. Re-check the assessment page around June 2027, which is when the base amounts should become publishable."
     },
-    "foreignResidentBands2025_26": {
-      "value": [
-        {
-          "upTo": 135000,
-          "rate": 0.3,
-          "base": 0
-        },
-        {
-          "upTo": 190000,
-          "rate": 0.37,
-          "base": 40500
-        },
-        {
-          "upTo": null,
-          "rate": 0.45,
-          "base": 60850
-        }
-      ],
-      "from": "2025-07-01",
-      "to": "2026-06-30",
-      "source": "https://www.ato.gov.au/tax-rates-and-codes/tax-rates-foreign-residents",
-      "checked": "2026-08-18",
-      "note": "Annual assessment rates for someone who was a foreign resident for the whole year. No tax-free threshold, since the first band charges 30c from the first dollar, and no Medicare levy. An employer not registered to withhold at working holiday rates withholds at foreign resident rates instead, but that rule and its periodic tables live in Schedule 15 rather than on this page."
-    },
     "noTfnWithholdingRate": {
       "value": 0.45,
       "from": "2024-07-01",

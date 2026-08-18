@@ -72,7 +72,6 @@
   "rule.daspWhmRates": "Departing Australia superannuation payment, working holiday rates",
   "rule.deductionSubstantiationThreshold": "When work expenses need written evidence",
   "rule.earlyLodgementProcessingDays": "Early lodgement processing time",
-  "rule.foreignResidentBands2025_26": "Foreign resident tax rates, used when the employer is not registered",
   "rule.lodgementDueDate": "Lodgement due date",
   "rule.medicareEntitlementStatementWindow": "When you can apply for a Medicare Entitlement Statement",
   "rule.medicareLevyRate": "Medicare levy rate",
@@ -141,5 +140,6 @@
   "ui.yes": "Yes",
   "ui.no": "No",
   "ui.sourceChecked": "checked {date}",
-  "locale.name": "English"
+  "locale.name": "English",
+  "help.maintainedHomeOverseas": "Like the day count, this does not change any figure here. It feeds the residency question below: keeping a home ready to return to points away from Australian residency, and most working holiday makers are not residents."
 }
