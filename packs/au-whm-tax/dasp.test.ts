@@ -90,3 +90,22 @@ test('the transfer and the return are explained on every path', () => {
     assert.ok(cited.includes('unclaimedSuperTransfer'))
   }
 })
+
+test('components beyond the balance are capped, never taxed as extra dollars', () => {
+  const r = at({ superBalance: 1000, taxFreeComponent: 0, untaxedElement: 2000 })
+  assert.equal(r.untaxedElement, 1000)
+  assert.equal(r.tax, 650)
+  assert.equal(r.net, 350)
+  assert.ok(r.flags.includes('components-add-up-to-more-than-the-balance'))
+})
+
+test('a negative balance produces zeroes, not a complaint about components', () => {
+  const r = at({ superBalance: -100 })
+  assert.equal(r.tax, 0)
+  assert.equal(r.net, 0)
+  assert.ok(!r.flags.includes('components-add-up-to-more-than-the-balance'))
+})
+
+test('the return treatment is cited, not just asserted', () => {
+  assert.ok(at({}).citations.some(c => c.rule === 'daspNotAssessable'))
+})

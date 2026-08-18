@@ -49,11 +49,16 @@ export function estimateDasp(a: DaspAnswers): DaspEstimate {
   const rule = whm ? 'daspWhmRates' : 'daspOtherTemporaryResidentRates'
   const rate = rates.rules[rule].value
 
-  const taxFreeComponent = Math.max(0, a.taxFreeComponent)
-  const untaxedElement = Math.max(0, a.untaxedElement)
-  const named = taxFreeComponent + untaxedElement
-  if (named > a.superBalance) flags.push('components-add-up-to-more-than-the-balance')
-  const taxedElement = Math.max(0, a.superBalance - named)
+  // Answers arrive from a form. Negatives are typos, and components beyond the balance
+  // are capped so tax is only ever worked out on dollars that exist: the flag says the
+  // figures need checking, but what reaches you can never be shown as less than zero.
+  const balance = Math.max(0, a.superBalance)
+  const taxFreeComponent = Math.min(Math.max(0, a.taxFreeComponent), balance)
+  const untaxedElement = Math.min(Math.max(0, a.untaxedElement), balance - taxFreeComponent)
+  if (Math.max(0, a.taxFreeComponent) + Math.max(0, a.untaxedElement) > balance) {
+    flags.push('components-add-up-to-more-than-the-balance')
+  }
+  const taxedElement = balance - taxFreeComponent - untaxedElement
 
   const tax =
     taxFreeComponent * rate.taxFreeComponent +
@@ -78,9 +83,9 @@ export function estimateDasp(a: DaspAnswers): DaspEstimate {
     taxedElement,
     untaxedElement,
     tax,
-    net: Math.max(0, a.superBalance) - tax,
+    net: balance - tax,
     claimable,
     flags,
-    citations: cite([rule, 'workingHolidayMakerVisas', 'unclaimedSuperTransfer', 'daspProcessingDays']),
+    citations: cite([rule, 'workingHolidayMakerVisas', 'daspNotAssessable', 'unclaimedSuperTransfer', 'daspProcessingDays']),
   }
 }

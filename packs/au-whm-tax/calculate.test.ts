@@ -254,3 +254,31 @@ test('no rule is cited twice', () => {
     assert.deepEqual([...new Set(cited)], cited, JSON.stringify(answers))
   }
 })
+
+// Every answer that carries money is floored at zero: a typo must never improve the
+// outcome, and the non-lodgement exemption is a test on wages rather than on what is
+// left after deductions.
+test('a negative deduction or credit is treated as zero', () => {
+  const r = at({ workRelatedDeductions: -500 })
+  assert.equal(r.taxableIncome, 30000)
+  assert.equal(r.taxPayable, 4500)
+  assert.equal(at({ taxWithheld: -100 }).credit, 0)
+})
+
+test('deductions cannot carry wages under the lodgement threshold', () => {
+  const r = at({ grossIncome: 46000, workRelatedDeductions: 2000, taxWithheld: 13800 })
+  assert.ok(!r.flags.includes('lodging-is-optional-but-refund-needs-a-return'))
+  const under = at({ grossIncome: 45000, taxWithheld: 13500 })
+  assert.ok(under.flags.includes('lodging-is-optional-but-refund-needs-a-return'))
+})
+
+test('a non-finite residentMonths falls back to the full year', () => {
+  const full = at({ nationality: 'GB', isAustralianTaxResident: true })
+  const r = at({ nationality: 'GB', isAustralianTaxResident: true, residentMonths: NaN })
+  assert.equal(r.totalLiability, full.totalLiability)
+  assert.equal(r.comparison?.applied, 'resident')
+})
+
+test('a year with no rate table is refused loudly', () => {
+  assert.throws(() => at({ financialYear: '2027-28' as never }), /no rates for 2027-28/)
+})

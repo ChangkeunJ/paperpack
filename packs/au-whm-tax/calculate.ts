@@ -136,15 +136,23 @@ function assess(
 }
 
 export function estimate(a: WhmAnswers): WhmEstimate {
+  const whmRule = whmBandRule[a.financialYear]
+  if (!whmRule) throw new Error(`no rates for ${a.financialYear}`)
+
+  // Answers arrive from a form. A stray minus sign must not shrink the bill or grow
+  // the refund, so money answers are floored at zero before anything is worked out.
+  const grossIncome = Math.max(0, a.grossIncome)
+  const taxWithheld = Math.max(0, a.taxWithheld)
+
   const flags: string[] = []
-  const used: string[] = [whmBandRule[a.financialYear]]
+  const used: string[] = [whmRule]
 
   if (!a.providedTfn) {
     used.push('noTfnWithholdingRate')
     flags.push('no-tfn-withholding-is-recoverable')
   }
 
-  let deductions = a.workRelatedDeductions
+  let deductions = Math.max(0, a.workRelatedDeductions)
   const substantiation = substantiationRule[a.financialYear]
   if (!substantiation) {
     flags.push('every-deduction-needs-written-evidence')
@@ -157,22 +165,24 @@ export function estimate(a: WhmAnswers): WhmEstimate {
   const standard = standardDeductionRule[a.financialYear]
   if (standard && a.isAustralianTaxResident) {
     used.push(standard)
-    const floor = Math.min(rates.rules[standard].value.max, a.grossIncome)
+    const floor = Math.min(rates.rules[standard].value.max, grossIncome)
     if (floor > deductions) {
       deductions = floor
       flags.push('standard-deduction-applied')
     }
   }
 
-  const taxableIncome = Math.max(0, a.grossIncome - deductions)
+  const taxableIncome = Math.max(0, grossIncome - deductions)
 
   const finish = (
     basis: WhmEstimate['basis'],
     side: Assessment,
     comparison?: WhmEstimate['comparison'],
   ): WhmEstimate => {
+    // The exemption is a test on wages, not on taxable income: deductions cannot
+    // carry someone under it.
     const threshold = eligibility.rules.nonLodgementWageThreshold.value as number
-    if (taxableIncome < threshold && a.taxWithheld > side.total) {
+    if (grossIncome < threshold && taxWithheld > side.total) {
       used.push('nonLodgementWageThreshold')
       flags.push('lodging-is-optional-but-refund-needs-a-return')
     }
@@ -183,15 +193,15 @@ export function estimate(a: WhmAnswers): WhmEstimate {
       lowIncomeTaxOffset: side.lowIncomeTaxOffset,
       medicareLevy: side.medicareLevy,
       totalLiability: side.total,
-      credit: a.taxWithheld,
-      balance: a.taxWithheld - side.total,
+      credit: taxWithheld,
+      balance: taxWithheld - side.total,
       ...(comparison ? { comparison } : {}),
       flags,
       citations: cite(used),
     }
   }
 
-  const whmBands = rates.rules[whmBandRule[a.financialYear]].value
+  const whmBands = rates.rules[whmRule].value
 
   // A foreign resident pays no levy and reaches no offset, so nothing below applies.
   if (!a.isAustralianTaxResident) {
@@ -212,7 +222,7 @@ export function estimate(a: WhmAnswers): WhmEstimate {
         lowIncomeTaxOffset: 0,
         medicareLevy: 0,
         totalLiability: 0,
-        credit: a.taxWithheld,
+        credit: taxWithheld,
         balance: 0,
         flags: [...flags, 'medicare-thresholds-not-published-for-this-year'],
         citations: cite(used),
@@ -242,7 +252,7 @@ export function estimate(a: WhmAnswers): WhmEstimate {
 
   // Addy v Commissioner of Taxation [2021] HCA 34. The treaty does not switch someone to
   // resident rates; it entitles them to whichever of the two assessments costs less.
-  const months = a.residentMonths ?? partYear.monthsInYear
+  const months = Number.isFinite(a.residentMonths) ? (a.residentMonths as number) : partYear.monthsInYear
   used.push('ndaCountries', residentBandRule[a.financialYear])
   if (months < partYear.monthsInYear) {
     used.push('partYearTaxFreeThreshold')

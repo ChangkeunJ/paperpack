@@ -279,7 +279,7 @@
         ]
       },
       "from": "2009-06-15",
-      "source": "https://www.legislation.gov.au/C2004A00518/latest/latest/text/original/epub/OEBPS/document_1/document_1.html",
+      "source": "https://www.legislation.gov.au/C2004A00518/latest/text",
       "checked": "2026-08-18",
       "note": "Six months from the later of the visa ceasing and the departure, not from either one alone, and it is a definition rather than a deadline: it is when s 20AA(1)(b) of the Unclaimed Money and Lost Members Act makes someone a former temporary resident, which obliges the Commissioner to notify the fund under s 20C. The money itself moves on the next scheduled statement day after that notice, or the one after if the notice came within 28 days of it. Those days are 30 April and 31 October, set by TPAL 2007/2 under s 20B, so the real lag after departure is anywhere from six months to over a year. The ATO summarises all of this as six months. Nothing is lost when it moves: s 307-142 and s 307-300 rebuild the component split from what the fund reported, the working holiday rate still applies, and there is no deadline to claim."
     },
@@ -301,6 +301,15 @@
       "source": "https://www.legislation.gov.au/C2004A03348/latest/text",
       "checked": "2026-08-18",
       "note": "Income Tax Rates Act 1986 s 3A(1), which is the definition the DASP rate provision points at. Two of the four limbs go missing when this is taken from the ATO summary instead. The pandemic event 408 visa is one of them, and it is not a curiosity: large numbers of 417 and 462 holders were moved onto it in 2020 and 2021, and super paid in during that time puts the whole payment at 65 per cent. The ATO also states the bridging visa limb backwards, as one issued immediately after a 417 or 462 with none or a second one after it. The Act asks instead whether the bridging visa allows work and whether the 417 or 462 application it was granted on is still undecided, so a bridging visa on an application later refused counts and the ATO wording misses it. Paragraph (d) came from the Corporate Collective Investment Vehicle Framework and Other Measures Act 2022, Sch 8 Pt 1 items 17 and 18, applying from the 2019-20 income year for non-residents, which is the start recorded here; the other three limbs are older."
+    },
+    "daspNotAssessable": {
+      "value": {
+        "assessableOnReturn": false
+      },
+      "from": "2026-08-18",
+      "source": "https://www.legislation.gov.au/C2004A05138/latest/latest/text/original/epub/OEBPS/document_6/document_6.html",
+      "checked": "2026-08-18",
+      "note": "ITAA 1997 s 301-175: the payment is not assessable income and not exempt income, so it goes nowhere on a tax return and cannot push other income into a higher bracket. The tax is withheld by the payer under TAA 1953 Sch 1 s 12-305 before anything is paid out. The section was read in the compilation in force on 1 July 2026, in volume 6 of the twelve the Act is split into; its own start date was not traced, so the date recorded here is when it was read, not when it began."
     }
   }
 }
