@@ -1,3 +1,5 @@
+English | [한국어](README.ko.md) | [简体中文](README.zh.md) | [繁體中文](README.zh-Hant.md) | [日本語](README.ja.md) | [Tiếng Việt](README.vi.md) | [Français](README.fr.md) | [Español](README.es.md)
+
 # paperpack
 
 Answer a set of questions, get the worked-out figures back with the source for every

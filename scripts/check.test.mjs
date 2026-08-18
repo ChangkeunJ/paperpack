@@ -111,6 +111,13 @@ test('escaped Korean is still Korean', () => {
   assert.ok(run('j.ts', 'const re = new RegExp("[\\\\u3131-\\\\u318E]")\n').ok, 'an escaped backslash is not Korean')
 })
 
+test('a readme may name the Korean translation and nothing more', () => {
+  assert.ok(run('README.ko.md', `# paperpack\n\n${HELLO} ${KOREAN}\n`).ok, 'the Korean readme is a translation file')
+  assert.ok(run('README.md', `English | [${KOREAN}](README.ko.md)\n`).ok, 'the switcher may name the language')
+  assert.ok(!run('README.md', `${HELLO}\n`).ok, 'anything beyond the name is still Korean')
+  assert.ok(!run('docs/notes.md', `[${KOREAN}](README.ko.md)\n`).ok, 'the allowance is readmes only')
+})
+
 test('the Korean exemption is only the pack translation file', () => {
   assert.ok(!run('web/i18n/ko.json', `{"hello":"${HELLO}"}\n`).ok)
 })

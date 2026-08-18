@@ -19,7 +19,11 @@ const AI_TELLS = [
 const CLICHES = /\b(seamlessly|effortlessly|delve into|robust and scalable|comprehensive solution|leverage the power|perfect for anyone|it'?s worth noting that|this ensures that)\b/i
 
 const HANGUL = new RegExp('[\\u3131-\\u318E\\uAC00-\\uD7A3]')
-const KO_EXEMPT = /^(dist\/)?packs\/[^/]+\/i18n\/ko\.json$/
+const KO_EXEMPT = /^(dist\/)?packs\/[^/]+\/i18n\/ko\.json$|^README\.ko\.md$/
+// A readme language switcher may name the Korean translation in Korean, and that
+// exact word is all it may say. Built from code points so this file passes itself.
+const KOREAN_NAME = String.fromCodePoint(0xd55c, 0xad6d, 0xc5b4)
+const README = /^README(\.[A-Za-z-]+)?\.md$/
 
 // Korean smuggled in as escapes or entities is still Korean on screen.
 const cp = h => { const n = parseInt(h, 16); return n <= 0x10ffff ? String.fromCodePoint(n) : '' }
@@ -74,7 +78,8 @@ for (const file of files) {
       fail(file, `line ${i + 1}: LLM cliche — ${line.trim().slice(0, 60)}`)
     }
     // Korean belongs only in translation files.
-    if (HANGUL.test(decodeEscapes(line)) && !KO_EXEMPT.test(file)) {
+    const decoded = README.test(file) ? decodeEscapes(line).replaceAll(KOREAN_NAME, '') : decodeEscapes(line)
+    if (HANGUL.test(decoded) && !KO_EXEMPT.test(file)) {
       fail(file, `line ${i + 1}: Korean text outside packs/*/i18n/ko.json`)
     }
   }
