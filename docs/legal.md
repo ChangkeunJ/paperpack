@@ -40,8 +40,8 @@ was reasonable. The architecture is the defence; the declaration is a footnote t
   `scripts/check.mjs` fails the build if revenue wording appears under `packs/au-whm-tax/`.
 - Results are labelled estimates and the sources panel stays hidden until the user
   explicitly acknowledges that they have checked the figures against their own records.
-- The declaration appears on the result screen, in this repository, and on anything
-  exported.
+- The declaration appears on the result screen and in this repository. Nothing is
+  exported yet; if an export path is ever added, it carries the declaration too.
 - Rates live in versioned data with an effective date and a source URL, so "the tool
   applied published rates" is a checkable statement rather than a claim.
 - Issues and discussions get general answers only. Questions about an individual's

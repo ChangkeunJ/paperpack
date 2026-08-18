@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+exec node scripts/check.mjs $(git diff --cached --name-only --diff-filter=ACM)

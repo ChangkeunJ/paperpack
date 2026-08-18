@@ -3,6 +3,8 @@ on:
   push:
     branches: [main]
   pull_request:
+  schedule:
+    - cron: '17 3 3 * *'
 
 permissions:
   contents: read
@@ -15,6 +17,8 @@ jobs:
         node: [20, 24]
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 20
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
@@ -22,4 +26,47 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: node scripts/check.mjs
+      - name: no attribution trailers in commit messages
+        run: |
+          if git log -20 --format=%B | grep -iE 'co-authored-by:.*claude|generated with .*claude'; then
+            echo 'attribution trailer in a commit message' >&2
+            exit 1
+          fi
       - run: pnpm test
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm e2e
+
+  # Australian rates change on 1 July. Once the recorded check dates fall behind the
+  # most recent 1 July, this starts failing until someone re-verifies the sources.
+  stale-rules:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: |
+          node -e '
+            const { readFileSync } = require("node:fs")
+            const { execSync } = require("node:child_process")
+            const now = new Date()
+            const y = now.getUTCMonth() >= 6 ? now.getUTCFullYear() : now.getUTCFullYear() - 1
+            const cutoff = `${y}-07-01`
+            const stale = []
+            for (const f of execSync("git ls-files packs/*/rules/*.json", { encoding: "utf8" }).trim().split("\n")) {
+              for (const [name, rule] of Object.entries(JSON.parse(readFileSync(f, "utf8")).rules)) {
+                if (rule.checked < cutoff) stale.push(`${f}: ${name} last checked ${rule.checked}`)
+              }
+            }
+            if (stale.length) { console.error(stale.join("\n")); process.exit(1) }
+            console.log(`all rules checked on or after ${cutoff}`)
+          '

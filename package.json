@@ -1,16 +1,18 @@
 {
   "name": "paperpack",
   "version": "0.0.0",
-  "description": "Answer a set of questions, get the filled documents back",
+  "description": "Answer a set of questions, get the worked-out figures back with their sources",
   "license": "MIT",
   "type": "module",
   "scripts": {
     "build": "tsc",
     "check": "node scripts/check.mjs",
+    "e2e": "tsc && node scripts/e2e.mjs",
+    "prepare": "git config core.hooksPath .githooks || true",
     "test": "tsc && node --test $(find dist scripts -name '*.test.*js')"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=20.10"
   },
   "devDependencies": {
     "@types/node": "^26.2.0",

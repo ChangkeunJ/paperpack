@@ -1,6 +1,7 @@
 # paperpack
 
-Answer a set of questions, get the filled paperwork back. Runs entirely in the browser.
+Answer a set of questions, get the worked-out figures back with the source for every
+one of them. Runs entirely in the browser.
 
 ![The working holiday tax pack, filled in](docs/screenshot.png)
 
@@ -65,31 +66,36 @@ without provenance:
 ```json
 "noTfnWithholdingRate": {
   "value": 0.45,
-  "from": "2025-07-01",
+  "from": "2024-07-01",
   "source": "https://www.ato.gov.au/tax-rates-and-codes/schedule-15-tax-table-for-working-holiday-makers",
   "checked": "2026-08-18",
-  "note": "45 per cent, not 47. The extra 2 per cent Medicare component belongs to the resident no-TFN rate and WHMs sit outside it."
+  "note": "45 per cent, not 47. The published 47 per cent applies to a resident payee; Schedule 15 sets a flat 45 per cent for working holiday makers with no residency test."
 }
 ```
 
-`scripts/check.mjs` rejects any rule missing `value`, `from`, `source` or `checked`, and
-the test suite asserts that each band table's base amounts agree with the table below
+`scripts/check.mjs` rejects any rule missing `value`, `from`, `source` or `checked`,
+rejects regulatory data parked outside the `rules` key, and the test suite asserts that each band table's base amounts agree with the table below
 them, which is how a mistyped rate gets caught before anyone sees a wrong number.
 
-Australian tax rates change on 1 July. Re-check the sources before then.
+Where a page publishes no effective date, `from` records the day the value was first
+read, and the rule's note says so.
+
+Australian tax rates change on 1 July. Re-check the sources before then; a monthly CI
+job starts failing when the recorded check dates fall behind the most recent 1 July.
 
 ## Adding a language
 
-Copy `packs/au-whm-tax/i18n/en.json`, translate the values, keep the keys. The tests
-fail if a key is missing, empty, or if the calculator can raise a message the
-translation does not carry. Tax wording is easy to get wrong in translation, so keep
-the source link visible next to anything you translate.
+Copy `packs/au-whm-tax/i18n/en.json`, translate the values, keep the keys, then register
+the locale in `web/index.html` (the `dicts` map and a button). The tests pick up every
+file in `i18n/` and fail if a key is missing or empty. Tax wording is easy to get wrong
+in translation, so keep the source link visible next to anything you translate.
 
 ## Adding a pack
 
 A pack is an interview (`interview.ts`), one or more calculations (`calculate.ts`,
 `dasp.ts`), rule data with sources (`rules/*.json`) and strings (`i18n/*.json`). The
-engine in `src/` has no knowledge of Australia or of tax.
+engine in `src/` is a question evaluator and a band-table calculator; nothing in it is
+specific to Australia.
 
 ## License
 

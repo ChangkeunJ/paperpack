@@ -3,19 +3,32 @@ import assert from 'node:assert/strict'
 import { questions, daspQuestions, NATIONALITIES } from './interview.js'
 import { estimate, type WhmAnswers } from './calculate.js'
 import { estimateDasp, type DaspAnswers } from './dasp.js'
+import { readdirSync, readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import en from './i18n/en.json' with { type: 'json' }
-import ko from './i18n/ko.json' with { type: 'json' }
+
+// Read from the source tree, not dist: a translation nobody imports yet still has
+// to face every one of these tests, or adding a language silently does nothing.
+const i18nDir = join('packs', 'au-whm-tax', 'i18n')
+const locales: Record<string, Record<string, string>> = Object.fromEntries(
+  readdirSync(i18nDir)
+    .filter(f => f.endsWith('.json'))
+    .map(f => [f.slice(0, -5), JSON.parse(readFileSync(join(i18nDir, f), 'utf8'))]),
+)
 
 const keys = (o: object) => new Set(Object.keys(o))
 
-test('every locale carries the same keys', () => {
-  const [a, b] = [keys(en), keys(ko)]
-  assert.deepEqual([...a].filter(k => !b.has(k)), [], 'missing from ko')
-  assert.deepEqual([...b].filter(k => !a.has(k)), [], 'missing from en')
+test('every locale carries the same keys as English', () => {
+  const a = keys(en)
+  for (const [locale, dict] of Object.entries(locales)) {
+    const b = keys(dict)
+    assert.deepEqual([...a].filter(k => !b.has(k)), [], `missing from ${locale}`)
+    assert.deepEqual([...b].filter(k => !a.has(k)), [], `extra in ${locale}`)
+  }
 })
 
 test('no locale string is left empty', () => {
-  for (const [locale, dict] of Object.entries({ en, ko })) {
+  for (const [locale, dict] of Object.entries(locales)) {
     for (const [k, v] of Object.entries(dict)) {
       assert.ok(typeof v === 'string' && v.trim().length > 0, `${locale}.${k}`)
     }
