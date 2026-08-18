@@ -1,5 +1,5 @@
 import type { Question } from '../../src/interview.js'
-import type { WhmAnswers } from './calculate.js'
+import { NDA_COUNTRIES, type WhmAnswers } from './calculate.js'
 
 /**
  * Countries that change the answer (non-discrimination article or reciprocal health
@@ -39,6 +39,13 @@ export const questions: readonly Question<A>[] = [
     type: 'boolean',
     promptKey: 'q.isAustralianTaxResident',
     helpKey: 'help.isAustralianTaxResident',
+  },
+  {
+    id: 'residentMonths',
+    type: 'number',
+    promptKey: 'q.residentMonths',
+    helpKey: 'help.residentMonths',
+    when: a => a.isAustralianTaxResident === true && NDA_COUNTRIES.includes(a.nationality ?? ''),
   },
   {
     id: 'hasMedicareEntitlementStatement',

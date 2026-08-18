@@ -37,7 +37,6 @@
   "flag.lodging-is-optional-but-refund-needs-a-return": "On working holiday wages under 45,001 dollars you are not required to lodge. But a refund only arrives if you do.",
   "flag.medicare-entitlement-statement-may-be-available": "If you were not entitled to Medicare, an entitlement statement from Services Australia may remove this levy.",
   "flag.medicare-exemption-claimed": "The levy is left out because you said you hold an entitlement statement.",
-  "flag.nda-resident-not-calculated": "You may be able to use resident rates, including the tax free threshold, because you were a resident and hold the passport of a treaty country. This calculator does not work out resident rates yet, so check with the ATO or a registered tax agent rather than using a number from here.",
   "flag.no-tfn-withholding-is-recoverable": "Tax withheld at 45 per cent because no tax file number was given is not lost. Lodging is how you get it back.",
   "flag.resident-but-whm-rates-still-apply": "Answering that you were a resident does not change your rate. Working holiday rates apply regardless of residency unless you hold the passport of one of eight treaty countries.",
   "flag.rhca-country-medicare-likely-payable": "Your country has a reciprocal health care agreement with Australia, so you can usually enrol in Medicare, and a resident who can enrol usually pays the levy.",
@@ -90,5 +89,17 @@
   "rule.residentBands2026_27": "Australian resident tax rates 2026-27",
   "rule.lowIncomeTaxOffset": "Low income tax offset",
   "rule.medicareLevyLowIncomeSingle2025_26": "Medicare levy low income thresholds 2025-26",
-  "rule.partYearTaxFreeThreshold": "Tax free threshold for part of a year"
+  "rule.partYearTaxFreeThreshold": "Tax free threshold for part of a year",
+  "q.residentMonths": "How many months of the year were you an Australian resident for tax purposes?",
+  "help.residentMonths": "Count the month you arrived as a whole month, through to 30 June. Arriving on 3 January and arriving on 31 January both count as six months. Answer 12 if you were a resident for the whole year.",
+  "flag.nda-resident-basis-is-lower": "You are taxed on whichever of two bases costs less. Being assessed like a resident Australian national on the same income comes out cheaper here, so that is what this uses.",
+  "flag.nda-whm-basis-is-lower": "You are taxed on whichever of two bases costs less, and here that is the working holiday maker basis, so the treaty makes no difference to what you pay.",
+  "flag.foreign-income-changes-the-comparison": "This assumes everything you earned was earned in Australia. Interest, dividends or wages from home count on the resident side of the comparison but not the working holiday side, which can flip which side is cheaper. If you had any, do not rely on this figure.",
+  "flag.part-year-threshold-applied": "You were a resident for part of the year, so your tax free threshold is smaller than the full 18,200 dollars. Staying until 30 June does not avoid this.",
+  "flag.below-the-medicare-levy-threshold": "Your income is under the Medicare levy threshold, so no levy is included.",
+  "flag.medicare-thresholds-not-published-for-this-year": "The Medicare levy thresholds for this year have not been published yet, so a resident’s tax cannot be worked out here. They usually appear early in the calendar year after the income year ends.",
+  "result.lowIncomeTaxOffset": "Low income tax offset",
+  "result.comparison": "The treaty gives you the lower of these two",
+  "result.whmBasis": "Assessed as a working holiday maker",
+  "result.residentBasis": "Assessed as a resident national"
 }

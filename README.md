@@ -15,14 +15,22 @@ registered as a working holiday employer. That money only comes back if you lodg
 - Shows what you already had withheld and what the difference is
 - Warns you where nationality changes the answer, which it does for eight treaty
   countries and eleven reciprocal health care countries
+- Runs the *Addy* comparison for a resident of a treaty country: it works out the tax
+  both as a working holiday maker and as a resident Australian national, shows both, and
+  applies the cheaper one, which is what the treaty actually gives you
 - Prints every figure with the ATO page it came from and the date that page was checked
 - Speaks English and Korean
 
 ## What it does not do
 
 - It does not lodge anything. Lodging goes through myTax, in your own hands.
-- It does not calculate resident individual rates. If you were a resident *and* hold
-  the passport of a treaty country, it says so and stops rather than guessing.
+- It does not assume the resident basis wins. The treaty gives you the lower of two
+  assessments, not resident rates, and both are on screen.
+- It does not handle income earned outside Australia. That income counts on one side of
+  the comparison and not the other, so the tool says so rather than quietly getting it
+  wrong.
+- It does not estimate a resident's 2026-27 tax until the ATO publishes that year's
+  Medicare levy thresholds. Refusing a year is better than guessing at it.
 - It is not a tax agent service and nothing in it is tax advice. It applies published
   rates to numbers you typed. Check them, and if you need advice you can rely on, ask a
   registered tax agent. See [docs/legal.md](docs/legal.md).
@@ -49,7 +57,7 @@ without provenance:
   "from": "2025-07-01",
   "source": "https://www.ato.gov.au/tax-rates-and-codes/schedule-15-tax-table-for-working-holiday-makers",
   "checked": "2026-08-18",
-  "note": "45 per cent, not 47. The extra 2 per cent Medicare component belongs to the resident no-TFN rate."
+  "note": "45 per cent, not 47. The extra 2 per cent Medicare component belongs to the resident no-TFN rate and WHMs sit outside it."
 }
 ```
 

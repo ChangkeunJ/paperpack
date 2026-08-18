@@ -37,7 +37,6 @@
   "flag.lodging-is-optional-but-refund-needs-a-return": "워킹홀리데이 임금이 45,001달러 미만이면 신고 의무는 없습니다. 다만 환급은 신고해야만 나옵니다.",
   "flag.medicare-entitlement-statement-may-be-available": "메디케어 대상이 아니었다면 Services Australia의 면제 증명서로 이 부담금을 없앨 수 있습니다.",
   "flag.medicare-exemption-claimed": "면제 증명서를 보유하고 계시다고 답하셔서 부담금을 제외했습니다.",
-  "flag.nda-resident-not-calculated": "거주자이면서 조약국 여권을 갖고 계셔서 면세한도를 포함한 거주자 세율을 적용받을 수 있습니다. 이 계산기는 아직 거주자 세율을 계산하지 않으니, 여기 숫자를 쓰지 마시고 ATO나 등록 세무대리인에게 확인하세요.",
   "flag.no-tfn-withholding-is-recoverable": "TFN을 제출하지 않아 45%로 원천징수된 세금은 사라진 게 아닙니다. 신고해야 돌려받습니다.",
   "flag.resident-but-whm-rates-still-apply": "거주자라고 답해도 세율은 바뀌지 않습니다. 8개 조약국 여권이 아니라면 거주 여부와 무관하게 워킹홀리데이 세율이 적용됩니다. 한국은 이 8개국에 포함되지 않습니다.",
   "flag.rhca-country-medicare-likely-payable": "해당 국가는 호주와 상호의료협정을 맺고 있어 보통 메디케어에 가입할 수 있고, 가입 가능한 거주자는 대개 부담금을 냅니다.",
@@ -90,5 +89,17 @@
   "rule.residentBands2026_27": "호주 거주자 세율 2026-27",
   "rule.lowIncomeTaxOffset": "저소득 세액공제",
   "rule.medicareLevyLowIncomeSingle2025_26": "메디케어 부담금 저소득 기준 2025-26",
-  "rule.partYearTaxFreeThreshold": "연중 거주 시의 면세한도"
+  "rule.partYearTaxFreeThreshold": "연중 거주 시의 면세한도",
+  "q.residentMonths": "그 해에 세법상 호주 거주자였던 기간은 몇 개월입니까?",
+  "help.residentMonths": "도착한 달을 온전히 한 달로 세어 6월 30일까지 계산합니다. 1월 3일 도착과 1월 31일 도착은 둘 다 6개월입니다. 일 년 내내 거주자였다면 12를 입력하세요.",
+  "flag.nda-resident-basis-is-lower": "두 가지 산정 방식 중 세금이 적은 쪽으로 과세됩니다. 여기서는 같은 소득의 호주 국적 거주자와 동일하게 산정하는 쪽이 더 적어서 그 기준을 적용했습니다.",
+  "flag.nda-whm-basis-is-lower": "두 가지 산정 방식 중 세금이 적은 쪽으로 과세되는데, 여기서는 워킹홀리데이 기준이 더 적습니다. 즉 조약이 세액을 바꾸지 않습니다.",
+  "flag.foreign-income-changes-the-comparison": "모든 소득이 호주에서 발생했다고 가정한 금액입니다. 본국의 이자·배당·급여는 거주자 쪽 계산에만 들어가고 워킹홀리데이 쪽에는 들어가지 않아서 어느 쪽이 유리한지가 뒤집힐 수 있습니다. 그런 소득이 있었다면 이 숫자를 믿지 마세요.",
+  "flag.part-year-threshold-applied": "연중 일부만 거주자였기 때문에 면세한도가 18,200달러 전액보다 줄어듭니다. 6월 30일까지 계속 머무르더라도 마찬가지입니다.",
+  "flag.below-the-medicare-levy-threshold": "소득이 메디케어 부담금 기준선 아래라서 부담금이 포함되지 않았습니다.",
+  "flag.medicare-thresholds-not-published-for-this-year": "해당 연도의 메디케어 부담금 기준선이 아직 공표되지 않아 거주자의 세액을 여기서 계산할 수 없습니다. 보통 과세연도가 끝난 다음 해 초에 공표됩니다.",
+  "result.lowIncomeTaxOffset": "저소득 세액공제",
+  "result.comparison": "조약에 따라 이 둘 중 낮은 쪽이 적용됩니다",
+  "result.whmBasis": "워킹홀리데이 기준으로 산정",
+  "result.residentBasis": "국적 거주자 기준으로 산정"
 }

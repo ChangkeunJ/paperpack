@@ -11,7 +11,82 @@ escalate. Rung 1 is the primary page directly, rung 2 the `r.jina.ai` text proxy
 same URL (still the source's own content), rung 3 the Wayback Machine, rung 4 a reputable
 secondary source. A value only counts as confirmed at rung 1 or 2.
 
-## 2026-08-18
+## 2026-08-18, second pass
+
+Eight questions behind the resident path, each read once and then independently re-read by
+a second person told to refute the first. Six agreed outright, two disputed a provenance
+claim without disputing a figure. No number was wrong; two design assumptions were.
+
+| area | result |
+|---|---|
+| Resident rates 2025-26 and 2026-27, low income tax offset, Medicare levy low income thresholds, part-year tax-free threshold | confirmed, rung 2, with the offset and the threshold formula also at rung 1 |
+| Medicare levy exemption and what a statement establishes | confirmed, rung 2, statute at rung 1 |
+| The method for a resident treaty national | confirmed, rung 2 |
+| Working Australians tax offset, first applicable year | confirmed, rung 1 |
+
+### The treaty does not switch you to resident rates
+
+This was the load-bearing correction. The tool was going to apply resident rates to a
+resident treaty national. The ATO applies **the lower of two assessments** — one worked
+out as a working holiday maker, one worked out as a resident Australian national on the
+same income — and the Decision Impact Statement spells out the losing case: if the working
+holiday figure is lower, the treaty simply does not apply. Both figures are now on screen.
+
+The two sides are not computed on the same income, either. A temporary resident's foreign
+income is left out of the working holiday side but counted on the resident side, which can
+decide which one wins. The tool does not ask about foreign income and says so rather than
+producing a figure that looks authoritative.
+
+### A resident's tax-free threshold is apportioned
+
+Someone who becomes a resident partway through the year gets `13,464 + 4,736 × N / 12`,
+counting the month of arrival in full and running to 30 June, and staying until 30 June
+does not avoid it. Arriving in January is worth 15,832, not 18,200. Nothing about this
+appears in the ATO's worked examples, which are all full-year.
+
+### Two defects in the ATO's own pages
+
+The Richelle example's total line reads `$2,242 + $600 − $700 = $1,988`. The 2,242
+contradicts the 1,888 computed two bullets above it — it is 11,800 at 19 per cent, the
+first-bracket rate before 1 July 2024, so the bullets were updated for the rate cut and
+the total was not. The equation is also false on its own terms: 2,242 + 600 − 700 is
+2,142. No reading of the page produces 1,988. Its conclusion survives, its number does
+not, and the test suite uses neither.
+
+Both examples also charge a flat 2 per cent Medicare levy at incomes where the low income
+reduction applies. Stefan, at 25,000, is below the lower threshold and owes no levy at
+all, so the page's 888 should be 388. The tests encode 388.
+
+### The levy was being charged flat here too
+
+Same defect, ours. A resident was charged 2 per cent of taxable income from the first
+dollar. The thresholds now shade it in: nothing at or below 28,011, ten cents in each
+dollar up to 35,013, the full rate only above that. The ATO publishes no shade-in rate
+anywhere, but its own worked example pins it exactly — 29,000 gives 98.90.
+
+### The offset was missing
+
+The low income tax offset reaches anyone who was an Australian resident at any time in the
+year, so a resident on working holiday rates gets it regardless of nationality, and it
+applies on both sides of the treaty comparison. It was not being applied at all. Unlike
+the tax-free threshold it is not apportioned for a part-year resident: the entitlement
+provision asks only for residency "at any time", and that answer is in the Act, not on
+any ATO page.
+
+### What was deliberately not encoded
+
+A new Working Australians tax offset sits fully drafted in the Act as it stands on
+1 July 2026, with nothing in the section text saying it does not yet apply. Its
+application provision lives in the amending Act and starts it at 2027-28. Encoding it from
+the consolidated Act would have understated tax by up to 250 dollars a person. Schedule 4
+of the very same amending Act starts at 2026-27, so "the Act's start year" is not one
+value and a consolidated text cannot be trusted for it.
+
+Medicare levy thresholds for 2026-27 are not published and are indexed annually, so a
+resident in that year is refused rather than estimated. Someone holding an entitlement
+statement is still computable, since their levy is nil either way.
+
+## 2026-08-18, first pass
 
 Seventeen rules checked. Sixteen confirmed, one unverifiable. No value was wrong.
 

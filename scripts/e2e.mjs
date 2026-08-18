@@ -75,6 +75,17 @@ await page.locator('.locale button[data-locale=en]').click()
 const shot = process.argv.includes('--shot') ? process.argv[process.argv.indexOf('--shot') + 1] : null
 if (shot) await page.screenshot({ path: shot, fullPage: true })
 
+// The treaty path is the one that shows two assessments and applies the cheaper.
+await answerSelect(1, 'GB')
+await answerBool('resident for tax purposes', true)
+await answerNumber('months of the year', 12)
+await answerBool('Medicare Entitlement Statement', false)
+await page.waitForSelector('#comparison:not([hidden])')
+const sides = await page.locator('#comparison').innerText()
+assert.match(sides, /working holiday maker/i, sides)
+assert.match(sides, /resident national/i, sides)
+assert.equal(await page.locator('#comparison tr.total').count(), 1, 'exactly one side applies')
+
 assert.deepEqual(errors, [], 'the page logged errors')
 await browser.close()
 server.close()
