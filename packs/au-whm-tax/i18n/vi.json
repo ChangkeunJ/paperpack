@@ -140,6 +140,9 @@
   "ui.yes": "Có",
   "ui.no": "Không",
   "ui.sourceChecked": "đối chiếu {date}",
+  "ui.theme.auto": "Tự động",
+  "ui.theme.light": "Sáng",
+  "ui.theme.dark": "Tối",
   "locale.name": "Tiếng Việt",
   "help.maintainedHomeOverseas": "Cũng như số ngày có mặt, câu trả lời này không thay đổi con số nào ở đây. Nó phục vụ cho câu hỏi về cư trú bên dưới: việc duy trì một chỗ ở sẵn sàng để trở về là dấu hiệu không phải cư dân Úc, và phần lớn working holiday maker không phải là cư dân."
 }

@@ -140,6 +140,9 @@
   "ui.yes": "예",
   "ui.no": "아니요",
   "ui.sourceChecked": "확인일 {date}",
+  "ui.theme.auto": "자동",
+  "ui.theme.light": "라이트",
+  "ui.theme.dark": "다크",
   "locale.name": "한국어",
   "help.maintainedHomeOverseas": "체류 일수와 마찬가지로 이 답은 여기 계산되는 금액을 바꾸지 않습니다. 아래 거주자 판정 질문을 돕기 위한 것으로, 돌아갈 집을 유지하고 있다면 호주 거주자가 아닐 가능성이 높고, 대부분의 워킹홀리데이 메이커는 거주자가 아닙니다."
 }

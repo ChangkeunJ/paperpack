@@ -140,6 +140,9 @@
   "ui.yes": "是",
   "ui.no": "否",
   "ui.sourceChecked": "核对于 {date}",
+  "ui.theme.auto": "自动",
+  "ui.theme.light": "浅色",
+  "ui.theme.dark": "深色",
   "locale.name": "简体中文",
   "help.maintainedHomeOverseas": "与停留天数一样，这个答案不会改变这里的任何数字。它只是为下面的居民身份问题提供参考：保留一处随时可以回去的住所是不属于澳大利亚居民的迹象，而大多数打工度假者都不是居民。"
 }

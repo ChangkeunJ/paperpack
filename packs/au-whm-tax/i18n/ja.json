@@ -140,6 +140,9 @@
   "ui.yes": "はい",
   "ui.no": "いいえ",
   "ui.sourceChecked": "確認日 {date}",
+  "ui.theme.auto": "自動",
+  "ui.theme.light": "ライト",
+  "ui.theme.dark": "ダーク",
   "locale.name": "日本語",
   "help.maintainedHomeOverseas": "滞在日数と同様に、この回答はここで計算される金額を変えません。下の居住者判定の質問の参考となるもので、いつでも戻れる住まいを維持していることはオーストラリア居住者ではない方向の材料であり、ワーキングホリデーメーカーの大半は居住者ではありません。"
 }

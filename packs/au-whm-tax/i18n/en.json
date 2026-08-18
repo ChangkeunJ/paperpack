@@ -140,6 +140,9 @@
   "ui.yes": "Yes",
   "ui.no": "No",
   "ui.sourceChecked": "checked {date}",
+  "ui.theme.auto": "Auto",
+  "ui.theme.light": "Light",
+  "ui.theme.dark": "Dark",
   "locale.name": "English",
   "help.maintainedHomeOverseas": "Like the day count, this does not change any figure here. It feeds the residency question below: keeping a home ready to return to points away from Australian residency, and most working holiday makers are not residents."
 }

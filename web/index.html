@@ -4,15 +4,31 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>paperpack — Australian working holiday tax</title>
+<script>
+// Before first paint, or a stored theme that disagrees with the system flashes.
+try { const t = localStorage.theme; if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t } catch {}
+</script>
 <style>
   :root {
+    color-scheme: light dark;
     --bg: #fbfaf8; --fg: #1c1b19; --muted: #6b6862; --line: #e2ded7;
     --accent: #1c1b19; --warn: #8a5a00; --warn-bg: #fdf6e6;
   }
+  /* Without a matching color-scheme the browser paints the native select popup for
+     the other mode and the option text disappears into it. */
+  :root[data-theme=light] { color-scheme: light }
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #161513; --fg: #eceae6; --muted: #9c9890; --line: #33302b;
-            --accent: #eceae6; --warn: #e8c07a; --warn-bg: #2a2317; }
+    :root:not([data-theme=light]) {
+      --bg: #161513; --fg: #eceae6; --muted: #9c9890; --line: #33302b;
+      --accent: #eceae6; --warn: #e8c07a; --warn-bg: #2a2317;
+    }
   }
+  :root[data-theme=dark] {
+    color-scheme: dark;
+    --bg: #161513; --fg: #eceae6; --muted: #9c9890; --line: #33302b;
+    --accent: #eceae6; --warn: #e8c07a; --warn-bg: #2a2317;
+  }
+  option { color: var(--fg); background: var(--bg) }
   * { box-sizing: border-box }
   body {
     margin: 0; background: var(--bg); color: var(--fg);
@@ -53,6 +69,11 @@
     background: transparent; border: 1px solid var(--line); border-radius: 6px;
   }
   .tools button[aria-pressed=true] { background: var(--accent); color: var(--bg); border-color: var(--accent) }
+  .theme { float: right; font-size: .875rem; margin-left: .75rem }
+  .theme button {
+    background: none; border: 1px solid var(--line); border-radius: 6px;
+    color: var(--muted); cursor: pointer; font: inherit; padding: .05rem .5rem;
+  }
   .locale { float: right; font-size: .875rem }
   .locale button { background: none; border: 0; color: var(--muted); cursor: pointer; font: inherit; padding: 0 .3rem }
   .locale button[aria-pressed=true] { color: var(--fg); text-decoration: underline }
@@ -60,6 +81,7 @@
 </head>
 <body>
 <main>
+  <div class="theme"><button id="theme" type="button" data-t="ui.theme.auto"></button></div>
   <div class="locale">
     <button data-locale="en" aria-pressed="true">English</button>
     <button data-locale="ko" aria-pressed="false">Korean</button>
@@ -369,6 +391,22 @@ for (const b of document.querySelectorAll('.tools button')) {
     render()
   }
 }
+const themeBtn = document.getElementById('theme')
+const themes = ['auto', 'light', 'dark']
+let theme = 'auto'
+try { if (themes.includes(localStorage.theme)) theme = localStorage.theme } catch {}
+function applyTheme() {
+  if (theme === 'auto') delete document.documentElement.dataset.theme
+  else document.documentElement.dataset.theme = theme
+  themeBtn.dataset.t = `ui.theme.${theme}`
+  themeBtn.textContent = t(`ui.theme.${theme}`)
+}
+themeBtn.onclick = () => {
+  theme = themes[(themes.indexOf(theme) + 1) % themes.length]
+  try { localStorage.theme = theme } catch {}
+  applyTheme()
+}
+applyTheme()
 for (const b of document.querySelectorAll('.locale button')) {
   b.onclick = () => {
     locale = b.dataset.locale

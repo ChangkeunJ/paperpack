@@ -89,6 +89,27 @@ for (const b of await page.locator('.locale button').all()) {
 }
 await page.locator('.locale button[data-locale=en]').click()
 
+// Dark mode: the page must follow the system scheme, the explicit choice must beat
+// the system in both directions, and the native select popup must be painted for the
+// scheme in use (color-scheme), or option text disappears into it.
+await page.emulateMedia({ colorScheme: 'dark' })
+const scheme = () => page.evaluate(() => getComputedStyle(document.documentElement).colorScheme)
+const bodyBg = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor)
+const lum = c => c.match(/\d+/g).slice(0, 3).reduce((a, b) => a + Number(b), 0)
+const darkBg = await bodyBg()
+assert.ok(lum(darkBg) < 200, `auto must follow a dark system scheme, got ${darkBg}`)
+await page.locator('#theme').click()
+const lightBg = await bodyBg()
+assert.ok(lum(lightBg) > 600, `explicit light must override a dark system, got ${lightBg}`)
+assert.equal(await scheme(), 'light')
+await page.locator('#theme').click()
+await page.emulateMedia({ colorScheme: 'light' })
+assert.equal(await bodyBg(), darkBg, 'explicit dark must override a light system')
+assert.equal(await scheme(), 'dark', 'popups must be dark when the page is dark')
+await page.locator('#theme').click()
+assert.equal(await bodyBg(), lightBg, 'auto must follow the system again')
+assert.equal(await page.locator('#theme').textContent(), 'Auto', 'cycle ends back at auto')
+
 const shot = process.argv.includes('--shot') ? process.argv[process.argv.indexOf('--shot') + 1] : null
 if (shot) await page.screenshot({ path: shot, fullPage: true })
 
@@ -118,6 +139,14 @@ await page.waitForSelector('#result:not([hidden])')
 const dasp = await page.locator('#figures').innerText()
 assert.match(dasp, /\$2,100/, dasp)
 assert.ok(await page.locator('#worksheet').isHidden(), 'switching tools must re-arm the confirmation')
+
+// The theme choice must survive a reload, applied before the module loads. Answers
+// must not: they live in memory only, so this comes last.
+await page.locator('#theme').click()
+await page.locator('#theme').click()
+await page.reload()
+await page.waitForSelector('fieldset')
+assert.equal(await bodyBg(), darkBg, 'stored dark must survive a reload on a light system')
 
 assert.deepEqual(errors, [], 'the page logged errors')
 await browser.close()

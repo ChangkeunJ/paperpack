@@ -140,6 +140,9 @@
   "ui.yes": "Sí",
   "ui.no": "No",
   "ui.sourceChecked": "comprobado el {date}",
+  "ui.theme.auto": "Auto",
+  "ui.theme.light": "Claro",
+  "ui.theme.dark": "Oscuro",
   "locale.name": "Español",
   "help.maintainedHomeOverseas": "Igual que el recuento de días, esto no cambia ninguna cifra aquí. Alimenta la pregunta de residencia de abajo: mantener una vivienda lista para volver apunta en contra de la residencia australiana, y la mayoría de los working holiday makers no son residentes."
 }
