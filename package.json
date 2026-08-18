@@ -1,0 +1,12 @@
+{
+  "name": "paperpack",
+  "version": "0.0.0",
+  "description": "Answer a set of questions, get the filled documents back",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "check": "node scripts/check.mjs",
+    "test": "node --test scripts/"
+  },
+  "engines": { "node": ">=20" }
+}
