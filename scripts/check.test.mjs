@@ -118,6 +118,17 @@ test('a readme may name the Korean translation and nothing more', () => {
   assert.ok(!run('docs/notes.md', `[${KOREAN}](README.ko.md)\n`).ok, 'the allowance is readmes only')
 })
 
+test('Korean in other encodings is still Korean', () => {
+  const jamo = String.fromCodePoint(0x1112, 0x1161, 0x11ab)
+  const halfwidth = String.fromCodePoint(0xffa1, 0xffb3, 0xffa9)
+  assert.ok(!run('p.ts', `const a = "${jamo}"\n`).ok, 'conjoining jamo')
+  assert.ok(!run('q.ts', `const a = "${halfwidth}"\n`).ok, 'halfwidth hangul')
+})
+
+test('the revenue screen follows the pack into dist', () => {
+  assert.ok(!run('dist/packs/au-whm-tax/page.js', 'const s = "see pricing"\n').ok)
+})
+
 test('the Korean exemption is only the pack translation file', () => {
   assert.ok(!run('web/i18n/ko.json', `{"hello":"${HELLO}"}\n`).ok)
 })

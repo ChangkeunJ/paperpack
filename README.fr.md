@@ -56,7 +56,7 @@ plupart des backpackers est le plus gros des deux montants et le plus lourdement
   donc différemment, et c'est voulu.
 - Il ne décide pas du taux DASP sur la seule foi du visa. Détenir un 417 ou un 462 n'est
   que la moitié du test ; le paiement doit aussi contenir de la superannuation versée
-  pendant la détention du visa, et si c'est le cas, le taux le plus élevé s'applique à
+  pendant la détention du visa, et si c'est le cas, les taux vacances-travail s'appliquent à
   la totalité du paiement.
 - Il ne s'agit pas d'un service d'agent fiscal et rien de ce qu'il contient ne constitue
   un conseil fiscal. Il applique des taux publiés aux nombres que vous avez saisis.

@@ -103,7 +103,7 @@ try { const t = localStorage.theme; if (t === 'light' || t === 'dark') document.
 
   <form id="form"></form>
 
-  <section id="result" hidden>
+  <section id="result" aria-live="polite" hidden>
     <table id="figures"></table>
     <table id="comparison" hidden></table>
     <div id="flags"></div>
@@ -172,6 +172,7 @@ function taxView(a) {
       ['result.residentBasis', sideTotal(r.comparison.residentBasis), r.comparison.applied === 'resident'],
     ],
     period: dicts[locale][`fy.${a.financialYear}`],
+    periodKey: a.financialYear,
     flags: r.flags,
     citations: r.citations,
   }
@@ -208,7 +209,10 @@ function paintStatic() {
   for (const el of document.querySelectorAll('[data-t]')) el.textContent = t(el.dataset.t)
   for (const b of document.querySelectorAll('.locale button')) {
     b.textContent = dicts[b.dataset.locale]['locale.name']
+    b.lang = b.dataset.locale
   }
+  const tb = document.getElementById('theme')
+  tb.setAttribute('aria-label', `${t('ui.theme')}: ${t(tb.dataset.t)}`)
   document.documentElement.lang = locale
 }
 
@@ -240,6 +244,7 @@ function field(q) {
     wrap.append(row)
   } else if (q.type === 'choice') {
     const sel = document.createElement('select')
+    sel.setAttribute('aria-label', t(q.promptKey))
     sel.append(new Option('', ''))
     for (const o of q.options) {
       const opt = new Option(t(o.labelKey), o.value)
@@ -250,11 +255,13 @@ function field(q) {
     wrap.append(sel)
   } else {
     const input = document.createElement('input')
+    input.setAttribute('aria-label', t(q.promptKey))
     input.type = 'number'
     input.min = '0'
     input.value = answers[q.id] ?? ''
     input.oninput = () => {
       const n = Number(input.value)
+      if (Number.isFinite(n) && n < 0) input.value = '0'
       set(q.id, input.value === '' || !Number.isFinite(n) ? undefined : Math.max(0, n))
     }
     wrap.append(input)
@@ -314,7 +321,7 @@ function render() {
   const v = active.view(active.answers)
 
   // The confirmation belongs to one set of figures. If the figures change, it lapses.
-  const fk = JSON.stringify([tool, v.rows, v.total, v.comparison ?? null, v.flags, v.period ?? null,
+  const fk = JSON.stringify([tool, v.rows, v.total, v.comparison ?? null, v.flags, v.periodKey ?? null,
     v.citations.map(c => c.rule)])
   if (fk !== figuresKey) {
     figuresKey = fk
@@ -370,6 +377,7 @@ function render() {
     const a = document.createElement('a')
     a.href = c.source
     a.textContent = t(`rule.${c.rule}`)
+    a.target = '_blank'
     a.rel = 'noreferrer'
     li.append(a, document.createTextNode(` — ${t('ui.sourceChecked').replace('{date}', c.checked)}`))
     if (c.note) {
@@ -386,6 +394,7 @@ document.getElementById('confirm').onchange = e => {
 }
 for (const b of document.querySelectorAll('.tools button')) {
   b.onclick = () => {
+    if (b.dataset.tool === tool) return
     tool = b.dataset.tool
     disarm()
     render()
@@ -400,6 +409,7 @@ function applyTheme() {
   else document.documentElement.dataset.theme = theme
   themeBtn.dataset.t = `ui.theme.${theme}`
   themeBtn.textContent = t(`ui.theme.${theme}`)
+  themeBtn.setAttribute('aria-label', `${t('ui.theme')}: ${t(`ui.theme.${theme}`)}`)
 }
 themeBtn.onclick = () => {
   theme = themes[(themes.indexOf(theme) + 1) % themes.length]

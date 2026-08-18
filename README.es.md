@@ -52,7 +52,7 @@ mochileros es la mayor de las dos cifras y la que soporta el impuesto más duro.
   propósito.
 - No decide la tasa del DASP solo por el visado. Tener un 417 o un 462 es solo la mitad
   de la prueba; el pago también tiene que contener super aportado mientras se tenía el
-  visado, y si lo contiene, la tasa más alta se aplica al pago completo.
+  visado, y si lo contiene, las tasas working holiday se aplican al pago completo.
 - No es un servicio de agente fiscal y nada de lo que contiene constituye asesoramiento
   fiscal. Aplica tasas publicadas a las cifras que usted escribió. Compruébelas y, si
   necesita asesoramiento en el que pueda confiar, consulte a un agente fiscal

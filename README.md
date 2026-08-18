@@ -47,7 +47,7 @@ of the two numbers and the one taxed hardest.
   residents only, so the two years behave differently on purpose.
 - It does not decide the DASP rate off the visa alone. Holding a 417 or 462 is only
   half the test; the payment also has to contain super contributed while it was held,
-  and if it does the higher rate applies to the whole payment.
+  and if it does the working holiday rates apply to the whole payment.
 - It is not a tax agent service and nothing in it is tax advice. It applies published
   rates to numbers you typed. Check them, and if you need advice you can rely on, ask a
   registered tax agent. See [docs/legal.md](docs/legal.md).

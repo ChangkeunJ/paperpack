@@ -18,7 +18,7 @@ const AI_TELLS = [
 // Only applied to prose (markdown) and comment lines, where they are actually tells.
 const CLICHES = /\b(seamlessly|effortlessly|delve into|robust and scalable|comprehensive solution|leverage the power|perfect for anyone|it'?s worth noting that|this ensures that)\b/i
 
-const HANGUL = new RegExp('[\\u3131-\\u318E\\uAC00-\\uD7A3]')
+const HANGUL = new RegExp('[\\u1100-\\u11FF\\u3131-\\u318E\\uA960-\\uA97F\\uAC00-\\uD7A3\\uD7B0-\\uD7FF\\uFFA0-\\uFFDC]')
 const KO_EXEMPT = /^(dist\/)?packs\/[^/]+\/i18n\/ko\.json$|^README\.ko\.md$/
 // A readme language switcher may name the Korean translation in Korean, and that
 // exact word is all it may say. Built from code points so this file passes itself.
@@ -78,7 +78,9 @@ for (const file of files) {
       fail(file, `line ${i + 1}: LLM cliche — ${line.trim().slice(0, 60)}`)
     }
     // Korean belongs only in translation files.
-    const decoded = README.test(file) ? decodeEscapes(line).replaceAll(KOREAN_NAME, '') : decodeEscapes(line)
+    // NFKC folds halfwidth Hangul back into the ranges above.
+    const folded = decodeEscapes(line).normalize('NFKC')
+    const decoded = README.test(file) ? folded.replaceAll(KOREAN_NAME, '') : folded
     if (HANGUL.test(decoded) && !KO_EXEMPT.test(file)) {
       fail(file, `line ${i + 1}: Korean text outside packs/*/i18n/ko.json`)
     }
@@ -86,7 +88,7 @@ for (const file of files) {
 
   // Revenue paths inside the tax pack would make it a "tax agent service for reward"
   // under TASA 2009 s 50-5(1)(c). See docs/legal.md.
-  if (file.startsWith('packs/au-whm-tax/')) {
+  if (/^(dist\/)?packs\/au-whm-tax\//.test(file)) {
     const rulesData = /\/rules\/[^/]+\.json$/i.test(file)
     // NFKC folds fullwidth lookalikes back to ASCII. This screens against accident,
     // not against an adversary with commit access.

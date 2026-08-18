@@ -54,7 +54,7 @@ con số lớn hơn trong hai khoản và là khoản bị đánh thuế nặng 
   cư dân, nên hai năm cố ý hoạt động khác nhau.
 - Nó không quyết định mức thuế DASP chỉ dựa vào visa. Việc giữ visa 417 hoặc 462 mới
   chỉ là một nửa điều kiện; khoản chi trả còn phải chứa tiền hưu bổng được đóng vào
-  trong thời gian giữ visa đó, và nếu có thì mức thuế cao hơn áp dụng cho toàn bộ khoản
+  trong thời gian giữ visa đó, và nếu có thì biểu thuế working holiday áp dụng cho toàn bộ khoản
   chi trả.
 - Nó không phải là dịch vụ đại lý thuế và không nội dung nào trong nó là tư vấn thuế.
   Nó áp dụng các mức thuế đã công bố lên những con số quý vị nhập. Hãy tự kiểm tra
