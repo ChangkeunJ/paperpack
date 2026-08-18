@@ -4,10 +4,26 @@
   "rules": {
     "whmBands2025_26": {
       "value": [
-        { "upTo": 45000, "rate": 0.15, "base": 0 },
-        { "upTo": 135000, "rate": 0.30, "base": 6750 },
-        { "upTo": 190000, "rate": 0.37, "base": 33750 },
-        { "upTo": null, "rate": 0.45, "base": 54100 }
+        {
+          "upTo": 45000,
+          "rate": 0.15,
+          "base": 0
+        },
+        {
+          "upTo": 135000,
+          "rate": 0.3,
+          "base": 6750
+        },
+        {
+          "upTo": 190000,
+          "rate": 0.37,
+          "base": 33750
+        },
+        {
+          "upTo": null,
+          "rate": 0.45,
+          "base": 54100
+        }
       ],
       "from": "2025-07-01",
       "to": "2026-06-30",
@@ -16,21 +32,49 @@
     },
     "whmBands2026_27": {
       "value": [
-        { "upTo": 45000, "rate": 0.15, "base": 0 },
-        { "upTo": 135000, "rate": 0.30, "base": 6750 },
-        { "upTo": 190000, "rate": 0.37, "base": 33750 },
-        { "upTo": null, "rate": 0.45, "base": 54100 }
+        {
+          "upTo": 45000,
+          "rate": 0.15,
+          "base": 0
+        },
+        {
+          "upTo": 135000,
+          "rate": 0.3,
+          "base": 6750
+        },
+        {
+          "upTo": 190000,
+          "rate": 0.37,
+          "base": 33750
+        },
+        {
+          "upTo": null,
+          "rate": 0.45,
+          "base": 54100
+        }
       ],
       "from": "2026-07-01",
       "source": "https://www.ato.gov.au/tax-rates-and-codes/schedule-15-tax-table-for-working-holiday-makers",
       "checked": "2026-08-18",
-      "note": "Bands taken from the 2026-27 withholding schedule (NAT 75331). The ATO assessment-rate page still stops at 2025-26, so the base amounts are inferred from identical bands. Re-verify once the assessment page is updated."
+      "note": "Rates and ceilings confirmed against the 2026-27 withholding schedule (NAT 75331). The four base amounts are still derived, not published: the ATO assessment-rate page stops at 2025-26 and Schedule 15 publishes coefficients rather than base amounts. Re-check once the assessment page picks up 2026-27."
     },
     "foreignResidentBands2025_26": {
       "value": [
-        { "upTo": 135000, "rate": 0.30, "base": 0 },
-        { "upTo": 190000, "rate": 0.37, "base": 40500 },
-        { "upTo": null, "rate": 0.45, "base": 60850 }
+        {
+          "upTo": 135000,
+          "rate": 0.3,
+          "base": 0
+        },
+        {
+          "upTo": 190000,
+          "rate": 0.37,
+          "base": 40500
+        },
+        {
+          "upTo": null,
+          "rate": 0.45,
+          "base": 60850
+        }
       ],
       "from": "2025-07-01",
       "to": "2026-06-30",
@@ -43,7 +87,7 @@
       "from": "2025-07-01",
       "source": "https://www.ato.gov.au/tax-rates-and-codes/schedule-15-tax-table-for-working-holiday-makers",
       "checked": "2026-08-18",
-      "note": "45 per cent, not 47. The extra 2 per cent Medicare component belongs to the resident no-TFN rate and WHMs sit outside it."
+      "note": "45 per cent, not 47. The extra 2 per cent Medicare component belongs to the resident no-TFN rate and WHMs sit outside it. The rate is long standing, but the cited schedule now serves the version effective 1 July 2026, so it no longer evidences the 2025 start date."
     },
     "taxFreeThreshold": {
       "value": 18200,
@@ -55,19 +99,27 @@
     "medicareLevyRate": {
       "value": 0.02,
       "from": "2014-07-01",
-      "source": "https://www.ato.gov.au/individuals-and-families/medicare-and-private-health-insurance/medicare-levy/medicare-levy-exemption/not-entitled-to-medicare-benefits",
+      "source": "https://www.ato.gov.au/individuals-and-families/medicare-and-private-health-insurance/medicare-levy/what-is-the-medicare-levy",
       "checked": "2026-08-18",
       "note": "Foreign residents do not pay it. A resident WHM does, unless a Medicare Entitlement Statement supports an exemption."
     },
     "daspWhmRates": {
-      "value": { "taxFreeComponent": 0, "taxedElement": 0.65, "untaxedElement": 0.65 },
+      "value": {
+        "taxFreeComponent": 0,
+        "taxedElement": 0.65,
+        "untaxedElement": 0.65
+      },
       "from": "2017-07-01",
       "source": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/temporary-residents-and-superannuation/departing-australia-superannuation-payment-dasp",
       "checked": "2026-08-18",
-      "note": "UNCONFIRMED CONTAMINATION RULE: secondary sources agree that any contribution made while on a 417 or 462 visa pushes the whole payment to 65 per cent, including amounts earned later on another visa. The dedicated ATO rates page returned 404. Do not rely on this for mixed-visa users until re-verified."
+      "note": "The ATO states the rule more broadly than a contribution-date test: having held a WHM visa at any time puts the entire payment at 65 per cent, including super earned while working under a different visa, with no apportionment. An associated bridging visa counts as a WHM visa. The dedicated tax-rates page for DASP is a 404; the table lives on the DASP topic page cited here. The 1 July 2017 start date is not stated on that page and remains unsourced."
     },
     "daspOtherTemporaryResidentRates": {
-      "value": { "taxFreeComponent": 0, "taxedElement": 0.35, "untaxedElement": 0.45 },
+      "value": {
+        "taxFreeComponent": 0,
+        "taxedElement": 0.35,
+        "untaxedElement": 0.45
+      },
       "from": "2017-07-01",
       "source": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/temporary-residents-and-superannuation/departing-australia-superannuation-payment-dasp",
       "checked": "2026-08-18"
@@ -80,10 +132,15 @@
       "note": "No receipts needed below this total, but the expense must actually have been incurred and the taxpayer must be able to explain how the figure was worked out. It is not a free 300 dollars."
     },
     "laundryRates": {
-      "value": { "writtenEvidenceThreshold": 150, "perLoadDeductibleOnly": 1.0, "perLoadMixed": 0.5 },
+      "value": {
+        "writtenEvidenceThreshold": 150,
+        "perLoadDeductibleOnly": 1.0,
+        "perLoadMixed": 0.5
+      },
       "from": "1997-07-01",
       "source": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/clothes-and-items-you-wear-at-work/clothing-laundry-and-dry-cleaning-expenses",
-      "checked": "2026-08-18"
+      "checked": "2026-08-18",
+      "note": "The 150 dollar written-evidence threshold covers washing, drying and ironing. It does not extend to dry-cleaning."
     }
   }
 }

@@ -3,23 +3,47 @@
   "jurisdiction": "AU",
   "rules": {
     "ndaCountries": {
-      "value": ["GB", "DE", "FI", "CL", "JP", "NO", "TR", "IL"],
+      "value": [
+        "GB",
+        "DE",
+        "FI",
+        "CL",
+        "JP",
+        "NO",
+        "TR",
+        "IL"
+      ],
       "from": "2021-11-03",
       "source": "https://www.ato.gov.au/individuals-and-families/coming-to-australia-or-going-overseas/coming-to-australia/taxation-of-australian-resident-whms-from-nda-countries",
       "checked": "2026-08-18",
       "note": "Addy v Commissioner of Taxation [2021] HCA 34. Resident rates apply only when the person is BOTH an Australian tax resident AND a national of one of these. The seven-country list in wide circulation omits Israel. The United States, South Korea and Iceland are excluded; the Iceland treaty rules the WHM rate out expressly. Wider twelve-country lists published by law firms describe every Australian treaty carrying a non-discrimination article and are not accepted by the ATO for this purpose."
     },
     "ndaCountryStartYears": {
-      "value": { "DE": "2017-07-01", "IL": "2020-07-01" },
+      "value": {
+        "DE": "2017-07-01",
+        "IL": "2020-07-01"
+      },
       "from": "2021-11-03",
       "source": "https://www.ato.gov.au/law/view/view.htm?docid=%22LIT%2FICD%2FQUD108of2018%2F00001%22",
       "checked": "2026-08-18",
-      "note": "The Decision Impact Statement gives these start years. The main ATO guidance page shows no qualifier for Germany. Re-verify before applying either to a prior-year amendment."
+      "note": "The Decision Impact Statement gives these start years. The main ATO guidance page now carries a qualifier for Israel as well, and still none for Germany. Re-verify before applying either to a prior-year amendment."
     },
     "rhcaCountries": {
-      "value": ["BE", "FI", "IT", "MT", "NL", "NZ", "NO", "IE", "SI", "SE", "GB"],
+      "value": [
+        "BE",
+        "FI",
+        "IT",
+        "MT",
+        "NL",
+        "NZ",
+        "NO",
+        "IE",
+        "SI",
+        "SE",
+        "GB"
+      ],
       "from": "2026-08-18",
-      "source": "https://www.servicesaustralia.gov.au/reciprocal-health-care-agreements",
+      "source": "https://www.servicesaustralia.gov.au/when-reciprocal-health-care-agreements-apply-and-you-visit-australia",
       "checked": "2026-08-18",
       "note": "Nationals of these countries can enrol in Medicare while on a WHM visa, so they generally cannot obtain a full Medicare Entitlement Statement and a resident among them pays the levy. Coverage differs by country and by period, so this is a starting point for a question, not a lookup answer."
     },
@@ -31,7 +55,10 @@
       "note": "Below this, with all income earned as WHM salary or wages, neither a return nor a non-lodgment advice is required. Lodging is still the only way to recover over-withholding or claim deductions."
     },
     "lodgementDueDate": {
-      "value": { "month": 10, "day": 31 },
+      "value": {
+        "month": 10,
+        "day": 31
+      },
       "from": "1997-07-01",
       "source": "https://www.ato.gov.au/forms-and-instructions/non-lodgment-advice",
       "checked": "2026-08-18",
@@ -44,12 +71,18 @@
       "checked": "2026-08-18",
       "note": "Business days, paper return only, and unavailable to anyone holding a HELP, AASL or VET Student Loan debt or still earning Australian income. Keeping myGov access and lodging from overseas after 1 July is usually faster."
     },
-    "medicareEntitlementStatementWeeks": {
-      "value": 8,
+    "medicareEntitlementStatementWindow": {
+      "value": {
+        "applicationsOpen": {
+          "month": 7,
+          "day": 1
+        },
+        "weeksBeforeDeparture": 4
+      },
       "from": "2026-08-18",
-      "source": "https://www.servicesaustralia.gov.au/medicare-entitlement-statement",
+      "source": "https://www.servicesaustralia.gov.au/how-to-get-medicare-entitlement-statement",
       "checked": "2026-08-18",
-      "note": "Applications open 1 July. Apply before lodging, not after."
+      "note": "Applications open 1 July. If you are leaving Australia you can apply up to four weeks before your departure date and it is processed after you leave. Services Australia publishes no processing time; an earlier eight-week figure here came from no source and was removed."
     }
   }
 }
