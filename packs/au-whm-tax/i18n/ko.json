@@ -68,5 +68,22 @@
   "result.sources": "각 숫자의 근거",
   "result.taxPayable": "해당 소득에 대한 세액",
   "result.taxableIncome": "과세소득",
-  "result.totalLiability": "해당 연도 총 납부액"
+  "result.totalLiability": "해당 연도 총 납부액",
+  "rule.daspOtherTemporaryResidentRates": "출국 시 퇴직연금 환급, 그 외 임시거주자",
+  "rule.daspWhmRates": "출국 시 퇴직연금 환급, 워킹홀리데이 세율",
+  "rule.deductionSubstantiationThreshold": "업무 지출에 증빙이 필요해지는 기준",
+  "rule.earlyLodgementProcessingDays": "조기 신고 처리 기간",
+  "rule.foreignResidentBands2025_26": "외국인 거주자 세율 (고용주 미등록 시 적용)",
+  "rule.laundryRates": "세탁비 공제 기준",
+  "rule.lodgementDueDate": "신고 기한",
+  "rule.medicareEntitlementStatementWeeks": "Medicare Entitlement Statement 처리 기간",
+  "rule.medicareLevyRate": "메디케어 부담금 요율",
+  "rule.ndaCountries": "조약상 거주자 세율이 가능한 국가",
+  "rule.ndaCountryStartYears": "조약국별 적용 개시 연도",
+  "rule.noTfnWithholdingRate": "TFN 미제출 시 원천징수율",
+  "rule.nonLodgementWageThreshold": "신고 의무가 없어지는 기준",
+  "rule.rhcaCountries": "상호의료협정 체결국",
+  "rule.taxFreeThreshold": "면세한도",
+  "rule.whmBands2025_26": "워킹홀리데이 세율, 2025-26년도",
+  "rule.whmBands2026_27": "워킹홀리데이 세율, 2026-27년도"
 }

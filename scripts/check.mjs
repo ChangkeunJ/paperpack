@@ -31,7 +31,11 @@ const fail = (file, msg) => problems.push(`${file}: ${msg}`)
 const isComment = line => /^\s*(\/\/|#|\*|<!--)/.test(line)
 
 for (const file of files) {
-  const text = readFileSync(file, 'utf8')
+  const buf = readFileSync(file)
+  // A NUL byte in the head is the usual sign of a binary file. Decoding a PNG as
+  // UTF-8 produces convincing nonsense, including things that look like Hangul.
+  if (buf.subarray(0, 8192).includes(0)) continue
+  const text = buf.toString('utf8')
   const isMd = file.endsWith('.md')
 
   for (const [re, name] of AI_TELLS) {

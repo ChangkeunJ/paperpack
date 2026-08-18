@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>paperpack — Australian working holiday tax</title>
+<style>
+  :root {
+    --bg: #fbfaf8; --fg: #1c1b19; --muted: #6b6862; --line: #e2ded7;
+    --accent: #1c1b19; --warn: #8a5a00; --warn-bg: #fdf6e6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #161513; --fg: #eceae6; --muted: #9c9890; --line: #33302b;
+            --accent: #eceae6; --warn: #e8c07a; --warn-bg: #2a2317; }
+  }
+  * { box-sizing: border-box }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 16px/1.6 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  main { max-width: 44rem; margin: 0 auto; padding: 3rem 1.25rem 6rem }
+  h1 { font-size: 1.6rem; margin: 0 0 .25rem; letter-spacing: -.02em }
+  .tagline { color: var(--muted); margin: 0 0 .5rem }
+  .privacy { font-size: .875rem; color: var(--muted); border-left: 2px solid var(--line); padding-left: .75rem }
+  fieldset { border: 0; padding: 0; margin: 2rem 0 0 }
+  legend { font-weight: 600; padding: 0 }
+  .help { font-size: .875rem; color: var(--muted); margin: .35rem 0 .6rem }
+  input[type=number], select {
+    width: 100%; padding: .55rem .7rem; font: inherit; color: inherit;
+    background: transparent; border: 1px solid var(--line); border-radius: 6px;
+  }
+  .yesno { display: flex; gap: .5rem; margin-top: .4rem }
+  .yesno button {
+    flex: 1; padding: .55rem; font: inherit; color: inherit; cursor: pointer;
+    background: transparent; border: 1px solid var(--line); border-radius: 6px;
+  }
+  .yesno button[aria-pressed=true] { background: var(--accent); color: var(--bg); border-color: var(--accent) }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0 }
+  td { padding: .45rem 0; border-bottom: 1px solid var(--line) }
+  td:last-child { text-align: right; font-variant-numeric: tabular-nums }
+  tr.total td { font-weight: 600; border-bottom: 2px solid var(--fg) }
+  .note { background: var(--warn-bg); color: var(--warn); border-radius: 6px; padding: .7rem .85rem; margin: .5rem 0; font-size: .9rem }
+  .disclaimer { border: 1px solid var(--line); border-radius: 8px; padding: 1rem; margin: 2rem 0 }
+  .disclaimer h2 { font-size: 1rem; margin: 0 0 .5rem }
+  .confirm { display: flex; gap: .6rem; align-items: flex-start; margin-top: .8rem; font-size: .9rem }
+  .sources { font-size: .8rem; color: var(--muted) }
+  .sources li { margin-bottom: .35rem }
+  [hidden] { display: none !important }
+  .locale { float: right; font-size: .875rem }
+  .locale button { background: none; border: 0; color: var(--muted); cursor: pointer; font: inherit; padding: 0 .3rem }
+  .locale button[aria-pressed=true] { color: var(--fg); text-decoration: underline }
+</style>
+</head>
+<body>
+<main>
+  <div class="locale">
+    <button data-locale="en" aria-pressed="true">English</button>
+    <button data-locale="ko" aria-pressed="false">&#54620;&#44397;&#50612;</button>
+  </div>
+  <h1 data-t="app.name"></h1>
+  <p class="tagline" data-t="app.tagline"></p>
+  <p class="privacy" data-t="app.privacy"></p>
+
+  <form id="form"></form>
+
+  <section id="result" hidden>
+    <table id="figures"></table>
+    <div id="flags"></div>
+
+    <div class="disclaimer">
+      <h2 data-t="disclaimer.title"></h2>
+      <p data-t="disclaimer.body"></p>
+      <p id="effective" class="sources"></p>
+      <label class="confirm">
+        <input type="checkbox" id="confirm">
+        <span data-t="disclaimer.confirm"></span>
+      </label>
+    </div>
+
+    <div id="worksheet" hidden>
+      <h2 data-t="result.sources"></h2>
+      <ul class="sources" id="sources"></ul>
+    </div>
+  </section>
+</main>
+
+<script type="module">
+import { questions } from '../dist/packs/au-whm-tax/interview.js'
+import { estimate } from '../dist/packs/au-whm-tax/calculate.js'
+import { visibleQuestions, prune } from '../dist/src/interview.js'
+import en from '../dist/packs/au-whm-tax/i18n/en.json' with { type: 'json' }
+import ko from '../dist/packs/au-whm-tax/i18n/ko.json' with { type: 'json' }
+
+const dicts = { en, ko }
+let locale = 'en'
+let answers = {}
+
+const t = key => dicts[locale][key] ?? key
+const money = n => n.toLocaleString('en-AU', { style: 'currency', currency: 'AUD', maximumFractionDigits: 0 })
+
+function paintStatic() {
+  document.title = `${t('app.name')} — ${t('app.tagline')}`
+  for (const el of document.querySelectorAll('[data-t]')) el.textContent = t(el.dataset.t)
+  document.documentElement.lang = locale
+}
+
+function field(q) {
+  const wrap = document.createElement('fieldset')
+  const legend = document.createElement('legend')
+  legend.textContent = t(q.promptKey)
+  wrap.append(legend)
+  if (q.helpKey) {
+    const help = document.createElement('p')
+    help.className = 'help'
+    help.textContent = t(q.helpKey)
+    wrap.append(help)
+  }
+  if (q.type === 'boolean') {
+    const row = document.createElement('div')
+    row.className = 'yesno'
+    for (const [value, label] of [[true, 'Yes'], [false, 'No']]) {
+      const b = document.createElement('button')
+      b.type = 'button'
+      b.textContent = label
+      b.setAttribute('aria-pressed', String(answers[q.id] === value))
+      b.onclick = () => set(q.id, value)
+      row.append(b)
+    }
+    wrap.append(row)
+  } else if (q.type === 'choice') {
+    const sel = document.createElement('select')
+    sel.append(new Option('', ''))
+    for (const o of q.options) {
+      const opt = new Option(t(o.labelKey), o.value)
+      opt.selected = answers[q.id] === o.value
+      sel.append(opt)
+    }
+    sel.onchange = () => set(q.id, sel.value || undefined)
+    wrap.append(sel)
+  } else {
+    const input = document.createElement('input')
+    input.type = 'number'
+    input.min = '0'
+    input.value = answers[q.id] ?? ''
+    input.oninput = () => set(q.id, input.value === '' ? undefined : Number(input.value))
+    wrap.append(input)
+  }
+  return wrap
+}
+
+function set(id, value) {
+  if (value === undefined) delete answers[id]
+  else answers[id] = value
+  answers = prune(questions, answers)
+  render()
+}
+
+function render() {
+  paintStatic()
+  const form = document.getElementById('form')
+  form.replaceChildren(...visibleQuestions(questions, answers).map(field))
+
+  const needed = ['financialYear', 'nationality', 'isAustralianTaxResident',
+    'providedTfn', 'grossIncome', 'taxWithheld', 'workRelatedDeductions']
+  const ready = needed.every(id => answers[id] !== undefined)
+  document.getElementById('result').hidden = !ready
+  if (!ready) return
+
+  const r = estimate({ hasMedicareEntitlementStatement: false, ...answers })
+
+  const rows = [
+    ['result.taxableIncome', r.taxableIncome],
+    ['result.taxPayable', r.taxPayable],
+    ...(r.medicareLevy ? [['result.medicareLevy', r.medicareLevy]] : []),
+    ['result.totalLiability', r.totalLiability],
+    ['result.credit', r.credit],
+  ]
+  const table = document.getElementById('figures')
+  table.replaceChildren()
+  for (const [key, value] of rows) {
+    const tr = table.insertRow()
+    tr.insertCell().textContent = t(key)
+    tr.insertCell().textContent = money(value)
+  }
+  if (r.basis === 'whm-rates') {
+    const tr = table.insertRow()
+    tr.className = 'total'
+    tr.insertCell().textContent = t(r.balance >= 0 ? 'result.refund' : 'result.owing')
+    tr.insertCell().textContent = money(Math.abs(r.balance))
+  }
+
+  const flags = document.getElementById('flags')
+  flags.replaceChildren(...r.flags.map(f => {
+    const p = document.createElement('p')
+    p.className = 'note'
+    p.textContent = t(`flag.${f}`)
+    return p
+  }))
+
+  const newest = r.citations.map(c => c.checked).sort().at(-1) ?? ''
+  document.getElementById('effective').textContent =
+    t('disclaimer.effective').replace('{from}', dicts[locale][`fy.${answers.financialYear}`]).replace('{checked}', newest)
+
+  const sources = document.getElementById('sources')
+  sources.replaceChildren(...r.citations.map(c => {
+    const li = document.createElement('li')
+    const a = document.createElement('a')
+    a.href = c.source
+    a.textContent = t(`rule.${c.rule}`)
+    a.rel = 'noreferrer'
+    li.append(a, document.createTextNode(` — checked ${c.checked}`))
+    if (c.note) {
+      const small = document.createElement('div')
+      small.textContent = c.note
+      li.append(small)
+    }
+    return li
+  }))
+}
+
+document.getElementById('confirm').onchange = e => {
+  document.getElementById('worksheet').hidden = !e.target.checked
+}
+for (const b of document.querySelectorAll('.locale button')) {
+  b.onclick = () => {
+    locale = b.dataset.locale
+    for (const o of document.querySelectorAll('.locale button'))
+      o.setAttribute('aria-pressed', String(o === b))
+    render()
+  }
+}
+render()
+</script>
+</body>
+</html>

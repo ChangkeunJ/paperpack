@@ -55,3 +55,11 @@ test('every flag the calculator can raise has a message', () => {
   assert.ok(seen.size >= 7, `only saw ${seen.size} flags`)
   for (const flag of seen) assert.ok(keys(en).has(`flag.${flag}`), `flag.${flag}`)
 })
+
+test('every rule that can be cited has a readable label', async () => {
+  const rates = (await import('./rules/rates.json', { with: { type: 'json' } })).default
+  const eligibility = (await import('./rules/eligibility.json', { with: { type: 'json' } })).default
+  for (const name of [...Object.keys(rates.rules), ...Object.keys(eligibility.rules)]) {
+    assert.ok(keys(en).has(`rule.${name}`), `rule.${name}`)
+  }
+})

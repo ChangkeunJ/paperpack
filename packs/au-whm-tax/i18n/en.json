@@ -68,5 +68,22 @@
   "result.sources": "Where each figure comes from",
   "result.taxPayable": "Tax on that income",
   "result.taxableIncome": "Taxable income",
-  "result.totalLiability": "Total you owe for the year"
+  "result.totalLiability": "Total you owe for the year",
+  "rule.daspOtherTemporaryResidentRates": "Departing Australia superannuation payment, other temporary residents",
+  "rule.daspWhmRates": "Departing Australia superannuation payment, working holiday rates",
+  "rule.deductionSubstantiationThreshold": "When work expenses need written evidence",
+  "rule.earlyLodgementProcessingDays": "Early lodgement processing time",
+  "rule.foreignResidentBands2025_26": "Foreign resident tax rates, used when the employer is not registered",
+  "rule.laundryRates": "Laundry claim rates",
+  "rule.lodgementDueDate": "Lodgement due date",
+  "rule.medicareEntitlementStatementWeeks": "Medicare Entitlement Statement processing time",
+  "rule.medicareLevyRate": "Medicare levy rate",
+  "rule.ndaCountries": "Countries whose treaty allows resident rates",
+  "rule.ndaCountryStartYears": "When each treaty country became eligible",
+  "rule.noTfnWithholdingRate": "Withholding rate when no tax file number was given",
+  "rule.nonLodgementWageThreshold": "When lodging a return is not required",
+  "rule.rhcaCountries": "Reciprocal health care agreement countries",
+  "rule.taxFreeThreshold": "The tax free threshold",
+  "rule.whmBands2025_26": "Working holiday maker tax rates, 2025-26",
+  "rule.whmBands2026_27": "Working holiday maker tax rates, 2026-27"
 }

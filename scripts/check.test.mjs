@@ -63,3 +63,12 @@ test('rejects malformed dates and non-URL sources', () => {
   assert.ok(!run('packs/au-whm-tax/rules/tax.json', rule({ from: '1 July 2025' })).ok)
   assert.ok(!run('packs/au-whm-tax/rules/tax.json', rule({ source: 'ATO website' })).ok)
 })
+
+test('binary files are skipped rather than decoded as text', () => {
+  // A PNG decoded as UTF-8 yields bytes that look like all sorts of scripts.
+  const png = Buffer.concat([
+    Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d]),
+    Buffer.from('\u{D55C}\u{AD6D}', 'utf8'),
+  ])
+  assert.ok(run('docs/shot.png', png).ok)
+})
