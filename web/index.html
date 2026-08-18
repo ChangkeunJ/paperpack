@@ -62,7 +62,7 @@
 <main>
   <div class="locale">
     <button data-locale="en" aria-pressed="true">English</button>
-    <button data-locale="ko" aria-pressed="false">&#54620;&#44397;&#50612;</button>
+    <button data-locale="ko" aria-pressed="false">Korean</button>
   </div>
   <h1 data-t="app.name"></h1>
   <p class="tagline" data-t="app.tagline"></p>
@@ -101,29 +101,39 @@
 import { questions, daspQuestions } from '../dist/packs/au-whm-tax/interview.js'
 import { estimate } from '../dist/packs/au-whm-tax/calculate.js'
 import { estimateDasp } from '../dist/packs/au-whm-tax/dasp.js'
-import { visibleQuestions, prune } from '../dist/src/interview.js'
+import { visibleQuestions, isComplete, prune } from '../dist/src/interview.js'
 import en from '../dist/packs/au-whm-tax/i18n/en.json' with { type: 'json' }
 import ko from '../dist/packs/au-whm-tax/i18n/ko.json' with { type: 'json' }
 
 const dicts = { en, ko }
 let locale = 'en'
 
+// Whole dollars only, and rows are rounded before the totals are taken from them, so
+// what is printed always adds up even when the arithmetic underneath carries cents.
+const round = n => Math.round(n) + 0
+
 function taxView(a) {
   const r = estimate({ hasMedicareEntitlementStatement: false, ...a })
   const refused = r.basis === 'referral-no-published-thresholds'
+  const taxPayable = round(r.taxPayable)
+  const offset = round(r.lowIncomeTaxOffset)
+  const levy = round(r.medicareLevy)
+  const liability = taxPayable - offset + levy
+  const credit = round(r.credit)
+  const sideTotal = s => round(s.taxPayable) - round(s.lowIncomeTaxOffset) + round(s.medicareLevy)
   return {
-    rows: refused ? [['result.taxableIncome', r.taxableIncome]] : [
-      ['result.taxableIncome', r.taxableIncome],
-      ['result.taxPayable', r.taxPayable],
-      ...(r.lowIncomeTaxOffset ? [['result.lowIncomeTaxOffset', -r.lowIncomeTaxOffset]] : []),
-      ...(r.medicareLevy ? [['result.medicareLevy', r.medicareLevy]] : []),
-      ['result.totalLiability', r.totalLiability],
-      ['result.credit', r.credit],
+    rows: refused ? [['result.taxableIncome', round(r.taxableIncome)]] : [
+      ['result.taxableIncome', round(r.taxableIncome)],
+      ['result.taxPayable', taxPayable],
+      ...(offset ? [['result.lowIncomeTaxOffset', -offset]] : []),
+      ...(levy ? [['result.medicareLevy', levy]] : []),
+      ['result.totalLiability', liability],
+      ['result.credit', credit],
     ],
-    total: refused ? null : [r.balance >= 0 ? 'result.refund' : 'result.owing', Math.abs(r.balance)],
+    total: refused ? null : [credit >= liability ? 'result.refund' : 'result.owing', Math.abs(credit - liability)],
     comparison: r.comparison && [
-      ['result.whmBasis', r.comparison.whmBasis.total, r.comparison.applied === 'whm'],
-      ['result.residentBasis', r.comparison.residentBasis.total, r.comparison.applied === 'resident'],
+      ['result.whmBasis', sideTotal(r.comparison.whmBasis), r.comparison.applied === 'whm'],
+      ['result.residentBasis', sideTotal(r.comparison.residentBasis), r.comparison.applied === 'resident'],
     ],
     period: dicts[locale][`fy.${a.financialYear}`],
     flags: r.flags,
@@ -132,49 +142,44 @@ function taxView(a) {
 }
 
 function daspView(a) {
-  const r = estimateDasp({ taxFreeComponent: 0, untaxedElement: 0, ...a })
+  const r = estimateDasp(a)
+  const balance = round(Math.max(0, a.superBalance))
+  const tax = round(r.tax)
   return {
     rows: [
-      ['dasp.balance', a.superBalance],
-      ...(r.taxFreeComponent ? [['dasp.taxFreeComponent', r.taxFreeComponent]] : []),
-      ...(r.untaxedElement ? [['dasp.untaxedElement', r.untaxedElement]] : []),
-      ['dasp.tax', -r.tax],
+      ['dasp.balance', balance],
+      ...(r.taxFreeComponent ? [['dasp.taxFreeComponent', round(r.taxFreeComponent)]] : []),
+      ...(r.untaxedElement ? [['dasp.untaxedElement', round(r.untaxedElement)]] : []),
+      ['dasp.tax', -tax],
     ],
-    total: ['dasp.net', r.net],
+    total: ['dasp.net', balance - tax],
     flags: r.flags,
     citations: r.citations,
   }
 }
 
 const tools = {
-  tax: {
-    questions,
-    answers: {},
-    needed: ['financialYear', 'nationality', 'isAustralianTaxResident',
-      'providedTfn', 'grossIncome', 'taxWithheld', 'workRelatedDeductions'],
-    view: taxView,
-  },
-  dasp: {
-    questions: daspQuestions,
-    answers: {},
-    needed: ['superBalance', 'everHeldWhmVisa', 'visaCeased', 'hasDeparted'],
-    view: daspView,
-  },
+  tax: { questions, answers: {}, view: taxView },
+  dasp: { questions: daspQuestions, answers: {}, view: daspView },
 }
 let tool = 'tax'
 
 const t = key => dicts[locale][key] ?? key
-const money = n => n.toLocaleString('en-AU', { style: 'currency', currency: 'AUD', maximumFractionDigits: 0 })
+const money = n => (n + 0).toLocaleString('en-AU', { style: 'currency', currency: 'AUD', maximumFractionDigits: 0 })
 
 function paintStatic() {
   document.title = `${t('app.name')} — ${t('app.tagline')}`
   for (const el of document.querySelectorAll('[data-t]')) el.textContent = t(el.dataset.t)
+  for (const b of document.querySelectorAll('.locale button')) {
+    b.textContent = dicts[b.dataset.locale]['locale.name']
+  }
   document.documentElement.lang = locale
 }
 
 function field(q) {
   const answers = tools[tool].answers
   const wrap = document.createElement('fieldset')
+  wrap.dataset.q = q.id
   const legend = document.createElement('legend')
   legend.textContent = t(q.promptKey)
   wrap.append(legend)
@@ -187,10 +192,11 @@ function field(q) {
   if (q.type === 'boolean') {
     const row = document.createElement('div')
     row.className = 'yesno'
-    for (const [value, label] of [[true, 'Yes'], [false, 'No']]) {
+    for (const value of [true, false]) {
       const b = document.createElement('button')
       b.type = 'button'
-      b.textContent = label
+      b.dataset.value = String(value)
+      b.textContent = t(value ? 'ui.yes' : 'ui.no')
       b.setAttribute('aria-pressed', String(answers[q.id] === value))
       b.onclick = () => set(q.id, value)
       row.append(b)
@@ -211,7 +217,10 @@ function field(q) {
     input.type = 'number'
     input.min = '0'
     input.value = answers[q.id] ?? ''
-    input.oninput = () => set(q.id, input.value === '' ? undefined : Number(input.value))
+    input.oninput = () => {
+      const n = Number(input.value)
+      set(q.id, input.value === '' || !Number.isFinite(n) ? undefined : Math.max(0, n))
+    }
     wrap.append(input)
   }
   return wrap
@@ -225,6 +234,14 @@ function set(id, value) {
   render()
 }
 
+function disarm() {
+  document.getElementById('confirm').checked = false
+  document.getElementById('worksheet').hidden = true
+}
+
+let formKey = ''
+let figuresKey = null
+
 function render() {
   paintStatic()
   for (const b of document.querySelectorAll('.tools button')) {
@@ -232,13 +249,40 @@ function render() {
   }
   const active = tools[tool]
   const form = document.getElementById('form')
-  form.replaceChildren(...visibleQuestions(active.questions, active.answers).map(field))
+  const visible = visibleQuestions(active.questions, active.answers)
 
-  const ready = active.needed.every(id => active.answers[id] !== undefined)
+  // Rebuild the form only when the question list itself changes. Rebuilding on every
+  // keystroke would destroy the input mid-word and drop focus with it.
+  const key = [tool, locale, ...visible.map(q => q.id)].join('|')
+  if (key !== formKey) {
+    formKey = key
+    form.replaceChildren(...visible.map(field))
+  } else {
+    for (const fs of form.children) {
+      for (const b of fs.querySelectorAll('.yesno button')) {
+        b.setAttribute('aria-pressed', String(active.answers[fs.dataset.q] === (b.dataset.value === 'true')))
+      }
+    }
+  }
+
+  // Every visible question, including the conditional ones, before any figure shows.
+  // A blank answer must never be silently read as a No.
+  const ready = isComplete(active.questions, active.answers)
   document.getElementById('result').hidden = !ready
-  if (!ready) return
+  if (!ready) {
+    figuresKey = null
+    disarm()
+    return
+  }
 
   const v = active.view(active.answers)
+
+  // The confirmation belongs to one set of figures. If the figures change, it lapses.
+  const fk = JSON.stringify([tool, v.rows, v.total, v.comparison ?? null])
+  if (fk !== figuresKey) {
+    figuresKey = fk
+    disarm()
+  }
 
   const table = document.getElementById('figures')
   table.replaceChildren()
@@ -290,7 +334,7 @@ function render() {
     a.href = c.source
     a.textContent = t(`rule.${c.rule}`)
     a.rel = 'noreferrer'
-    li.append(a, document.createTextNode(` — checked ${c.checked}`))
+    li.append(a, document.createTextNode(` — ${t('ui.sourceChecked').replace('{date}', c.checked)}`))
     if (c.note) {
       const small = document.createElement('div')
       small.textContent = c.note
@@ -306,8 +350,7 @@ document.getElementById('confirm').onchange = e => {
 for (const b of document.querySelectorAll('.tools button')) {
   b.onclick = () => {
     tool = b.dataset.tool
-    document.getElementById('confirm').checked = false
-    document.getElementById('worksheet').hidden = true
+    disarm()
     render()
   }
 }

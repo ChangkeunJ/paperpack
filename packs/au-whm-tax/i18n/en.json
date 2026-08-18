@@ -137,5 +137,9 @@
   "rule.unclaimedSuperTransfer": "Transfer of unclaimed super to the ATO",
   "rule.daspProcessingDays": "Processing time for a departing Australia superannuation payment",
   "rule.workingHolidayMakerVisas": "Visas that make you a working holiday maker",
-  "rule.daspNotAssessable": "Departing super payments are not assessable income"
+  "rule.daspNotAssessable": "Departing super payments are not assessable income",
+  "ui.yes": "Yes",
+  "ui.no": "No",
+  "ui.sourceChecked": "checked {date}",
+  "locale.name": "English"
 }

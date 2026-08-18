@@ -137,5 +137,9 @@
   "rule.unclaimedSuperTransfer": "미청구 퇴직연금의 ATO 이관",
   "rule.daspProcessingDays": "출국 시 퇴직연금 지급 처리 기간",
   "rule.workingHolidayMakerVisas": "워킹홀리데이 메이커로 인정되는 비자",
-  "rule.daspNotAssessable": "출국 시 퇴직연금 지급액의 소득 불산입"
+  "rule.daspNotAssessable": "출국 시 퇴직연금 지급액의 소득 불산입",
+  "ui.yes": "예",
+  "ui.no": "아니요",
+  "ui.sourceChecked": "확인일 {date}",
+  "locale.name": "한국어"
 }

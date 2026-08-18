@@ -6,6 +6,7 @@ import { readFile } from 'node:fs/promises'
 import { extname, join, normalize } from 'node:path'
 import assert from 'node:assert/strict'
 import { chromium } from 'playwright'
+import ko from '../packs/au-whm-tax/i18n/ko.json' with { type: 'json' }
 
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.css': 'text/css' }
 const root = process.cwd()
@@ -49,7 +50,12 @@ assert.match(await legend(0), /income year/i)
 // on 30,000 dollars. The whole point of the tool is that this comes back.
 await answerSelect(0, '2025-26')
 await answerSelect(1, 'KR')
-await answerNumber('How many days', 200)
+// Typed digit by digit: the form must not be rebuilt under the cursor.
+const days = page.locator('fieldset').filter({ has: page.getByText('How many days') }).locator('input')
+await days.click()
+await days.pressSequentially('200')
+assert.equal(await days.inputValue(), '200')
+assert.ok(await days.evaluate(el => el === document.activeElement), 'focus lost while typing')
 await answerBool('keep a home', true)
 await answerBool('resident for tax purposes', false)
 await answerBool('tax file number', true)
@@ -68,8 +74,15 @@ await page.locator('#confirm').check()
 await page.waitForSelector('#worksheet:not([hidden])')
 assert.ok((await page.locator('#sources li').count()) >= 2, 'every figure needs a citation')
 
+// The acknowledgment belongs to one estimate. Changing an answer lapses it.
+await answerNumber('tax was withheld', 9500)
+assert.ok(await page.locator('#worksheet').isHidden(), 'confirmation must lapse when figures change')
+await answerNumber('tax was withheld', 9000)
+await page.locator('#confirm').check()
+
 await page.locator('.locale button[data-locale=ko]').click()
 assert.match(await page.locator('.tagline').textContent(), /[\u3131-\u318E\uAC00-\uD7A3]/, 'Korean did not load')
+assert.equal(await page.locator('.yesno button').first().textContent(), ko['ui.yes'], 'yes/no buttons must localise')
 await page.locator('.locale button[data-locale=en]').click()
 
 const shot = process.argv.includes('--shot') ? process.argv[process.argv.indexOf('--shot') + 1] : null
@@ -90,11 +103,13 @@ assert.equal(await page.locator('#comparison tr.total').count(), 1, 'exactly one
 await page.locator('.tools button[data-tool=dasp]').click()
 await answerNumber('super is in your fund', 6000)
 await answerBool('ever held a working holiday visa', true)
-await answerBool('paid in while you held', true)
 await answerNumber('tax free component', 0)
 await answerNumber('untaxed element', 0)
 await answerBool('expired or been cancelled', true)
 await answerBool('left Australia', true)
+// The second limb of the rate test is unanswered, so no figure may show yet.
+assert.ok(await page.locator('#result').isHidden(), 'a blank answer must not be read as a No')
+await answerBool('paid in while you held', true)
 await page.waitForSelector('#result:not([hidden])')
 const dasp = await page.locator('#figures').innerText()
 assert.match(dasp, /\$2,100/, dasp)
