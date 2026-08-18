@@ -1,5 +1,6 @@
 import type { Question } from '../../src/interview.js'
 import { NDA_COUNTRIES, type WhmAnswers } from './calculate.js'
+import type { DaspAnswers } from './dasp.js'
 
 /**
  * Countries that change the answer (non-discrimination article or reciprocal health
@@ -63,4 +64,20 @@ export const questions: readonly Question<A>[] = [
     promptKey: 'q.workRelatedDeductions',
     helpKey: 'help.workRelatedDeductions',
   },
+]
+
+export const daspQuestions: readonly Question<DaspAnswers>[] = [
+  { id: 'superBalance', type: 'number', promptKey: 'q.superBalance', helpKey: 'help.superBalance' },
+  { id: 'everHeldWhmVisa', type: 'boolean', promptKey: 'q.everHeldWhmVisa', helpKey: 'help.everHeldWhmVisa' },
+  {
+    id: 'superFromWhmPeriod',
+    type: 'boolean',
+    promptKey: 'q.superFromWhmPeriod',
+    helpKey: 'help.superFromWhmPeriod',
+    when: a => a.everHeldWhmVisa === true,
+  },
+  { id: 'taxFreeComponent', type: 'number', promptKey: 'q.taxFreeComponent', helpKey: 'help.taxFreeComponent' },
+  { id: 'untaxedElement', type: 'number', promptKey: 'q.untaxedElement', helpKey: 'help.untaxedElement' },
+  { id: 'visaCeased', type: 'boolean', promptKey: 'q.visaCeased', helpKey: 'help.visaCeased' },
+  { id: 'hasDeparted', type: 'boolean', promptKey: 'q.hasDeparted', helpKey: 'help.hasDeparted' },
 ]

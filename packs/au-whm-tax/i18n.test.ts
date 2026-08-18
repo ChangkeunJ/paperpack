@@ -1,7 +1,8 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { questions, NATIONALITIES } from './interview.js'
+import { questions, daspQuestions, NATIONALITIES } from './interview.js'
 import { estimate, type WhmAnswers } from './calculate.js'
+import { estimateDasp, type DaspAnswers } from './dasp.js'
 import en from './i18n/en.json' with { type: 'json' }
 import ko from './i18n/ko.json' with { type: 'json' }
 
@@ -23,7 +24,7 @@ test('no locale string is left empty', () => {
 
 test('every question and option has a label', () => {
   const have = keys(en)
-  for (const q of questions) {
+  for (const q of [...questions, ...daspQuestions]) {
     assert.ok(have.has(q.promptKey), q.promptKey)
     if (q.helpKey) assert.ok(have.has(q.helpKey), q.helpKey)
     for (const o of q.options ?? []) assert.ok(have.has(o.labelKey), o.labelKey)
@@ -64,4 +65,22 @@ test('every rule that can be cited has a readable label', async () => {
   for (const name of [...Object.keys(rates.rules), ...Object.keys(eligibility.rules)]) {
     assert.ok(keys(en).has(`rule.${name}`), `rule.${name}`)
   }
+})
+
+test('every flag the super calculator can raise has a message', () => {
+  const base: DaspAnswers = {
+    superBalance: 6000, taxFreeComponent: 0, untaxedElement: 0,
+    everHeldWhmVisa: true, superFromWhmPeriod: true, visaCeased: true, hasDeparted: true,
+  }
+  const seen = new Set<string>()
+  for (const everHeldWhmVisa of [true, false])
+    for (const superFromWhmPeriod of [true, false])
+      for (const visaCeased of [true, false])
+        for (const hasDeparted of [true, false])
+          for (const taxFreeComponent of [0, 9000])
+            estimateDasp({ ...base, everHeldWhmVisa, superFromWhmPeriod, visaCeased,
+              hasDeparted, taxFreeComponent }).flags.forEach(f => seen.add(f))
+
+  assert.equal(seen.size, 4, [...seen].join(', '))
+  for (const flag of seen) assert.ok(keys(en).has(`flag.${flag}`), `flag.${flag}`)
 })
