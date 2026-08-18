@@ -165,11 +165,12 @@ export function estimate(a: WhmAnswers): WhmEstimate {
     }
   }
 
-  const whmOnly = (): Assessment =>
-    assess(rates.rules[whmBandRule[a.financialYear]].value, taxableIncome, 0, 0)
+  const whmBands = rates.rules[whmBandRule[a.financialYear]].value
 
   // A foreign resident pays no levy and reaches no offset, so nothing below applies.
-  if (!a.isAustralianTaxResident) return finish('whm-rates', whmOnly())
+  if (!a.isAustralianTaxResident) {
+    return finish('whm-rates', assess(whmBands, taxableIncome, 0, 0))
+  }
 
   used.push('medicareLevyRate')
   let medicareLevy = 0
@@ -188,7 +189,7 @@ export function estimate(a: WhmAnswers): WhmEstimate {
         credit: a.taxWithheld,
         balance: 0,
         flags: [...flags, 'medicare-thresholds-not-published-for-this-year'],
-        citations: cite([...used, 'medicareLevyRate']),
+        citations: cite(used),
       }
     }
     used.push(thresholds)
@@ -206,12 +207,7 @@ export function estimate(a: WhmAnswers): WhmEstimate {
   // Residency alone unlocks the offset, whatever rates end up applying.
   used.push('lowIncomeTaxOffset')
   const offset = lowIncomeTaxOffset(taxableIncome)
-  const whmBasis = assess(
-    rates.rules[whmBandRule[a.financialYear]].value,
-    taxableIncome,
-    medicareLevy,
-    offset,
-  )
+  const whmBasis = assess(whmBands, taxableIncome, medicareLevy, offset)
 
   if (!NDA_COUNTRIES.includes(a.nationality)) {
     flags.push('resident-but-whm-rates-still-apply')

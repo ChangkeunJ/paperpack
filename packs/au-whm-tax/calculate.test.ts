@@ -212,3 +212,15 @@ test('every figure shown carries a source and a check date', () => {
 test('both financial years are computable', () => {
   assert.equal(at({ financialYear: '2026-27' }).taxPayable, 4500)
 })
+
+test('no rule is cited twice', () => {
+  for (const answers of [
+    {},
+    { isAustralianTaxResident: true },
+    { nationality: 'GB', isAustralianTaxResident: true, residentMonths: 4 },
+    { financialYear: '2026-27' as const, isAustralianTaxResident: true },
+  ]) {
+    const cited = at(answers).citations.map(c => c.rule)
+    assert.deepEqual([...new Set(cited)], cited, JSON.stringify(answers))
+  }
+})
