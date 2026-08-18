@@ -6,7 +6,6 @@ import { readFile } from 'node:fs/promises'
 import { extname, join, normalize } from 'node:path'
 import assert from 'node:assert/strict'
 import { chromium } from 'playwright'
-import ko from '../packs/au-whm-tax/i18n/ko.json' with { type: 'json' }
 
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.json': 'application/json', '.css': 'text/css' }
 const root = process.cwd()
@@ -80,9 +79,14 @@ assert.ok(await page.locator('#worksheet').isHidden(), 'confirmation must lapse 
 await answerNumber('tax was withheld', 9000)
 await page.locator('#confirm').check()
 
-await page.locator('.locale button[data-locale=ko]').click()
-assert.equal(await page.locator('.tagline').textContent(), ko['app.tagline'], 'Korean did not load')
-assert.equal(await page.locator('.yesno button').first().textContent(), ko['ui.yes'], 'yes/no buttons must localise')
+// Every locale renders, and the interview itself localises with it.
+for (const b of await page.locator('.locale button').all()) {
+  const code = await b.getAttribute('data-locale')
+  const dict = JSON.parse(await readFile(`packs/au-whm-tax/i18n/${code}.json`, 'utf8'))
+  await b.click()
+  assert.equal(await page.locator('.tagline').textContent(), dict['app.tagline'], `${code} did not load`)
+  assert.equal(await page.locator('.yesno button').first().textContent(), dict['ui.yes'], `${code} yes/no buttons`)
+}
 await page.locator('.locale button[data-locale=en]').click()
 
 const shot = process.argv.includes('--shot') ? process.argv[process.argv.indexOf('--shot') + 1] : null

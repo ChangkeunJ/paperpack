@@ -63,6 +63,11 @@
   <div class="locale">
     <button data-locale="en" aria-pressed="true">English</button>
     <button data-locale="ko" aria-pressed="false">Korean</button>
+    <button data-locale="zh" aria-pressed="false">Chinese</button>
+    <button data-locale="ja" aria-pressed="false">Japanese</button>
+    <button data-locale="vi" aria-pressed="false">Vietnamese</button>
+    <button data-locale="fr" aria-pressed="false">French</button>
+    <button data-locale="es" aria-pressed="false">Spanish</button>
   </div>
   <h1 data-t="app.name"></h1>
   <p class="tagline" data-t="app.tagline"></p>
@@ -106,8 +111,13 @@ import { visibleQuestions, isComplete, prune } from '../dist/src/interview.js'
 // locale the tests know about must never be missing from a fresh build.
 import en from '../packs/au-whm-tax/i18n/en.json' with { type: 'json' }
 import ko from '../packs/au-whm-tax/i18n/ko.json' with { type: 'json' }
+import zh from '../packs/au-whm-tax/i18n/zh.json' with { type: 'json' }
+import ja from '../packs/au-whm-tax/i18n/ja.json' with { type: 'json' }
+import vi from '../packs/au-whm-tax/i18n/vi.json' with { type: 'json' }
+import fr from '../packs/au-whm-tax/i18n/fr.json' with { type: 'json' }
+import es from '../packs/au-whm-tax/i18n/es.json' with { type: 'json' }
 
-const dicts = { en, ko }
+const dicts = { en, ko, zh, ja, vi, fr, es }
 let locale = 'en'
 
 // Whole dollars only, and rows are rounded before the totals are taken from them, so
