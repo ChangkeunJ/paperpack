@@ -16,6 +16,10 @@ function run(relPath, contents) {
   return { ok: r.status === 0, out: r.stderr }
 }
 
+// Built at runtime so this file itself carries no Korean, encoded or otherwise.
+const KOREAN = String.fromCodePoint(0xd55c, 0xad6d, 0xc5b4)
+const HELLO = String.fromCodePoint(0xc548, 0xb155)
+
 const rule = extra => JSON.stringify({
   rules: { rate: { value: 0.15, from: '2025-07-01', source: 'https://ato.gov.au/x', checked: '2026-08-18', ...extra } },
 })
@@ -41,8 +45,8 @@ test('rejects LLM cliches in prose but not in code identifiers', () => {
 })
 
 test('rejects Korean outside i18n/ko.json', () => {
-  assert.ok(!run('g.ts', 'const label = "\u{D55C}\u{AD6D}\u{C5B4}"\n').ok)
-  assert.ok(run('packs/au-whm-tax/i18n/ko.json', '{"hello":"\u{C548}\u{B155}"}\n').ok)
+  assert.ok(!run('g.ts', `const label = "${KOREAN}"\n`).ok)
+  assert.ok(run('packs/au-whm-tax/i18n/ko.json', `{"hello":"${HELLO}"}\n`).ok)
 })
 
 test('rejects revenue wording inside the tax pack only', () => {
@@ -68,7 +72,49 @@ test('binary files are skipped rather than decoded as text', () => {
   // A PNG decoded as UTF-8 yields bytes that look like all sorts of scripts.
   const png = Buffer.concat([
     Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d]),
-    Buffer.from('\u{D55C}\u{AD6D}', 'utf8'),
+    Buffer.from(KOREAN, 'utf8'),
   ])
   assert.ok(run('docs/shot.png', png).ok)
+})
+
+test('a NUL byte cannot excuse a source file from the rules', () => {
+  const smuggled = Buffer.concat([Buffer.from([0]), Buffer.from('see pricing\n')])
+  const r = run('packs/au-whm-tax/nul.ts', smuggled)
+  assert.ok(!r.ok)
+  assert.match(r.out, /NUL byte/)
+})
+
+test('path spelling does not change which rules apply', () => {
+  assert.ok(!run('./packs/au-whm-tax/dot.ts', 'const s = "see pricing"\n').ok)
+})
+
+test('rejects the revenue forms the hard rule actually names', () => {
+  for (const wording of ['a donation link', 'the paid tier', 'premium features', 'sponsored by']) {
+    assert.ok(!run('packs/au-whm-tax/rev.ts', `const s = "${wording}"\n`).ok, wording)
+  }
+  const note = rule({ note: 'The fund may charge a fee on a paper application.' })
+  assert.ok(run('packs/au-whm-tax/rules/tax.json', note).ok, 'a rule note may describe a government fee')
+  assert.ok(!run('packs/au-whm-tax/rules/tax.json', rule({ note: 'donate here' })).ok)
+})
+
+test('regulatory numbers cannot hide outside the rules key', () => {
+  const r = run('packs/au-whm-tax/rules/tax.json', '{"jurisdiction":"AU","bands":[{"rate":0.15}],"rules":{}}')
+  assert.ok(!r.ok)
+  assert.match(r.out, /top-level key "bands"/)
+  assert.match(r.out, /nothing under "rules"/)
+})
+
+test('escaped Korean is still Korean', () => {
+  assert.ok(!run('h.ts', 'const k = "\\u{D55C}\\u{AD6D}"\n').ok)
+  const entities = [0xd55c, 0xad6d, 0xc5b4].map(n => `&#${n};`).join('')
+  assert.ok(!run('i.html', `<b>${entities}</b>\n`).ok)
+  assert.ok(run('j.ts', 'const re = new RegExp("[\\\\u3131-\\\\u318E]")\n').ok, 'an escaped backslash is not Korean')
+})
+
+test('the Korean exemption is only the pack translation file', () => {
+  assert.ok(!run('web/i18n/ko.json', `{"hello":"${HELLO}"}\n`).ok)
+})
+
+test('an emoji anywhere in a heading is still an emoji heading', () => {
+  assert.ok(!run('k.md', '## Features \u{1F680}\n').ok)
 })

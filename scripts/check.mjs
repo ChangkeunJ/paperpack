@@ -4,12 +4,13 @@
 
 import { readFileSync, statSync } from 'node:fs'
 import { execSync } from 'node:child_process'
+import { resolve, relative, sep } from 'node:path'
 
 const AI_TELLS = [
   [/Co-Authored-By:\s*Claude/i, 'AI attribution trailer'],
   [/Generated with \[?Claude/i, 'AI generation footer'],
   [/\u{1F916}/u, 'robot emoji'],
-  [/^#{1,6}\s*[\p{Extended_Pictographic}]/mu, 'emoji heading'],
+  [/^#{1,6}\s*[^\n]*\p{Extended_Pictographic}/mu, 'emoji heading'],
   [/^\s*(\/\/|#|\*)\s*=={3,}/m, 'divider comment'],
   [/^\s*(\/\/|#)\s*Step \d+[:.]/m, 'numbered step comment'],
 ]
@@ -17,11 +18,34 @@ const AI_TELLS = [
 // Only applied to prose (markdown) and comment lines, where they are actually tells.
 const CLICHES = /\b(seamlessly|effortlessly|delve into|robust and scalable|comprehensive solution|leverage the power|perfect for anyone|it'?s worth noting that|this ensures that)\b/i
 
-const HANGUL = /[\u3131-\u318E\uAC00-\uD7A3]/
-const REVENUE = /\b(affiliate|sponsor(ship)?|pricing|paid plan|pro tier|subscribe now|buy now)\b/i
+const HANGUL = new RegExp('[\\u3131-\\u318E\\uAC00-\\uD7A3]')
+const KO_EXEMPT = /^(dist\/)?packs\/[^/]+\/i18n\/ko\.json$/
+
+// Korean smuggled in as escapes or entities is still Korean on screen.
+const cp = h => { const n = parseInt(h, 16); return n <= 0x10ffff ? String.fromCodePoint(n) : '' }
+const decodeEscapes = line => line
+  .replace(/(?<!\\)\\u\{([0-9a-fA-F]{1,6})\}/g, (_, h) => cp(h))
+  .replace(/(?<!\\)\\u([0-9a-fA-F]{4})/g, (_, h) => cp(h))
+  .replace(/&#x([0-9a-fA-F]{1,6});/gi, (_, h) => cp(h))
+  .replace(/&#(\d{1,7});/g, (_, d) => cp(Number(d).toString(16)))
+
+// Money changing hands for the tool, in any form. Rule notes legitimately describe
+// government and fund fees, so rules data is only screened for revenue channels;
+// every other pack file also gets the broader wording list.
+const REVENUE_CHANNELS = /\b(affiliate|sponsor\w*|patreon|ko-fi|donat\w*|paid (?:plan|tier)|pro tier|pricing|paywall)\b/i
+const REVENUE_WORDING = /\b(subscribe|buy now|premium|tip jar|checkout|in-app purchase)\b/i
+
+// Binary formats are skipped, but a NUL byte cannot excuse a source file from the
+// rules: that is the one-byte switch that would turn every check off.
+const TEXT = /\.(ts|mts|cts|js|mjs|cjs|json|md|html|css|svg|yml|yaml|txt|sh)$/i
 
 const args = process.argv.slice(2)
+// Paths are matched against rules, so './packs/x' and an absolute path must mean the
+// same thing as 'packs/x'.
+const normalise = f => relative(process.cwd(), resolve(f)).split(sep).join('/')
 const files = (args.length ? args : execSync('git ls-files --cached --others --exclude-standard', { encoding: 'utf8' }).split('\n'))
+  .filter(f => f)
+  .map(normalise)
   .filter(f => f && !f.startsWith('.git/'))
   .filter(f => { try { return statSync(f).isFile() } catch { return false } })
 
@@ -34,7 +58,10 @@ for (const file of files) {
   const buf = readFileSync(file)
   // A NUL byte in the head is the usual sign of a binary file. Decoding a PNG as
   // UTF-8 produces convincing nonsense, including things that look like Hangul.
-  if (buf.subarray(0, 8192).includes(0)) continue
+  if (buf.subarray(0, 8192).includes(0)) {
+    if (TEXT.test(file)) fail(file, 'NUL byte in a text file')
+    continue
+  }
   const text = buf.toString('utf8')
   const isMd = file.endsWith('.md')
 
@@ -47,21 +74,33 @@ for (const file of files) {
       fail(file, `line ${i + 1}: LLM cliche — ${line.trim().slice(0, 60)}`)
     }
     // Korean belongs only in translation files.
-    if (HANGUL.test(line) && !/\/i18n\/ko\.json$/.test(file)) {
-      fail(file, `line ${i + 1}: Korean text outside i18n/ko.json`)
+    if (HANGUL.test(decodeEscapes(line)) && !KO_EXEMPT.test(file)) {
+      fail(file, `line ${i + 1}: Korean text outside packs/*/i18n/ko.json`)
     }
   }
 
   // Revenue paths inside the tax pack would make it a "tax agent service for reward"
   // under TASA 2009 s 50-5(1)(c). See docs/legal.md.
-  if (file.startsWith('packs/au-whm-tax/') && REVENUE.test(text)) {
-    fail(file, 'revenue-related wording inside the tax pack (TASA s 50-5)')
+  if (file.startsWith('packs/au-whm-tax/')) {
+    const rulesData = /\/rules\/[^/]+\.json$/.test(file)
+    if (REVENUE_CHANNELS.test(text) || (!rulesData && REVENUE_WORDING.test(text))) {
+      fail(file, 'revenue-related wording inside the tax pack (TASA s 50-5)')
+    }
   }
 
   // Every regulatory constant carries its provenance, or it does not ship.
   if (/^packs\/.+\/rules\/.+\.json$/.test(file)) {
     let doc
     try { doc = JSON.parse(text) } catch (e) { fail(file, `invalid JSON: ${e.message}`); continue }
+    // A number parked outside "rules" would dodge the provenance fields below.
+    for (const key of Object.keys(doc)) {
+      if (key !== 'jurisdiction' && key !== 'rules') {
+        fail(file, `top-level key "${key}" — regulatory data belongs under "rules"`)
+      }
+    }
+    if (!doc.rules || typeof doc.rules !== 'object' || !Object.keys(doc.rules).length) {
+      fail(file, 'a rules file with nothing under "rules"')
+    }
     for (const [key, rule] of Object.entries(doc.rules ?? {})) {
       for (const field of ['value', 'from', 'source', 'checked']) {
         if (rule?.[field] === undefined) fail(file, `rule "${key}" is missing "${field}"`)

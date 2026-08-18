@@ -81,7 +81,7 @@ await answerNumber('tax was withheld', 9000)
 await page.locator('#confirm').check()
 
 await page.locator('.locale button[data-locale=ko]').click()
-assert.match(await page.locator('.tagline').textContent(), /[\u3131-\u318E\uAC00-\uD7A3]/, 'Korean did not load')
+assert.equal(await page.locator('.tagline').textContent(), ko['app.tagline'], 'Korean did not load')
 assert.equal(await page.locator('.yesno button').first().textContent(), ko['ui.yes'], 'yes/no buttons must localise')
 await page.locator('.locale button[data-locale=en]').click()
 
