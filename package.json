@@ -8,6 +8,7 @@
     "build": "tsc",
     "check": "node scripts/check.mjs",
     "e2e": "tsc && node scripts/e2e.mjs",
+    "bundle": "tsc && node scripts/bundle.mjs",
     "prepare": "git config core.hooksPath .githooks || true",
     "test": "tsc && node --test $(find dist scripts -name '*.test.*js')"
   },
