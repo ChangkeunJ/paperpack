@@ -131,5 +131,9 @@
   "flag.whm-rate-covers-the-whole-payment": "이 퇴직연금 중 일부가 워킹홀리데이 비자 보유 기간에 적립됐기 때문에 지급액 전체에 65%가 적용됩니다. 비자별로 나누지 않고 안분도 없습니다.",
   "flag.ordinary-rates-despite-having-held-the-visa": "워킹홀리데이 비자를 보유했지만 이 퇴직연금에 그 기간 적립분이 없다고 답하셨기 때문에, 65%가 아니라 일반 세율이 적용됩니다. 믿기 전에 납입 내역을 확인하세요.",
   "flag.nothing-is-payable-until-the-visa-ends-and-you-leave": "펀드가 지급하려면 두 가지가 모두 충족돼야 합니다. 비자가 종료되었고, 호주를 떠났어야 합니다. 위 금액은 그 조건이 충족됐을 때의 금액입니다.",
-  "flag.components-add-up-to-more-than-the-balance": "입력하신 구성요소 합계가 잔액보다 큽니다. 위 금액은 맞지 않으니 펀드 명세서와 대조해 보세요."
+  "flag.components-add-up-to-more-than-the-balance": "입력하신 구성요소 합계가 잔액보다 큽니다. 위 금액은 맞지 않으니 펀드 명세서와 대조해 보세요.",
+  "flag.super-moves-to-the-ato-after-six-months": "비자 종료와 출국 중 나중의 시점으로부터 6개월이 지나면 펀드가 그 돈을 ATO로 넘깁니다. 다만 그날 바로 넘어가는 것이 아니라 그다음 4월 30일 또는 10월 31일에 넘어갑니다. 넘어가도 손해는 없습니다. 세율은 같고, 구성 내역은 펀드가 보고한 자료로 다시 계산되며, 청구 기한도 없습니다. 넘어간 뒤에는 펀드가 아니라 ATO에 청구하면 됩니다.",
+  "flag.dasp-is-not-income-on-your-return": "이 지급액은 세금 신고서상의 소득이 아닙니다. 세금은 지급 전에 원천징수되고 따로 신고할 것이 없으므로, 세금 계산기의 소득란에 더하지 마세요.",
+  "rule.unclaimedSuperTransfer": "미청구 퇴직연금의 ATO 이관",
+  "rule.daspProcessingDays": "출국 시 퇴직연금 지급 처리 기간"
 }

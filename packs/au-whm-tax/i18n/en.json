@@ -131,5 +131,9 @@
   "flag.whm-rate-covers-the-whole-payment": "Because part of this super went in while you held a working holiday visa, 65 per cent applies to the whole payment. It is not split between visas and there is no apportioning.",
   "flag.ordinary-rates-despite-having-held-the-visa": "You held a working holiday visa, but you said none of this super went in during that time, so the ordinary rates apply instead of 65 per cent. Check your contribution history before you rely on that.",
   "flag.nothing-is-payable-until-the-visa-ends-and-you-leave": "Two things have to be true before a fund pays anything out: the visa has ended, and you have left Australia. The figure above is what it would come to when they are.",
-  "flag.components-add-up-to-more-than-the-balance": "The components you entered come to more than the balance, so the figures above are wrong. Check them against your fund statement."
+  "flag.components-add-up-to-more-than-the-balance": "The components you entered come to more than the balance, so the figures above are wrong. Check them against your fund statement.",
+  "flag.super-moves-to-the-ato-after-six-months": "Six months after the later of your visa ending and you leaving, your fund hands the money to the ATO, though it moves on the next 30 April or 31 October rather than on the day itself. Nothing is lost when it does: the rate is the same, the components are rebuilt from what the fund reported, and there is no deadline to claim. Once it has moved you claim from the ATO instead of the fund.",
+  "flag.dasp-is-not-income-on-your-return": "This payment is not income on your tax return. The tax comes out before you are paid and there is nothing to declare, so do not add it to the earnings in the tax calculator.",
+  "rule.unclaimedSuperTransfer": "Transfer of unclaimed super to the ATO",
+  "rule.daspProcessingDays": "Processing time for a departing Australia superannuation payment"
 }

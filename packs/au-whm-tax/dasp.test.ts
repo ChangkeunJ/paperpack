@@ -77,3 +77,16 @@ test('the rate used carries a source and a check date', () => {
     assert.match(c!.checked, /^\d{4}-\d{2}-\d{2}$/)
   }
 })
+
+// Where the money is and whether it goes on the return do not depend on any answer, so
+// they are said every time rather than only when something triggers them.
+test('the transfer and the return are explained on every path', () => {
+  for (const o of [{}, { everHeldWhmVisa: false }, { hasDeparted: false }]) {
+    const r = at(o)
+    assert.ok(r.flags.includes('super-moves-to-the-ato-after-six-months'))
+    assert.ok(r.flags.includes('dasp-is-not-income-on-your-return'))
+    const cited = r.citations.map(c => c.rule)
+    assert.deepEqual([...new Set(cited)], cited)
+    assert.ok(cited.includes('unclaimedSuperTransfer'))
+  }
+})

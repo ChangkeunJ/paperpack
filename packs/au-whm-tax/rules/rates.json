@@ -263,6 +263,32 @@
       "source": "https://www.ato.gov.au/individuals-and-families/coming-to-australia-or-going-overseas/coming-to-australia/tax-free-threshold-for-newcomers-to-australia",
       "checked": "2026-08-18",
       "note": "Someone who becomes a resident partway through the year gets 13,464 plus 4,736 apportioned over the months they were a resident, counting the month of arrival in full and running to 30 June. Staying until 30 June does not avoid the apportionment. Whole calendar months, so 31 January and 1 January both count six. Income Tax Rates Act 1986 s 18(1) covers two shapes the ATO page does not: someone who ceases residency mid-year, and arrive-work-leave, where the period runs from the start of the arrival month to the end of the departure month. There is no apportionment at all where the period is the whole year. The formula is an exact fraction with no rounding, so an odd month count leaves cents. In statute only 4,736 and 18,200 are literals and 13,464 is the difference, so if the threshold ever moves the flat component goes stale silently. The page carries no effective date; 2012-07-01 is when the 18,200 threshold began."
+    },
+    "unclaimedSuperTransfer": {
+      "value": {
+        "months": 6,
+        "statementDays": [
+          {
+            "month": 4,
+            "day": 30
+          },
+          {
+            "month": 10,
+            "day": 31
+          }
+        ]
+      },
+      "from": "2009-06-15",
+      "source": "https://www.legislation.gov.au/C2004A00518/latest/latest/text/original/epub/OEBPS/document_1/document_1.html",
+      "checked": "2026-08-18",
+      "note": "Six months from the later of the visa ceasing and the departure, not from either one alone, and it is a definition rather than a deadline: it is when s 20AA(1)(b) of the Unclaimed Money and Lost Members Act makes someone a former temporary resident, which obliges the Commissioner to notify the fund under s 20C. The money itself moves on the next scheduled statement day after that notice, or the one after if the notice came within 28 days of it. Those days are 30 April and 31 October, set by TPAL 2007/2 under s 20B, so the real lag after departure is anywhere from six months to over a year. The ATO summarises all of this as six months. Nothing is lost when it moves: s 307-142 and s 307-300 rebuild the component split from what the fund reported, the working holiday rate still applies, and there is no deadline to claim."
+    },
+    "daspProcessingDays": {
+      "value": 28,
+      "from": "2026-08-18",
+      "source": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/temporary-residents-and-superannuation/departing-australia-superannuation-payment-dasp",
+      "checked": "2026-08-18",
+      "note": "The ATO calls it a service standard rather than a limit, and says an incomplete application or a request for documents takes longer. For money still in a fund the same 28 days is an obligation rather than a standard: SIS Regulations reg 6.20A(5)(b) requires the benefit to be cashed within 28 days of the request. For money already transferred to the ATO the same page says it cannot always meet the standard. The page publishes no effective date. A fund may charge a fee on a paper application and Home Affairs charges for the certification of immigration status a paper claim of 5,000 dollars or more needs, but neither publishes an amount, so neither is recorded here."
     }
   }
 }

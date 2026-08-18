@@ -81,6 +81,6 @@ test('every flag the super calculator can raise has a message', () => {
             estimateDasp({ ...base, everHeldWhmVisa, superFromWhmPeriod, visaCeased,
               hasDeparted, taxFreeComponent }).flags.forEach(f => seen.add(f))
 
-  assert.equal(seen.size, 4, [...seen].join(', '))
+  assert.equal(seen.size, 6, [...seen].join(', '))
   for (const flag of seen) assert.ok(keys(en).has(`flag.${flag}`), `flag.${flag}`)
 })

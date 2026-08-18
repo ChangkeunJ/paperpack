@@ -68,6 +68,9 @@ export function estimateDasp(a: DaspAnswers): DaspEstimate {
   const claimable = a.visaCeased && a.hasDeparted
   if (!claimable) flags.push('nothing-is-payable-until-the-visa-ends-and-you-leave')
 
+  // Neither of these depends on an answer, and both are things people find out too late.
+  flags.push('super-moves-to-the-ato-after-six-months', 'dasp-is-not-income-on-your-return')
+
   return {
     rates: whm ? 'whm' : 'ordinary',
     taxFreeComponent,
@@ -77,6 +80,6 @@ export function estimateDasp(a: DaspAnswers): DaspEstimate {
     net: Math.max(0, a.superBalance) - tax,
     claimable,
     flags,
-    citations: cite([rule]),
+    citations: cite([rule, 'unclaimedSuperTransfer', 'daspProcessingDays']),
   }
 }
