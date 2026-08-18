@@ -25,7 +25,7 @@ of the two numbers and the one taxed hardest.
 - Works out what a DASP claim leaves you with after tax, at the working holiday rate
   where it applies and the ordinary temporary resident rates where it does not
 - Prints every figure with the ATO page it came from and the date that page was checked
-- Speaks English, Korean, Chinese, Japanese, Vietnamese, French and Spanish
+- Speaks English, Korean, Chinese in both scripts, Japanese, Vietnamese, French and Spanish
 
 ## What it does not do
 
