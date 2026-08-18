@@ -23,7 +23,11 @@ export function nextUnanswered<A extends Answers>(
   questions: readonly Question<A>[],
   answers: Partial<A>,
 ): Question<A> | undefined {
-  return visibleQuestions(questions, answers).find(q => answers[q.id] === undefined)
+  // A blank string is not an answer, but false and zero are.
+  return visibleQuestions(questions, answers).find(q => {
+    const v = answers[q.id]
+    return v === undefined || (typeof v === 'string' && v.trim() === '')
+  })
 }
 
 export function isComplete<A extends Answers>(
