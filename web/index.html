@@ -47,6 +47,12 @@
   .sources { font-size: .8rem; color: var(--muted) }
   .sources li { margin-bottom: .35rem }
   [hidden] { display: none !important }
+  .tools { display: flex; gap: .5rem; margin: 1.5rem 0 }
+  .tools button {
+    flex: 1; padding: .6rem; font: inherit; color: inherit; cursor: pointer;
+    background: transparent; border: 1px solid var(--line); border-radius: 6px;
+  }
+  .tools button[aria-pressed=true] { background: var(--accent); color: var(--bg); border-color: var(--accent) }
   .locale { float: right; font-size: .875rem }
   .locale button { background: none; border: 0; color: var(--muted); cursor: pointer; font: inherit; padding: 0 .3rem }
   .locale button[aria-pressed=true] { color: var(--fg); text-decoration: underline }
@@ -61,6 +67,11 @@
   <h1 data-t="app.name"></h1>
   <p class="tagline" data-t="app.tagline"></p>
   <p class="privacy" data-t="app.privacy"></p>
+
+  <div class="tools">
+    <button type="button" data-tool="tax" data-t="tool.tax" aria-pressed="true"></button>
+    <button type="button" data-tool="dasp" data-t="tool.dasp" aria-pressed="false"></button>
+  </div>
 
   <form id="form"></form>
 
@@ -87,15 +98,70 @@
 </main>
 
 <script type="module">
-import { questions } from '../dist/packs/au-whm-tax/interview.js'
+import { questions, daspQuestions } from '../dist/packs/au-whm-tax/interview.js'
 import { estimate } from '../dist/packs/au-whm-tax/calculate.js'
+import { estimateDasp } from '../dist/packs/au-whm-tax/dasp.js'
 import { visibleQuestions, prune } from '../dist/src/interview.js'
 import en from '../dist/packs/au-whm-tax/i18n/en.json' with { type: 'json' }
 import ko from '../dist/packs/au-whm-tax/i18n/ko.json' with { type: 'json' }
 
 const dicts = { en, ko }
 let locale = 'en'
-let answers = {}
+
+function taxView(a) {
+  const r = estimate({ hasMedicareEntitlementStatement: false, ...a })
+  const refused = r.basis === 'referral-no-published-thresholds'
+  return {
+    rows: refused ? [['result.taxableIncome', r.taxableIncome]] : [
+      ['result.taxableIncome', r.taxableIncome],
+      ['result.taxPayable', r.taxPayable],
+      ...(r.lowIncomeTaxOffset ? [['result.lowIncomeTaxOffset', -r.lowIncomeTaxOffset]] : []),
+      ...(r.medicareLevy ? [['result.medicareLevy', r.medicareLevy]] : []),
+      ['result.totalLiability', r.totalLiability],
+      ['result.credit', r.credit],
+    ],
+    total: refused ? null : [r.balance >= 0 ? 'result.refund' : 'result.owing', Math.abs(r.balance)],
+    comparison: r.comparison && [
+      ['result.whmBasis', r.comparison.whmBasis.total, r.comparison.applied === 'whm'],
+      ['result.residentBasis', r.comparison.residentBasis.total, r.comparison.applied === 'resident'],
+    ],
+    period: dicts[locale][`fy.${a.financialYear}`],
+    flags: r.flags,
+    citations: r.citations,
+  }
+}
+
+function daspView(a) {
+  const r = estimateDasp({ taxFreeComponent: 0, untaxedElement: 0, ...a })
+  return {
+    rows: [
+      ['dasp.balance', a.superBalance],
+      ...(r.taxFreeComponent ? [['dasp.taxFreeComponent', r.taxFreeComponent]] : []),
+      ...(r.untaxedElement ? [['dasp.untaxedElement', r.untaxedElement]] : []),
+      ['dasp.tax', -r.tax],
+    ],
+    total: ['dasp.net', r.net],
+    flags: r.flags,
+    citations: r.citations,
+  }
+}
+
+const tools = {
+  tax: {
+    questions,
+    answers: {},
+    needed: ['financialYear', 'nationality', 'isAustralianTaxResident',
+      'providedTfn', 'grossIncome', 'taxWithheld', 'workRelatedDeductions'],
+    view: taxView,
+  },
+  dasp: {
+    questions: daspQuestions,
+    answers: {},
+    needed: ['superBalance', 'everHeldWhmVisa', 'visaCeased', 'hasDeparted'],
+    view: daspView,
+  },
+}
+let tool = 'tax'
 
 const t = key => dicts[locale][key] ?? key
 const money = n => n.toLocaleString('en-AU', { style: 'currency', currency: 'AUD', maximumFractionDigits: 0 })
@@ -107,6 +173,7 @@ function paintStatic() {
 }
 
 function field(q) {
+  const answers = tools[tool].answers
   const wrap = document.createElement('fieldset')
   const legend = document.createElement('legend')
   legend.textContent = t(q.promptKey)
@@ -151,82 +218,73 @@ function field(q) {
 }
 
 function set(id, value) {
-  if (value === undefined) delete answers[id]
-  else answers[id] = value
-  answers = prune(questions, answers)
+  const t = tools[tool]
+  if (value === undefined) delete t.answers[id]
+  else t.answers[id] = value
+  t.answers = prune(t.questions, t.answers)
   render()
 }
 
 function render() {
   paintStatic()
+  for (const b of document.querySelectorAll('.tools button')) {
+    b.setAttribute('aria-pressed', String(b.dataset.tool === tool))
+  }
+  const active = tools[tool]
   const form = document.getElementById('form')
-  form.replaceChildren(...visibleQuestions(questions, answers).map(field))
+  form.replaceChildren(...visibleQuestions(active.questions, active.answers).map(field))
 
-  const needed = ['financialYear', 'nationality', 'isAustralianTaxResident',
-    'providedTfn', 'grossIncome', 'taxWithheld', 'workRelatedDeductions']
-  const ready = needed.every(id => answers[id] !== undefined)
+  const ready = active.needed.every(id => active.answers[id] !== undefined)
   document.getElementById('result').hidden = !ready
   if (!ready) return
 
-  const r = estimate({ hasMedicareEntitlementStatement: false, ...answers })
+  const v = active.view(active.answers)
 
-  const rows = r.basis === 'referral-no-published-thresholds'
-    ? [['result.taxableIncome', r.taxableIncome]]
-    : [
-        ['result.taxableIncome', r.taxableIncome],
-        ['result.taxPayable', r.taxPayable],
-        ...(r.lowIncomeTaxOffset ? [['result.lowIncomeTaxOffset', -r.lowIncomeTaxOffset]] : []),
-        ...(r.medicareLevy ? [['result.medicareLevy', r.medicareLevy]] : []),
-        ['result.totalLiability', r.totalLiability],
-        ['result.credit', r.credit],
-      ]
   const table = document.getElementById('figures')
   table.replaceChildren()
-  for (const [key, value] of rows) {
+  for (const [key, value] of v.rows) {
     const tr = table.insertRow()
     tr.insertCell().textContent = t(key)
     tr.insertCell().textContent = money(value)
   }
-  if (r.basis !== 'referral-no-published-thresholds') {
+  if (v.total) {
     const tr = table.insertRow()
     tr.className = 'total'
-    tr.insertCell().textContent = t(r.balance >= 0 ? 'result.refund' : 'result.owing')
-    tr.insertCell().textContent = money(Math.abs(r.balance))
+    tr.insertCell().textContent = t(v.total[0])
+    tr.insertCell().textContent = money(v.total[1])
   }
 
   // Both sides of the treaty comparison, so the cheaper one is not taken on trust.
   const sides = document.getElementById('comparison')
   sides.replaceChildren()
-  sides.hidden = !r.comparison
-  if (r.comparison) {
+  sides.hidden = !v.comparison
+  if (v.comparison) {
     const caption = document.createElement('caption')
     caption.textContent = t('result.comparison')
     sides.appendChild(caption)
-    for (const [key, side] of [['result.whmBasis', r.comparison.whmBasis],
-                               ['result.residentBasis', r.comparison.residentBasis]]) {
+    for (const [key, amount, applied] of v.comparison) {
       const tr = sides.insertRow()
-      if (side === (r.comparison.applied === 'whm' ? r.comparison.whmBasis : r.comparison.residentBasis)) {
-        tr.className = 'total'
-      }
+      if (applied) tr.className = 'total'
       tr.insertCell().textContent = t(key)
-      tr.insertCell().textContent = money(side.total)
+      tr.insertCell().textContent = money(amount)
     }
   }
 
   const flags = document.getElementById('flags')
-  flags.replaceChildren(...r.flags.map(f => {
+  flags.replaceChildren(...v.flags.map(f => {
     const p = document.createElement('p')
     p.className = 'note'
     p.textContent = t(`flag.${f}`)
     return p
   }))
 
-  const newest = r.citations.map(c => c.checked).sort().at(-1) ?? ''
-  document.getElementById('effective').textContent =
-    t('disclaimer.effective').replace('{from}', dicts[locale][`fy.${answers.financialYear}`]).replace('{checked}', newest)
+  const newest = v.citations.map(c => c.checked).sort().at(-1) ?? ''
+  document.getElementById('effective').textContent = v.period
+    ? t('disclaimer.effective').replace('{from}', v.period).replace('{checked}', newest)
+    : t('disclaimer.checked').replace('{checked}', newest)
 
   const sources = document.getElementById('sources')
-  sources.replaceChildren(...r.citations.map(c => {
+  sources.replaceChildren(...v.citations.map(c => {
     const li = document.createElement('li')
     const a = document.createElement('a')
     a.href = c.source
@@ -244,6 +302,14 @@ function render() {
 
 document.getElementById('confirm').onchange = e => {
   document.getElementById('worksheet').hidden = !e.target.checked
+}
+for (const b of document.querySelectorAll('.tools button')) {
+  b.onclick = () => {
+    tool = b.dataset.tool
+    document.getElementById('confirm').checked = false
+    document.getElementById('worksheet').hidden = true
+    render()
+  }
 }
 for (const b of document.querySelectorAll('.locale button')) {
   b.onclick = () => {
