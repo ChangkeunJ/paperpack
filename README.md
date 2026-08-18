@@ -9,6 +9,9 @@ hold a 417 or 462 visa at any time, most of them are taxed from the first dollar
 no tax free threshold, and a lot of them are over-withheld by an employer who never
 registered as a working holiday employer. That money only comes back if you lodge.
 
+It also works out the departing super payment, which for most backpackers is the larger
+of the two numbers and the one taxed hardest.
+
 ## What it does
 
 - Works out the tax on working holiday income for 2025-26 and 2026-27
@@ -18,6 +21,8 @@ registered as a working holiday employer. That money only comes back if you lodg
 - Runs the *Addy* comparison for a resident of a treaty country: it works out the tax
   both as a working holiday maker and as a resident Australian national, shows both, and
   applies the cheaper one, which is what the treaty actually gives you
+- Works out what a DASP claim leaves you with after tax, at the working holiday rate
+  where it applies and the ordinary temporary resident rates where it does not
 - Prints every figure with the ATO page it came from and the date that page was checked
 - Speaks English and Korean
 
@@ -34,6 +39,9 @@ registered as a working holiday employer. That money only comes back if you lodg
 - It does not model deduction rules it has not read. From 2026-27 the 300 dollar
   no-receipts allowance is repealed and a 1,000 dollar standard deduction replaces it for
   residents only, so the two years behave differently on purpose.
+- It does not decide the DASP rate off the visa alone. Holding a 417 or 462 is only
+  half the test; the payment also has to contain super contributed while it was held,
+  and if it does the higher rate applies to the whole payment.
 - It is not a tax agent service and nothing in it is tax advice. It applies published
   rates to numbers you typed. Check them, and if you need advice you can rely on, ask a
   registered tax agent. See [docs/legal.md](docs/legal.md).
@@ -79,9 +87,9 @@ the source link visible next to anything you translate.
 
 ## Adding a pack
 
-A pack is an interview (`interview.ts`), a calculation (`calculate.ts`), rule data with
-sources (`rules/*.json`) and strings (`i18n/*.json`). The engine in `src/` has no
-knowledge of Australia or of tax.
+A pack is an interview (`interview.ts`), one or more calculations (`calculate.ts`,
+`dasp.ts`), rule data with sources (`rules/*.json`) and strings (`i18n/*.json`). The
+engine in `src/` has no knowledge of Australia or of tax.
 
 ## License
 
