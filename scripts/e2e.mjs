@@ -89,7 +89,7 @@ assert.equal(await page.locator('#comparison tr.total').count(), 1, 'exactly one
 // The super calculator is a separate tool behind the same disclaimer gate.
 await page.locator('.tools button[data-tool=dasp]').click()
 await answerNumber('super is in your fund', 6000)
-await answerBool('417 or 462 visa', true)
+await answerBool('ever held a working holiday visa', true)
 await answerBool('paid in while you held', true)
 await answerNumber('tax free component', 0)
 await answerNumber('untaxed element', 0)

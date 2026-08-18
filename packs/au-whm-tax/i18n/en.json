@@ -111,8 +111,8 @@
   "disclaimer.checked": "Rates last checked against the source on {checked}.",
   "q.superBalance": "How much super is in your fund, before tax?",
   "help.superBalance": "The balance the fund will pay out. Your fund app or last statement has it. If you had several jobs you may have several funds, so add them up or work them out one at a time.",
-  "q.everHeldWhmVisa": "Have you ever held a 417 or 462 visa?",
-  "help.everHeldWhmVisa": "Working Holiday (417) or Work and Holiday (462) at any point, along with any bridging visa attached to one. How long ago does not matter.",
+  "q.everHeldWhmVisa": "Have you ever held a working holiday visa?",
+  "help.everHeldWhmVisa": "Working Holiday (417) or Work and Holiday (462) at any point. Two others count and are easy to miss: a bridging visa that let you work while a 417 or 462 application was still undecided, and the COVID-19 pandemic event 408 visa a lot of backpackers were moved onto in 2020 and 2021. How long ago does not matter.",
   "q.superFromWhmPeriod": "Does this super include anything paid in while you held that visa?",
   "help.superFromWhmPeriod": "This is the part people get wrong. Holding the visa is not enough on its own. If even part of the balance went in during that time, the higher rate takes the whole payment. If none of it did, the ordinary rates apply.",
   "q.taxFreeComponent": "How much of the balance is a tax free component?",
@@ -135,5 +135,6 @@
   "flag.super-moves-to-the-ato-after-six-months": "Six months after the later of your visa ending and you leaving, your fund hands the money to the ATO, though it moves on the next 30 April or 31 October rather than on the day itself. Nothing is lost when it does: the rate is the same, the components are rebuilt from what the fund reported, and there is no deadline to claim. Once it has moved you claim from the ATO instead of the fund.",
   "flag.dasp-is-not-income-on-your-return": "This payment is not income on your tax return. The tax comes out before you are paid and there is nothing to declare, so do not add it to the earnings in the tax calculator.",
   "rule.unclaimedSuperTransfer": "Transfer of unclaimed super to the ATO",
-  "rule.daspProcessingDays": "Processing time for a departing Australia superannuation payment"
+  "rule.daspProcessingDays": "Processing time for a departing Australia superannuation payment",
+  "rule.workingHolidayMakerVisas": "Visas that make you a working holiday maker"
 }

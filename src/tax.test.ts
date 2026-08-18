@@ -24,14 +24,14 @@ test('band boundaries are continuous', () => {
 // Catches a mistyped base or rate in the rule data, which is the most likely
 // way this pack would quietly start telling people the wrong number.
 for (const [name, table] of Object.entries(rates.rules)) {
-  const bands = (table as { value: unknown }).value
-  if (!Array.isArray(bands) || !bands.every(b => 'upTo' in b && 'rate' in b)) continue
+  const value = (table as { value: unknown }).value
+  if (!Array.isArray(value) || !value.every(b => b && typeof b === 'object' && 'upTo' in b)) continue
+  const bands = value as Band[]
   test(`${name}: each base equals the tax at the previous ceiling`, () => {
     for (let i = 1; i < bands.length; i++) {
-      const ceiling = bands[i - 1].upTo as number
       assert.equal(
-        bands[i].base,
-        taxFromBands(bands as Band[], ceiling),
+        bands[i]!.base,
+        taxFromBands(bands, bands[i - 1]!.upTo as number),
         `band ${i} base disagrees with the table below it`,
       )
     }

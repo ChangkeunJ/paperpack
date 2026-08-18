@@ -111,8 +111,8 @@
   "disclaimer.checked": "세율 원문 최종 확인일 {checked}.",
   "q.superBalance": "펀드에 있는 퇴직연금은 세전으로 얼마입니까?",
   "help.superBalance": "펀드가 지급할 잔액입니다. 펀드 앱이나 마지막 명세서에 나옵니다. 여러 곳에서 일했다면 펀드가 여러 개일 수 있으니 합산하거나 하나씩 계산하세요.",
-  "q.everHeldWhmVisa": "417 또는 462 비자를 보유한 적이 있습니까?",
-  "help.everHeldWhmVisa": "Working Holiday(417) 또는 Work and Holiday(462), 그리고 그에 연계된 브리지 비자를 언제든 보유했다면 해당됩니다. 얼마나 오래전인지는 상관없습니다.",
+  "q.everHeldWhmVisa": "워킹홀리데이 비자를 보유한 적이 있습니까?",
+  "help.everHeldWhmVisa": "시기와 무관하게 Working Holiday(417) 또는 Work and Holiday(462)를 보유한 적이 있는지를 묻습니다. 놓치기 쉬운 두 가지도 해당됩니다. 417 또는 462 신청이 아직 처리되지 않은 동안 취업이 허용된 브리지 비자, 그리고 2020년과 2021년에 많은 워홀러가 전환됐던 COVID-19 pandemic event 408 비자입니다. 얼마나 오래전인지는 상관없습니다.",
   "q.superFromWhmPeriod": "이 퇴직연금에 그 비자를 보유한 기간에 적립된 금액이 포함돼 있습니까?",
   "help.superFromWhmPeriod": "사람들이 가장 많이 틀리는 부분입니다. 비자 보유만으로는 요건이 안 됩니다. 잔액 중 일부라도 그 기간에 적립됐다면 높은 세율이 지급액 전체에 걸립니다. 전혀 없다면 일반 세율이 적용됩니다.",
   "q.taxFreeComponent": "잔액 중 비과세분(tax free component)은 얼마입니까?",
@@ -135,5 +135,6 @@
   "flag.super-moves-to-the-ato-after-six-months": "비자 종료와 출국 중 나중의 시점으로부터 6개월이 지나면 펀드가 그 돈을 ATO로 넘깁니다. 다만 그날 바로 넘어가는 것이 아니라 그다음 4월 30일 또는 10월 31일에 넘어갑니다. 넘어가도 손해는 없습니다. 세율은 같고, 구성 내역은 펀드가 보고한 자료로 다시 계산되며, 청구 기한도 없습니다. 넘어간 뒤에는 펀드가 아니라 ATO에 청구하면 됩니다.",
   "flag.dasp-is-not-income-on-your-return": "이 지급액은 세금 신고서상의 소득이 아닙니다. 세금은 지급 전에 원천징수되고 따로 신고할 것이 없으므로, 세금 계산기의 소득란에 더하지 마세요.",
   "rule.unclaimedSuperTransfer": "미청구 퇴직연금의 ATO 이관",
-  "rule.daspProcessingDays": "출국 시 퇴직연금 지급 처리 기간"
+  "rule.daspProcessingDays": "출국 시 퇴직연금 지급 처리 기간",
+  "rule.workingHolidayMakerVisas": "워킹홀리데이 메이커로 인정되는 비자"
 }

@@ -43,7 +43,8 @@ export function estimateDasp(a: DaspAnswers): DaspEstimate {
   const flags: string[] = []
 
   // Two limbs, and people only remember the first. Having held the visa is not enough on
-  // its own: the payment also has to contain super contributed while it was held.
+  // its own: the payment also has to contain super contributed while it was held. Which
+  // visas count comes from Income Tax Rates Act s 3A(1), not from the two obvious ones.
   const whm = a.everHeldWhmVisa && a.superFromWhmPeriod === true
   const rule = whm ? 'daspWhmRates' : 'daspOtherTemporaryResidentRates'
   const rate = rates.rules[rule].value
@@ -80,6 +81,6 @@ export function estimateDasp(a: DaspAnswers): DaspEstimate {
     net: Math.max(0, a.superBalance) - tax,
     claimable,
     flags,
-    citations: cite([rule, 'unclaimedSuperTransfer', 'daspProcessingDays']),
+    citations: cite([rule, 'workingHolidayMakerVisas', 'unclaimedSuperTransfer', 'daspProcessingDays']),
   }
 }

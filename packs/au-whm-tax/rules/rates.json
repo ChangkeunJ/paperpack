@@ -111,7 +111,7 @@
       "from": "2017-07-01",
       "source": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/temporary-residents-and-superannuation/departing-australia-superannuation-payment-dasp",
       "checked": "2026-08-18",
-      "note": "A two-limb test, and the second limb matters. The rate applies where the person has ever held a 417 or 462 or an associated bridging visa AND the payment includes amounts attributable to contributions made while they held it. When held it does not matter; that the contributions fall in that period does. Someone who held a 417 years ago, accrued nothing then, and whose balance is all from a later visa pays the ordinary rates. Once triggered the rate applies to the entire payment with no apportionment. The dedicated tax-rates page for DASP is a 404; the table lives on the topic page cited here, and the 1 July 2017 start is s 5(3)(a) of the Superannuation (Departing Australia Superannuation Payments Tax) Act 2007."
+      "note": "A two-limb test, and the second limb matters. The rate applies where the person has ever been a working holiday maker within the meaning of s 3A of the Income Tax Rates Act 1986, which is wider than the two visa subclasses, AND the payment includes amounts attributable to contributions made while they were. When held it does not matter; that the contributions fall in that period does. Someone who held a 417 years ago, accrued nothing then, and whose balance is all from a later visa pays the ordinary rates. Once triggered the rate applies to the entire payment with no apportionment. The dedicated tax-rates page for DASP is a 404; the table lives on the topic page cited here, and the 1 July 2017 start is s 5(3)(a) of the Superannuation (Departing Australia Superannuation Payments Tax) Act 2007."
     },
     "daspOtherTemporaryResidentRates": {
       "value": {
@@ -289,6 +289,18 @@
       "source": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/temporary-residents-and-superannuation/departing-australia-superannuation-payment-dasp",
       "checked": "2026-08-18",
       "note": "The ATO calls it a service standard rather than a limit, and says an incomplete application or a request for documents takes longer. For money still in a fund the same 28 days is an obligation rather than a standard: SIS Regulations reg 6.20A(5)(b) requires the benefit to be cashed within 28 days of the request. For money already transferred to the ATO the same page says it cannot always meet the standard. The page publishes no effective date. A fund may charge a fee on a paper application and Home Affairs charges for the certification of immigration status a paper claim of 5,000 dollars or more needs, but neither publishes an amount, so neither is recorded here."
+    },
+    "workingHolidayMakerVisas": {
+      "value": [
+        "Subclass 417 (Working Holiday)",
+        "Subclass 462 (Work and Holiday)",
+        "A bridging visa permitting work, granted on a 417 or 462 application still to be decided, where the most recent visa other than a bridging visa was a 417 or 462",
+        "COVID-19 pandemic event 408 visa"
+      ],
+      "from": "2019-07-01",
+      "source": "https://www.legislation.gov.au/C2004A03348/latest/text",
+      "checked": "2026-08-18",
+      "note": "Income Tax Rates Act 1986 s 3A(1), which is the definition the DASP rate provision points at. Two of the four limbs go missing when this is taken from the ATO summary instead. The pandemic event 408 visa is one of them, and it is not a curiosity: large numbers of 417 and 462 holders were moved onto it in 2020 and 2021, and super paid in during that time puts the whole payment at 65 per cent. The ATO also states the bridging visa limb backwards, as one issued immediately after a 417 or 462 with none or a second one after it. The Act asks instead whether the bridging visa allows work and whether the 417 or 462 application it was granted on is still undecided, so a bridging visa on an application later refused counts and the ATO wording misses it. Paragraph (d) came from the Corporate Collective Investment Vehicle Framework and Other Measures Act 2022, Sch 8 Pt 1 items 17 and 18, applying from the 2019-20 income year for non-residents, which is the start recorded here; the other three limbs are older."
     }
   }
 }
