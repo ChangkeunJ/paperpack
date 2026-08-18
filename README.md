@@ -31,6 +31,9 @@ registered as a working holiday employer. That money only comes back if you lodg
   wrong.
 - It does not estimate a resident's 2026-27 tax until the ATO publishes that year's
   Medicare levy thresholds. Refusing a year is better than guessing at it.
+- It does not model deduction rules it has not read. From 2026-27 the 300 dollar
+  no-receipts allowance is repealed and a 1,000 dollar standard deduction replaces it for
+  residents only, so the two years behave differently on purpose.
 - It is not a tax agent service and nothing in it is tax advice. It applies published
   rates to numbers you typed. Check them, and if you need advice you can rely on, ask a
   registered tax agent. See [docs/legal.md](docs/legal.md).

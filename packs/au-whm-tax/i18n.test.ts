@@ -42,18 +42,19 @@ test('every flag the calculator can raise has a message', () => {
     workRelatedDeductions: 0, hasMedicareEntitlementStatement: false,
   }
   const seen = new Set<string>()
-  for (const nationality of NATIONALITIES)
+  for (const financialYear of ['2025-26', '2026-27'] as const)
+   for (const nationality of NATIONALITIES)
     for (const isAustralianTaxResident of [true, false])
       for (const providedTfn of [true, false])
         for (const hasMedicareEntitlementStatement of [true, false])
           for (const workRelatedDeductions of [0, 500])
             for (const residentMonths of [12, 6])
               for (const [grossIncome, taxWithheld] of [[30000, 9000], [200000, 10000]] as const)
-                estimate({ ...base, nationality, isAustralianTaxResident, providedTfn, residentMonths,
+                estimate({ ...base, financialYear, nationality, isAustralianTaxResident, providedTfn, residentMonths,
                   hasMedicareEntitlementStatement, workRelatedDeductions, grossIncome, taxWithheld })
                   .flags.forEach(f => seen.add(f))
 
-  assert.ok(seen.size >= 7, `only saw ${seen.size} flags`)
+  assert.ok(seen.size >= 12, `only saw ${seen.size} flags`)
   for (const flag of seen) assert.ok(keys(en).has(`flag.${flag}`), `flag.${flag}`)
 })
 

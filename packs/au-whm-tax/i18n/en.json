@@ -73,7 +73,6 @@
   "rule.deductionSubstantiationThreshold": "When work expenses need written evidence",
   "rule.earlyLodgementProcessingDays": "Early lodgement processing time",
   "rule.foreignResidentBands2025_26": "Foreign resident tax rates, used when the employer is not registered",
-  "rule.laundryRates": "Laundry claim rates",
   "rule.lodgementDueDate": "Lodgement due date",
   "rule.medicareEntitlementStatementWindow": "When you can apply for a Medicare Entitlement Statement",
   "rule.medicareLevyRate": "Medicare levy rate",
@@ -101,5 +100,10 @@
   "result.lowIncomeTaxOffset": "Low income tax offset",
   "result.comparison": "The treaty gives you the lower of these two",
   "result.whmBasis": "Assessed as a working holiday maker",
-  "result.residentBasis": "Assessed as a resident national"
+  "result.residentBasis": "Assessed as a resident national",
+  "flag.every-deduction-needs-written-evidence": "From this year the 300 dollar no receipts allowance is gone. Every dollar of work expense you claim needs written evidence.",
+  "flag.standard-deduction-applied": "A standard deduction of up to 1,000 dollars for work expenses has been applied because you were a resident. It replaces your own claim rather than adding to it, so claiming more than 1,000 dollars in real expenses is worth more.",
+  "rule.standardWorkDeduction": "Standard deduction for work expenses",
+  "rule.laundryWrittenEvidenceThreshold": "Laundry written evidence threshold",
+  "rule.laundryPerLoadRates": "Laundry rates per load"
 }

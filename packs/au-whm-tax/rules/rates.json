@@ -130,18 +130,35 @@
       "from": "1997-07-01",
       "source": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/clothes-and-items-you-wear-at-work/clothing-laundry-and-dry-cleaning-expenses",
       "checked": "2026-08-18",
-      "note": "No receipts needed below this total, but the expense must actually have been incurred and the taxpayer must be able to explain how the figure was worked out. It is not a free 300 dollars."
+      "note": "No receipts needed below this total, but the expense must actually have been incurred and the taxpayer must be able to explain how the figure was worked out. It is not a free 300 dollars. ITAA 1997 s 900-35 is repealed by Act No 49 of 2026 Sch 4 Pt 1 item 11 for assessments for 2026-27 and later, so this is the last year it applies. From then every dollar of actual work expense needs written evidence under s 900-15, and a resident gets the standard deduction instead.",
+      "to": "2026-06-30"
     },
-    "laundryRates": {
+    "laundryWrittenEvidenceThreshold": {
+      "value": 150,
+      "from": "1997-07-01",
+      "to": "2026-06-30",
+      "source": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/clothes-and-items-you-wear-at-work/clothing-laundry-and-dry-cleaning-expenses",
+      "checked": "2026-08-18",
+      "note": "Covers washing, drying and ironing but not dry-cleaning. Laundry still counts towards the 300 dollar total. ITAA 1997 s 900-40 is repealed by the same item as s 900-35, so this ends with 2025-26."
+    },
+    "laundryPerLoadRates": {
       "value": {
-        "writtenEvidenceThreshold": 150,
-        "perLoadDeductibleOnly": 1.0,
-        "perLoadMixed": 0.5
+        "deductibleOnly": 1.0,
+        "mixed": 0.5
       },
       "from": "1997-07-01",
       "source": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/clothes-and-items-you-wear-at-work/clothing-laundry-and-dry-cleaning-expenses",
       "checked": "2026-08-18",
-      "note": "The 150 dollar written-evidence threshold covers washing, drying and ironing. It does not extend to dry-cleaning."
+      "note": "Per load. These are the ATO practice for working out what a laundry claim is worth, not an evidence exception, so the 2026-27 repeal of the written evidence thresholds leaves them standing."
+    },
+    "standardWorkDeduction": {
+      "value": {
+        "max": 1000
+      },
+      "from": "2026-07-01",
+      "source": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/standard-deduction-for-work-related-expenses",
+      "checked": "2026-08-18",
+      "note": "ITAA 1997 s 25-130, inserted by Act No 49 of 2026 Sch 4 Pt 1, applying to assessments for 2026-27 and later. It is not a flat addition: the amount is the lesser of 1,000 and total labour income, reduced by the work deductions actually claimed, so the effect is a floor rather than a bonus and someone claiming more than 1,000 simply gets their actual expenses. Working holiday wages are labour income. The gate is being an Australian resident at any time in the year, with no apportionment for a part-year resident, so a foreign resident gets neither this nor the repealed 300 dollar allowance and is worse off than in 2025-26. No election and no indexation."
     },
     "residentBands2025_26": {
       "value": [

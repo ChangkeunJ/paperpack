@@ -74,6 +74,15 @@ const residentBandRule: Record<FinancialYear, 'residentBands2025_26' | 'resident
   '2026-27': 'residentBands2026_27',
 }
 
+// The 300 dollar no-receipts allowance is repealed from 2026-27 and a standard deduction
+// takes its place, so both are keyed by year rather than applied to every year.
+const substantiationRule: Partial<Record<FinancialYear, 'deductionSubstantiationThreshold'>> = {
+  '2025-26': 'deductionSubstantiationThreshold',
+}
+const standardDeductionRule: Partial<Record<FinancialYear, 'standardWorkDeduction'>> = {
+  '2026-27': 'standardWorkDeduction',
+}
+
 // Indexed every year and published late, so a year the ATO has not reached yet is absent
 // rather than guessed at.
 const medicareThresholdRule: Partial<Record<FinancialYear, 'medicareLevyLowIncomeSingle2025_26'>> = {
@@ -129,16 +138,33 @@ function assess(
 export function estimate(a: WhmAnswers): WhmEstimate {
   const flags: string[] = []
   const used: string[] = [whmBandRule[a.financialYear]]
-  const taxableIncome = Math.max(0, a.grossIncome - a.workRelatedDeductions)
 
   if (!a.providedTfn) {
     used.push('noTfnWithholdingRate')
     flags.push('no-tfn-withholding-is-recoverable')
   }
-  if (a.workRelatedDeductions > (rates.rules.deductionSubstantiationThreshold.value as number)) {
-    used.push('deductionSubstantiationThreshold')
+
+  let deductions = a.workRelatedDeductions
+  const substantiation = substantiationRule[a.financialYear]
+  if (!substantiation) {
+    flags.push('every-deduction-needs-written-evidence')
+  } else if (deductions > (rates.rules[substantiation].value as number)) {
+    used.push(substantiation)
     flags.push('deductions-need-written-evidence')
   }
+
+  // A floor on the work deduction rather than an addition to it, and only for a resident.
+  const standard = standardDeductionRule[a.financialYear]
+  if (standard && a.isAustralianTaxResident) {
+    used.push(standard)
+    const floor = Math.min(rates.rules[standard].value.max, a.grossIncome)
+    if (floor > deductions) {
+      deductions = floor
+      flags.push('standard-deduction-applied')
+    }
+  }
+
+  const taxableIncome = Math.max(0, a.grossIncome - deductions)
 
   const finish = (
     basis: WhmEstimate['basis'],

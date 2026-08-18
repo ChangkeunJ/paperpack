@@ -197,7 +197,37 @@ test('an exempt resident is computable in that year anyway', () => {
     hasMedicareEntitlementStatement: true,
   })
   assert.equal(r.basis, 'whm-rates')
-  assert.equal(r.totalLiability, 3800)
+  assert.equal(r.taxableIncome, 29000)
+  assert.equal(r.totalLiability, 3650)
+})
+
+// The 300 dollar no-receipts allowance is repealed from 2026-27 and a standard deduction
+// takes its place, for residents only.
+const in2026 = (o: Partial<WhmAnswers>) =>
+  at({ financialYear: '2026-27', hasMedicareEntitlementStatement: true, ...o })
+
+test('a foreign resident loses the no-receipts allowance and gains nothing', () => {
+  const r = in2026({})
+  assert.equal(r.taxableIncome, 30000)
+  assert.ok(r.flags.includes('every-deduction-needs-written-evidence'))
+  assert.ok(!r.flags.includes('standard-deduction-applied'))
+})
+
+test('the standard deduction is a floor, not an addition', () => {
+  assert.equal(in2026({ isAustralianTaxResident: true }).taxableIncome, 29000)
+  assert.equal(in2026({ isAustralianTaxResident: true, workRelatedDeductions: 400 }).taxableIncome, 29000)
+  assert.equal(in2026({ isAustralianTaxResident: true, workRelatedDeductions: 1500 }).taxableIncome, 28500)
+})
+
+test('the standard deduction cannot exceed what was earned', () => {
+  const r = in2026({ isAustralianTaxResident: true, grossIncome: 600, taxWithheld: 90 })
+  assert.equal(r.taxableIncome, 0)
+  assert.equal(r.taxPayable, 0)
+})
+
+test('the substantiation flag does not survive the rule that raised it', () => {
+  assert.ok(!in2026({ workRelatedDeductions: 500 }).flags.includes('deductions-need-written-evidence'))
+  assert.ok(at({ workRelatedDeductions: 500 }).flags.includes('deductions-need-written-evidence'))
 })
 
 test('every figure shown carries a source and a check date', () => {

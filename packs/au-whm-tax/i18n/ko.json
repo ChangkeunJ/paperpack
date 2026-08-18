@@ -73,7 +73,6 @@
   "rule.deductionSubstantiationThreshold": "업무 지출에 증빙이 필요해지는 기준",
   "rule.earlyLodgementProcessingDays": "조기 신고 처리 기간",
   "rule.foreignResidentBands2025_26": "외국인 거주자 세율 (고용주 미등록 시 적용)",
-  "rule.laundryRates": "세탁비 공제 기준",
   "rule.lodgementDueDate": "신고 기한",
   "rule.medicareEntitlementStatementWindow": "Medicare Entitlement Statement 신청 가능 시기",
   "rule.medicareLevyRate": "메디케어 부담금 요율",
@@ -101,5 +100,10 @@
   "result.lowIncomeTaxOffset": "저소득 세액공제",
   "result.comparison": "조약에 따라 이 둘 중 낮은 쪽이 적용됩니다",
   "result.whmBasis": "워킹홀리데이 기준으로 산정",
-  "result.residentBasis": "국적 거주자 기준으로 산정"
+  "result.residentBasis": "국적 거주자 기준으로 산정",
+  "flag.every-deduction-needs-written-evidence": "이 연도부터 300달러 무증빙 공제가 없어졌습니다. 신고하는 업무 관련 지출은 전액 증빙이 필요합니다.",
+  "flag.standard-deduction-applied": "거주자여서 업무 관련 지출에 대해 최대 1,000달러의 표준공제가 적용됐습니다. 직접 신고한 금액에 더해지는 게 아니라 대체하는 것이라, 실제 지출이 1,000달러를 넘으면 그쪽이 더 유리합니다.",
+  "rule.standardWorkDeduction": "업무 관련 지출 표준공제",
+  "rule.laundryWrittenEvidenceThreshold": "세탁비 증빙 면제 기준",
+  "rule.laundryPerLoadRates": "세탁 1회당 단가"
 }
