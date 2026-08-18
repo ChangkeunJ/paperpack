@@ -1,0 +1,89 @@
+{
+  "$schema": "../../../schemas/rules.schema.json",
+  "jurisdiction": "AU",
+  "rules": {
+    "whmBands2025_26": {
+      "value": [
+        { "upTo": 45000, "rate": 0.15, "base": 0 },
+        { "upTo": 135000, "rate": 0.30, "base": 6750 },
+        { "upTo": 190000, "rate": 0.37, "base": 33750 },
+        { "upTo": null, "rate": 0.45, "base": 54100 }
+      ],
+      "from": "2025-07-01",
+      "to": "2026-06-30",
+      "source": "https://www.ato.gov.au/tax-rates-and-codes/tax-rates-working-holiday-makers",
+      "checked": "2026-08-18"
+    },
+    "whmBands2026_27": {
+      "value": [
+        { "upTo": 45000, "rate": 0.15, "base": 0 },
+        { "upTo": 135000, "rate": 0.30, "base": 6750 },
+        { "upTo": 190000, "rate": 0.37, "base": 33750 },
+        { "upTo": null, "rate": 0.45, "base": 54100 }
+      ],
+      "from": "2026-07-01",
+      "source": "https://www.ato.gov.au/tax-rates-and-codes/schedule-15-tax-table-for-working-holiday-makers",
+      "checked": "2026-08-18",
+      "note": "Bands taken from the 2026-27 withholding schedule (NAT 75331). The ATO assessment-rate page still stops at 2025-26, so the base amounts are inferred from identical bands. Re-verify once the assessment page is updated."
+    },
+    "foreignResidentBands2025_26": {
+      "value": [
+        { "upTo": 135000, "rate": 0.30, "base": 0 },
+        { "upTo": 190000, "rate": 0.37, "base": 40500 },
+        { "upTo": null, "rate": 0.45, "base": 60850 }
+      ],
+      "from": "2025-07-01",
+      "to": "2026-06-30",
+      "source": "https://www.ato.gov.au/tax-rates-and-codes/tax-rates-foreign-residents",
+      "checked": "2026-08-18",
+      "note": "Applies to withholding when the employer is not registered as a WHM employer. No tax-free threshold, no Medicare levy."
+    },
+    "noTfnWithholdingRate": {
+      "value": 0.45,
+      "from": "2025-07-01",
+      "source": "https://www.ato.gov.au/tax-rates-and-codes/schedule-15-tax-table-for-working-holiday-makers",
+      "checked": "2026-08-18",
+      "note": "45 per cent, not 47. The extra 2 per cent Medicare component belongs to the resident no-TFN rate and WHMs sit outside it."
+    },
+    "taxFreeThreshold": {
+      "value": 18200,
+      "from": "2012-07-01",
+      "source": "https://www.ato.gov.au/individuals-and-families/coming-to-australia-or-going-overseas/coming-to-australia/taxation-of-australian-resident-whms-from-nda-countries",
+      "checked": "2026-08-18",
+      "note": "Reachable by a WHM only when they are an Australian tax resident AND hold the nationality of an NDA country. See eligibility.json."
+    },
+    "medicareLevyRate": {
+      "value": 0.02,
+      "from": "2014-07-01",
+      "source": "https://www.ato.gov.au/individuals-and-families/medicare-and-private-health-insurance/medicare-levy/medicare-levy-exemption/not-entitled-to-medicare-benefits",
+      "checked": "2026-08-18",
+      "note": "Foreign residents do not pay it. A resident WHM does, unless a Medicare Entitlement Statement supports an exemption."
+    },
+    "daspWhmRates": {
+      "value": { "taxFreeComponent": 0, "taxedElement": 0.65, "untaxedElement": 0.65 },
+      "from": "2017-07-01",
+      "source": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/temporary-residents-and-superannuation/departing-australia-superannuation-payment-dasp",
+      "checked": "2026-08-18",
+      "note": "UNCONFIRMED CONTAMINATION RULE: secondary sources agree that any contribution made while on a 417 or 462 visa pushes the whole payment to 65 per cent, including amounts earned later on another visa. The dedicated ATO rates page returned 404. Do not rely on this for mixed-visa users until re-verified."
+    },
+    "daspOtherTemporaryResidentRates": {
+      "value": { "taxFreeComponent": 0, "taxedElement": 0.35, "untaxedElement": 0.45 },
+      "from": "2017-07-01",
+      "source": "https://www.ato.gov.au/individuals-and-families/super-for-individuals-and-families/super/temporary-residents-and-superannuation/departing-australia-superannuation-payment-dasp",
+      "checked": "2026-08-18"
+    },
+    "deductionSubstantiationThreshold": {
+      "value": 300,
+      "from": "1997-07-01",
+      "source": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/clothes-and-items-you-wear-at-work/clothing-laundry-and-dry-cleaning-expenses",
+      "checked": "2026-08-18",
+      "note": "No receipts needed below this total, but the expense must actually have been incurred and the taxpayer must be able to explain how the figure was worked out. It is not a free 300 dollars."
+    },
+    "laundryRates": {
+      "value": { "writtenEvidenceThreshold": 150, "perLoadDeductibleOnly": 1.0, "perLoadMixed": 0.5 },
+      "from": "1997-07-01",
+      "source": "https://www.ato.gov.au/individuals-and-families/income-deductions-offsets-and-records/deductions-you-can-claim/work-related-deductions/clothes-and-items-you-wear-at-work/clothing-laundry-and-dry-cleaning-expenses",
+      "checked": "2026-08-18"
+    }
+  }
+}
