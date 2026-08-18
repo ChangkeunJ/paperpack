@@ -102,8 +102,10 @@ import { questions, daspQuestions } from '../dist/packs/au-whm-tax/interview.js'
 import { estimate } from '../dist/packs/au-whm-tax/calculate.js'
 import { estimateDasp } from '../dist/packs/au-whm-tax/dasp.js'
 import { visibleQuestions, isComplete, prune } from '../dist/src/interview.js'
-import en from '../dist/packs/au-whm-tax/i18n/en.json' with { type: 'json' }
-import ko from '../dist/packs/au-whm-tax/i18n/ko.json' with { type: 'json' }
+// Straight from the source tree: translations are data, not build output, and a
+// locale the tests know about must never be missing from a fresh build.
+import en from '../packs/au-whm-tax/i18n/en.json' with { type: 'json' }
+import ko from '../packs/au-whm-tax/i18n/ko.json' with { type: 'json' }
 
 const dicts = { en, ko }
 let locale = 'en'
@@ -148,8 +150,8 @@ function daspView(a) {
   return {
     rows: [
       ['dasp.balance', balance],
-      ...(r.taxFreeComponent ? [['dasp.taxFreeComponent', round(r.taxFreeComponent)]] : []),
-      ...(r.untaxedElement ? [['dasp.untaxedElement', round(r.untaxedElement)]] : []),
+      ...(round(r.taxFreeComponent) ? [['dasp.taxFreeComponent', round(r.taxFreeComponent)]] : []),
+      ...(round(r.untaxedElement) ? [['dasp.untaxedElement', round(r.untaxedElement)]] : []),
       ['dasp.tax', -tax],
     ],
     total: ['dasp.net', balance - tax],
@@ -278,7 +280,8 @@ function render() {
   const v = active.view(active.answers)
 
   // The confirmation belongs to one set of figures. If the figures change, it lapses.
-  const fk = JSON.stringify([tool, v.rows, v.total, v.comparison ?? null])
+  const fk = JSON.stringify([tool, v.rows, v.total, v.comparison ?? null, v.flags, v.period ?? null,
+    v.citations.map(c => c.rule)])
   if (fk !== figuresKey) {
     figuresKey = fk
     disarm()

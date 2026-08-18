@@ -282,3 +282,14 @@ test('a non-finite residentMonths falls back to the full year', () => {
 test('a year with no rate table is refused loudly', () => {
   assert.throws(() => at({ financialYear: '2027-28' as never }), /no rates for 2027-28/)
 })
+
+test('non-finite money answers are treated as zero, not passed through', () => {
+  const r = at({ grossIncome: NaN, taxWithheld: Infinity })
+  assert.equal(r.taxableIncome, 0)
+  assert.equal(r.taxPayable, 0)
+  assert.equal(r.credit, 0)
+})
+
+test('a year named after an object method is still refused loudly', () => {
+  assert.throws(() => at({ financialYear: 'toString' as never }), /no rates for toString/)
+})

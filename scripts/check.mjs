@@ -10,7 +10,7 @@ const AI_TELLS = [
   [/Co-Authored-By:\s*Claude/i, 'AI attribution trailer'],
   [/Generated with \[?Claude/i, 'AI generation footer'],
   [/\u{1F916}/u, 'robot emoji'],
-  [/^#{1,6}\s*[^\n]*\p{Extended_Pictographic}/mu, 'emoji heading'],
+  [/^#{1,6}\s*[^\n]*(\p{Extended_Pictographic}|[\u{1F1E6}-\u{1F1FF}]|\u20E3)/mu, 'emoji heading'],
   [/^\s*(\/\/|#|\*)\s*=={3,}/m, 'divider comment'],
   [/^\s*(\/\/|#)\s*Step \d+[:.]/m, 'numbered step comment'],
 ]
@@ -58,7 +58,7 @@ for (const file of files) {
   const buf = readFileSync(file)
   // A NUL byte in the head is the usual sign of a binary file. Decoding a PNG as
   // UTF-8 produces convincing nonsense, including things that look like Hangul.
-  if (buf.subarray(0, 8192).includes(0)) {
+  if (buf.includes(0)) {
     if (TEXT.test(file)) fail(file, 'NUL byte in a text file')
     continue
   }
@@ -82,14 +82,17 @@ for (const file of files) {
   // Revenue paths inside the tax pack would make it a "tax agent service for reward"
   // under TASA 2009 s 50-5(1)(c). See docs/legal.md.
   if (file.startsWith('packs/au-whm-tax/')) {
-    const rulesData = /\/rules\/[^/]+\.json$/.test(file)
-    if (REVENUE_CHANNELS.test(text) || (!rulesData && REVENUE_WORDING.test(text))) {
+    const rulesData = /\/rules\/[^/]+\.json$/i.test(file)
+    // NFKC folds fullwidth lookalikes back to ASCII. This screens against accident,
+    // not against an adversary with commit access.
+    const folded = text.normalize('NFKC')
+    if (REVENUE_CHANNELS.test(folded) || (!rulesData && REVENUE_WORDING.test(folded))) {
       fail(file, 'revenue-related wording inside the tax pack (TASA s 50-5)')
     }
   }
 
   // Every regulatory constant carries its provenance, or it does not ship.
-  if (/^packs\/.+\/rules\/.+\.json$/.test(file)) {
+  if (/^packs\/.+\/rules\/.+\.json$/i.test(file)) {
     let doc
     try { doc = JSON.parse(text) } catch (e) { fail(file, `invalid JSON: ${e.message}`); continue }
     // A number parked outside "rules" would dodge the provenance fields below.

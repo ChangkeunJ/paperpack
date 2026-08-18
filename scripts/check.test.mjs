@@ -118,3 +118,24 @@ test('the Korean exemption is only the pack translation file', () => {
 test('an emoji anywhere in a heading is still an emoji heading', () => {
   assert.ok(!run('k.md', '## Features \u{1F680}\n').ok)
 })
+
+test('extension case does not change which rules apply', () => {
+  const r = run('packs/au-whm-tax/rules/tax.JSON', '{"bands":[{"rate":0.15}],"rules":{}}')
+  assert.ok(!r.ok)
+  assert.match(r.out, /top-level key "bands"/)
+})
+
+test('flag and keycap emoji count as emoji in headings', () => {
+  assert.ok(!run('l.md', '# Trip to \u{1F1E6}\u{1F1FA}\n').ok)
+  assert.ok(!run('m.md', '# Step 1\u{FE0F}\u{20E3} done\n').ok)
+})
+
+test('a NUL byte past the head is still a NUL byte', () => {
+  const late = Buffer.concat([Buffer.alloc(9000, 0x61), Buffer.from([0])])
+  assert.ok(!run('n.ts', late).ok)
+})
+
+test('fullwidth lookalikes do not slip past the revenue screen', () => {
+  const fullwidth = [...'Donate'].map(c => String.fromCodePoint(c.codePointAt(0) + 0xfee0)).join('')
+  assert.ok(!run('packs/au-whm-tax/fw.ts', `const s = "${fullwidth} here"\n`).ok)
+})

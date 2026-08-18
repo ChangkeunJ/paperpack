@@ -52,10 +52,11 @@ export function estimateDasp(a: DaspAnswers): DaspEstimate {
   // Answers arrive from a form. Negatives are typos, and components beyond the balance
   // are capped so tax is only ever worked out on dollars that exist: the flag says the
   // figures need checking, but what reaches you can never be shown as less than zero.
-  const balance = Math.max(0, a.superBalance)
-  const taxFreeComponent = Math.min(Math.max(0, a.taxFreeComponent), balance)
-  const untaxedElement = Math.min(Math.max(0, a.untaxedElement), balance - taxFreeComponent)
-  if (Math.max(0, a.taxFreeComponent) + Math.max(0, a.untaxedElement) > balance) {
+  const money = (n: number) => (Number.isFinite(n) ? Math.max(0, n) : 0)
+  const balance = money(a.superBalance)
+  const taxFreeComponent = Math.min(money(a.taxFreeComponent), balance)
+  const untaxedElement = Math.min(money(a.untaxedElement), balance - taxFreeComponent)
+  if (money(a.taxFreeComponent) + money(a.untaxedElement) > balance) {
     flags.push('components-add-up-to-more-than-the-balance')
   }
   const taxedElement = balance - taxFreeComponent - untaxedElement

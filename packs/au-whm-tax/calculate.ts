@@ -136,13 +136,16 @@ function assess(
 }
 
 export function estimate(a: WhmAnswers): WhmEstimate {
+  // A plain lookup would find Object.prototype methods for a year like 'toString'.
+  if (!Object.hasOwn(whmBandRule, a.financialYear)) throw new Error(`no rates for ${a.financialYear}`)
   const whmRule = whmBandRule[a.financialYear]
-  if (!whmRule) throw new Error(`no rates for ${a.financialYear}`)
 
   // Answers arrive from a form. A stray minus sign must not shrink the bill or grow
-  // the refund, so money answers are floored at zero before anything is worked out.
-  const grossIncome = Math.max(0, a.grossIncome)
-  const taxWithheld = Math.max(0, a.taxWithheld)
+  // the refund, and NaN or Infinity must not ride through the arithmetic, so money
+  // answers are reduced to a finite non-negative number before anything is worked out.
+  const money = (n: number) => (Number.isFinite(n) ? Math.max(0, n) : 0)
+  const grossIncome = money(a.grossIncome)
+  const taxWithheld = money(a.taxWithheld)
 
   const flags: string[] = []
   const used: string[] = [whmRule]
@@ -152,7 +155,7 @@ export function estimate(a: WhmAnswers): WhmEstimate {
     flags.push('no-tfn-withholding-is-recoverable')
   }
 
-  let deductions = Math.max(0, a.workRelatedDeductions)
+  let deductions = money(a.workRelatedDeductions)
   const substantiation = substantiationRule[a.financialYear]
   if (!substantiation) {
     flags.push('every-deduction-needs-written-evidence')
