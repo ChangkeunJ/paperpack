@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Single source of truth for repo rules. Run by git hooks, Claude Code hooks and CI.
+// Single source of truth for repo rules. Run by git hooks and CI.
 // Usage: node scripts/check.mjs [file ...]   (no args: every tracked file)
 
 import { readFileSync, statSync } from 'node:fs'
